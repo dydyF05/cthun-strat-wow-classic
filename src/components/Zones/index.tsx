@@ -1,6 +1,7 @@
 import { FunctionComponent, memo, useEffect, useRef, useState } from 'react';
 import Zone from '../../containers/Zone';
 import { ZoneId } from '../../redux/Zones';
+import BossZone from '../BossZone';
 import classes from './index.module.css';
 
 export type Props = {
@@ -27,9 +28,8 @@ const Zones: FunctionComponent<Props> = memo(({ ids }) => {
   return (
     <div className={classes.container}>
       <div className={classes.center}>
-        <p>Boss</p>
+        <BossZone />
       </div>
-
       <svg width="100%" height="100%" ref={ref}>
         {!!ids &&
           ids.map(id => (

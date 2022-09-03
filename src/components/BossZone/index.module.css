@@ -1,0 +1,21 @@
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-grey-heavy);
+  border-radius: 100%;
+  border: 10px solid var(--color-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.container > p {
+  color: #fff;
+}
+
+.raidImage {
+  position: absolute;
+  width: 32px;
+  height: auto;
+}

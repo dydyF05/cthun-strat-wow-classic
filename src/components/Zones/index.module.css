@@ -9,16 +9,6 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  top: calc(50% - 80px);
+  top: calc(50% - 59px);
   left: calc(50% - 55px);
-  background-color: var(--color-grey-heavy);
-  border-radius: 100%;
-  border: 10px solid var(--color-grey);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.center > p {
-  color: #fff;
 }
