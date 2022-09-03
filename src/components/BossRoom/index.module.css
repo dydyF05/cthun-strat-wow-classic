@@ -1,0 +1,46 @@
+.wrapper {
+  position: relative;
+}
+
+.container {
+  border: 10px solid var(--color-grey);
+  background-color: var(--color-grey-heavy);
+  height: 600px;
+  width: 500px;
+  border-radius: 100%;
+  position: relative;
+  overflow-x: hidden;
+  margin: auto;
+}
+.container > p {
+  color: #fff;
+  position: absolute;
+  top: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+.zones {
+  position: absolute;
+  top: 100px;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+}
+
+.entrance {
+  position: absolute;
+  height: 120px;
+  bottom: -100px;
+  background-color: var(--color-grey-heavy);
+  left: 45%;
+  right: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.entrance > p {
+  color: #fff;
+}
