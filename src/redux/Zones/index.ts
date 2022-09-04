@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import log from '../../lib/log';
+import { createSlice } from '@reduxjs/toolkit';
 import { Marker, ZoneColor } from '../../types/index.d';
 
 export enum ZoneId {
@@ -15,82 +14,111 @@ export enum ZoneId {
 
 export type Zone = {
   id: ZoneId;
+  isLeft: boolean;
+  position: 'up' | 'middle-up' | 'middle-bottom' | 'bottom';
   marker: Marker;
-  players: string[];
   color: ZoneColor;
 };
 
 type State = Zone[];
 
 const initialState: State = [
-  { id: ZoneId.One, marker: Marker.Star, players: [], color: ZoneColor.Green },
-  { id: ZoneId.Two, marker: Marker.Square, players: [], color: ZoneColor.Red },
-  { id: ZoneId.Three, marker: Marker.Cross, players: [], color: ZoneColor.Yellow },
-  { id: ZoneId.Four, marker: Marker.Skull, players: [], color: ZoneColor.Blue },
-  { id: ZoneId.Five, marker: Marker.Circle, players: [], color: ZoneColor.Green },
-  { id: ZoneId.Six, marker: Marker.Moon, players: [], color: ZoneColor.Red },
-  { id: ZoneId.Seven, marker: Marker.Triangle, players: [], color: ZoneColor.Yellow },
-  { id: ZoneId.Eight, marker: Marker.Diamond, players: [], color: ZoneColor.Blue },
+  {
+    id: ZoneId.One,
+    marker: Marker.Star,
+    color: ZoneColor.Green,
+    isLeft: true,
+    position: 'up',
+  },
+  {
+    id: ZoneId.Two,
+    marker: Marker.Square,
+    color: ZoneColor.Red,
+    isLeft: true,
+    position: 'middle-up',
+  },
+  {
+    id: ZoneId.Three,
+    marker: Marker.Cross,
+    color: ZoneColor.Yellow,
+    isLeft: true,
+    position: 'middle-bottom',
+  },
+  {
+    id: ZoneId.Four,
+    marker: Marker.Skull,
+    color: ZoneColor.Blue,
+    isLeft: true,
+    position: 'bottom',
+  },
+  {
+    id: ZoneId.Five,
+    marker: Marker.Circle,
+    color: ZoneColor.Green,
+    isLeft: false,
+    position: 'bottom',
+  },
+  {
+    id: ZoneId.Six,
+    marker: Marker.Moon,
+    color: ZoneColor.Red,
+    isLeft: false,
+    position: 'middle-bottom',
+  },
+  {
+    id: ZoneId.Seven,
+    marker: Marker.Triangle,
+    color: ZoneColor.Yellow,
+    isLeft: false,
+    position: 'middle-up',
+  },
+  {
+    id: ZoneId.Eight,
+    marker: Marker.Diamond,
+    color: ZoneColor.Blue,
+    isLeft: false,
+    position: 'up',
+  },
 ];
 
 export const zonesSlice = createSlice({
   name: 'zones',
   initialState,
-  reducers: {
-    addPlayers: (
-      state,
-      { payload }: PayloadAction<{ players: Zone['players']; id: Zone['id'] }>
-    ) => {
-      const zone = state.find(({ id }) => id === payload.id);
-
-      if (!zone) {
-        log({
-          message: 'Target zone for players adding unexistant',
-          context: { state, payload },
-        });
-        return;
-      }
-
-      // Can't add already existing player
-      const addablePlayers = payload.players.filter(player => !zone.players.includes(player));
-      if (!addablePlayers.length) {
-        payload.players.length &&
-          log({
-            message: 'Cannot add any of the received players for they are already in the zone',
-            context: { state, addablePlayers, payload },
-          });
-        return;
-      }
-
-      if (payload.players.length !== addablePlayers.length) {
-        log({
-          message: 'Some of the players were filtered out for their name already exist in zone',
-          context: { state, addablePlayers, payload },
-        });
-      }
-
-      zone.players.push(...addablePlayers);
-    },
-    removePlayers: (
-      state,
-      { payload }: PayloadAction<{ players: Zone['players']; id: Zone['id'] }>
-    ) => {
-      const zone = state.find(({ id }) => id === payload.id);
-
-      if (!zone) {
-        log({
-          message: 'Target zone for players deletion unexistant',
-          context: { state, payload },
-        });
-        return;
-      }
-
-      zone.players.filter(playerName => !payload.players.includes(playerName));
-    },
-  },
+  reducers: {},
 });
 
+const isUp = (pointY: number, pointX: number, isLeft: boolean): boolean => {
+  const minimumY = (Math.PI / 4) * (isLeft ? Math.abs(pointX) : pointX);
+  return minimumY <= pointY;
+};
+
+const getBottom = (pointY: number, pointX: number): Zone['position'] => {
+  const maximumY = -Math.abs((-Math.PI / 4) * pointX);
+  return maximumY >= pointY ? 'bottom' : 'middle-bottom';
+};
+
+const getPositionFromTrigoPoint = (trigoPosition: number, isLeft: boolean): Zone['position'] => {
+  const sinus = Math.sin(trigoPosition);
+  const cosinus = Math.cos(trigoPosition);
+  if (isUp(sinus, cosinus, isLeft)) {
+    return 'up';
+  }
+  if (sinus >= 0) {
+    return 'middle-up';
+  }
+  return getBottom(sinus, cosinus);
+};
+
+export const getZoneIdFromTrigoPosition = (
+  trigoPosition: number,
+  isLeft: boolean
+): ZoneId | undefined => {
+  const position = getPositionFromTrigoPoint(trigoPosition, isLeft);
+
+  return initialState.find(zone => zone.isLeft === isLeft && zone.position === position)?.id;
+};
+
 // Action creators are generated for each case reducer function
-export const { addPlayers, removePlayers } = zonesSlice.actions;
+// export const { addPlayers, removePlayers } = zonesSlice.actions;
 
 export default zonesSlice.reducer;

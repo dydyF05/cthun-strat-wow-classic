@@ -3,12 +3,43 @@
   cursor: pointer;
   background-color: #fff;
   z-index: 2;
-  height: 2vh;
-  width: 2vh;
+  height: 4vh;
+  width: 4vh;
   border-radius: 100%;
   transition: background-color .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 
 .container:hover {
   background-color: var(--color-grey);
+}
+
+.container[data-marker=true] {
+  height: 2.5vh;
+  width: 2vh;
+  background-color: transparent;
+}
+.container[data-marker=true]:hover {
+  background-color: transparent;
+}
+.container[data-marker=true]:hover .raidImage {
+  transform: rotateZ(10deg);
+}
+
+.raidImage {
+  position: absolute;
+  width: 4vh;
+  height: auto;
+  z-index: -1;
+  transition: transform .2s;
+  transform: rotateZ(0deg);
+  animation: fadeIn .2s linear 0s 1;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }

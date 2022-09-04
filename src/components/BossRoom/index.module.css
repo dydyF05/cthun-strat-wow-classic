@@ -20,6 +20,7 @@
   border-radius: 100%;
   position: relative;
   overflow-x: hidden;
+  animation: fadeIn .4s linear 0s 1;
 }
 .container > p {
   color: #fff;
@@ -60,4 +61,9 @@
 
 .entrance > p {
   color: #fff;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }

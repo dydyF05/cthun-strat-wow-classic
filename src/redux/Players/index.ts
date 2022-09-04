@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import log from '../../lib/log';
-import { ClassName, Marker, Role } from '../../types/index.d';
+import { ClassName, Role } from '../../types/index.d';
 
 export type Player = {
   /** Also used as ID in WoW */
   name: string;
   class: ClassName;
   role: Role;
-  marker?: Marker;
 };
 
 type State = Player[];
