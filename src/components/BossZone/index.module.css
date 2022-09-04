@@ -13,9 +13,3 @@
 .container > p {
   color: #fff;
 }
-
-.raidImage {
-  position: absolute;
-  width: 32px;
-  height: auto;
-}

@@ -16,13 +16,13 @@ const Zones: FunctionComponent<Props> = memo(({ ids }) => {
   const [svgHeight, setSvgHeight] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
-      console.log('width', ref.current?.width.baseVal.value);
+    const resize = () => {
       ref.current?.width.baseVal.value && setSvgHeight(ref.current?.width.baseVal.value);
-
-      console.log('height', ref.current?.height.baseVal.value);
       ref.current?.height.baseVal.value && setSvgWidth(ref.current?.height.baseVal.value);
-    }, LOAD_SVG_DELAY);
+    };
+    window?.addEventListener('resize', resize);
+    setTimeout(resize, LOAD_SVG_DELAY);
+    return () => window?.removeEventListener('resize', resize);
   }, []);
 
   return (
