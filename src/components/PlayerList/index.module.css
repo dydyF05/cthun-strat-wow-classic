@@ -1,17 +1,58 @@
-.emptyContainer {
+.container {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex: 1;
   min-width: 400px;
-  min-height: 99vh;
+  max-width: 600px;
+  min-height: 100vh;
+  background-color: var(--color-grey-light);
+}
+.container[data-visible="false"] {
+  min-width: 56px;
+  width: 56px;
+  flex: none;
+  position: absolute;
+  right: 0;
+  padding-top: 16px;
+}
+
+.container > .title {
+  width: 100%;
+  background-color: var(--color-grey);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.title > h2 {
+  color: #fff;
+  font-size: 20px;
+  padding: 16px;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.burger:hover > div {
   background-color: var(--color-grey-light);
 }
 
-.emptyContainer > h2 {
-  width: 100%;
-  padding: 16px;
-  background-color: var(--color-grey);
-  color: #fff;
+.burger > div {
+  background-color: #fff;
+  border-radius: 5px;
+  height: 4px;
+  width: 40px;
+  transition: background-color .2s;
+}
+
+.burger > div:not(:nth-child(1)) {
+  margin-top: 6px;
 }

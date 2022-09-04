@@ -1,21 +1,24 @@
 import { FunctionComponent, memo } from 'react';
-import { Player } from '../../redux/Players';
 import classes from './index.module.css';
 
 export type Props = {
-  ids?: Player['name'][];
+  isVisible: boolean;
+  onToggle: () => void;
 };
 
-const PlayerList: FunctionComponent<Props> = memo(({ ids }) => {
-  if (!ids?.length) {
-    return (
-      <div className={classes.emptyContainer}>
-        <h2>No Players yet</h2>
+const PlayerList: FunctionComponent<Props> = memo(({ isVisible, onToggle }) => {
+  return (
+    <div className={classes.container} data-visible={isVisible}>
+      <div className={classes.title}>
+        {isVisible && <h2>Players</h2>}
+        <div className={classes.burger} onClick={onToggle}>
+          <div />
+          <div />
+          <div />
+        </div>
       </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 });
 PlayerList.displayName = 'PlayerList';
 

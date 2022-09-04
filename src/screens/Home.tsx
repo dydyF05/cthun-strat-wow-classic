@@ -9,6 +9,7 @@ const Home: FunctionComponent<Props> = () => {
   return (
     <div className={classes.container}>
       <BossRoom />
+      <div className={classes.spacer} />
       <PlayerList />
     </div>
   );
