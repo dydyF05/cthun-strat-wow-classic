@@ -1,8 +1,7 @@
-import './App.css';
-import BossRoom from './components/BossRoom';
+import Home from './screens/Home';
 
 function App() {
-  return <BossRoom />;
+  return <Home />;
 }
 
 export default App;

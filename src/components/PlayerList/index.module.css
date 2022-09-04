@@ -1,0 +1,17 @@
+.emptyContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 400px;
+  min-height: 99vh;
+  background-color: var(--color-grey-light);
+}
+
+.emptyContainer > h2 {
+  width: 100%;
+  padding: 16px;
+  background-color: var(--color-grey);
+  color: #fff;
+}
