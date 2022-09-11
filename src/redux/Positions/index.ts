@@ -78,6 +78,7 @@ export const positionsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setPlayerPosition, addPositions } = positionsSlice.actions;
+export const { setPlayerPosition: setPlayerPositionAction, addPositions: addPositionsAction } =
+  positionsSlice.actions;
 
 export default positionsSlice.reducer;

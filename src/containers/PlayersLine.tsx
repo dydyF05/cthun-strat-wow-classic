@@ -2,7 +2,7 @@ import { FunctionComponent, useCallback } from 'react';
 import Component, { Props as ComponentProps, UIPosition } from '../components/PlayersLine';
 import { useDispatch } from '../hooks/redux';
 import log from '../lib/log';
-import { addPositions, Position as StatePosition } from '../redux/Positions';
+import { addPositionsAction, Position as StatePosition } from '../redux/Positions';
 import { getZoneIdFromTrigoPosition } from '../redux/Zones';
 
 export type Props = Omit<ComponentProps, 'onPositionsSet'>;
@@ -44,7 +44,7 @@ const PlayersLine: FunctionComponent<Props> = props => {
       clearTimeout(timeoutIds[line]);
       timeoutIds[line] = setTimeout(() => {
         dispatch(
-          addPositions(
+          addPositionsAction(
             positions
               .map(position => mapUIPositionToReduxPosition(position, line))
               .filter(position => !!position) as StatePosition[]
@@ -52,7 +52,7 @@ const PlayersLine: FunctionComponent<Props> = props => {
         );
       }, 500);
     },
-    [line]
+    [line, dispatch]
   );
 
   return <Component {...props} onPositionsSet={handlePositionsSet} />;

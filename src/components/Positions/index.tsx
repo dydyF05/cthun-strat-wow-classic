@@ -1,38 +1,58 @@
-import { FunctionComponent, memo, useEffect, useMemo, useRef, useState } from 'react';
+import { FunctionComponent, memo, useMemo } from 'react';
 import PlayersLine from '../../containers/PlayersLine';
 import classes from './index.module.css';
 
-export type Props = Record<string, never>;
+export type Props = {
+  graphWidth: number;
+  /** The meter distance separating the first line from the boss */
+  firstLineDistance: number;
+  /** The meter distance separating the second line from the boss */
+  secondLineDistance: number;
+  /** The meter distance separating the third line from the boss */
+  thirdLineDistance: number;
+};
 
-const LINES_NUMBER = 4;
+const FIRST_LINE_PLAYER_COUNT = 8;
+const SECOND_LINE_PLAYER_COUNT = 12;
 
-const Positions: FunctionComponent<Props> = memo(() => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [ray, setRay] = useState(0);
+const Positions: FunctionComponent<Props> = memo(
+  ({ firstLineDistance, secondLineDistance, thirdLineDistance, graphWidth }) => {
+    const { firstLineRay, secondLineRay, thirdLineRay } = useMemo(() => {
+      const firstRay = graphWidth * 0.1;
 
-  const { firstLineRay, secondLineRay, thirdLineRay } = useMemo(
-    () => ({
-      firstLineRay: ray / LINES_NUMBER,
-      secondLineRay: (ray * 2.3) / LINES_NUMBER,
-      thirdLineRay: (ray * 3.6) / LINES_NUMBER,
-    }),
-    [ray]
-  );
+      return {
+        firstLineRay: firstRay,
+        secondLineRay: (firstRay * secondLineDistance) / firstLineDistance,
+        thirdLineRay: (firstRay * thirdLineDistance) / firstLineDistance,
+      };
+    }, [graphWidth, firstLineDistance, secondLineDistance, thirdLineDistance]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      ref.current && setRay(ref.current.clientWidth);
-    }, 100);
-  }, []);
-
-  return (
-    <div className={classes.container} ref={ref}>
-      <PlayersLine line="first" ray={firstLineRay} numberOfPlayers={8} trigoDelta={Math.PI / 8} />
-      <PlayersLine line="second" ray={secondLineRay} numberOfPlayers={12} />
-      <PlayersLine line="third" ray={thirdLineRay} numberOfPlayers={20} trigoDelta={Math.PI / 4} />
-    </div>
-  );
-});
+    return (
+      <div className={classes.container}>
+        <PlayersLine
+          line="first"
+          ray={firstLineRay}
+          numberOfPlayers={FIRST_LINE_PLAYER_COUNT}
+          numberOfPositionsBeforeLine={0}
+          trigoDelta={Math.PI / 8}
+        />
+        <PlayersLine
+          line="second"
+          ray={secondLineRay}
+          numberOfPlayers={SECOND_LINE_PLAYER_COUNT}
+          numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT}
+        />
+        <PlayersLine
+          line="third"
+          ray={thirdLineRay}
+          numberOfPlayers={20}
+          numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT + SECOND_LINE_PLAYER_COUNT}
+          trigoDelta={Math.PI / 4}
+        />
+      </div>
+    );
+  }
+);
 Positions.displayName = 'Positions';
 
 export default Positions;

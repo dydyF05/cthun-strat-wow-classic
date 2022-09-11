@@ -3,13 +3,13 @@ import classes from './index.module.css';
 
 export type Props = Record<string, never>;
 
-const BossZone: FunctionComponent<Props> = memo(() => {
+const CenterZone: FunctionComponent<Props> = memo(() => {
   return (
     <div className={classes.container}>
       <p>Boss</p>
     </div>
   );
 });
-BossZone.displayName = 'BossZone';
+CenterZone.displayName = 'CenterZone';
 
-export default BossZone;
+export default CenterZone;

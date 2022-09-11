@@ -4,6 +4,7 @@ import Position, { Props as PositionProps } from '../../containers/Position';
 export type UIPosition = { trigoPosition: number; index: number };
 
 export type Props = {
+  numberOfPositionsBeforeLine: number;
   numberOfPlayers: number;
   trigoDelta?: number;
   ray: number;
@@ -19,15 +20,22 @@ const getPosition = (trigoPosition: number, ray: number) => ({
 });
 
 const PlayersLine: FunctionComponent<Props> = memo(
-  ({ onPositionsSet, ray, numberOfPlayers, trigoDelta = 0, ...props }) => {
+  ({
+    numberOfPositionsBeforeLine,
+    ray,
+    numberOfPlayers,
+    trigoDelta = 0,
+    onPositionsSet,
+    ...props
+  }) => {
     const positions = useMemo<UIPosition[]>(() => {
       return Array.from({ length: numberOfPlayers }).map(
         (_, index): UIPosition => ({
           trigoPosition: (Math.PI * index) / (numberOfPlayers / 2) + trigoDelta,
-          index: index + 1,
+          index: index + 1 + numberOfPositionsBeforeLine,
         })
       );
-    }, [numberOfPlayers, trigoDelta]);
+    }, [numberOfPlayers, trigoDelta, numberOfPositionsBeforeLine]);
 
     useEffect(() => {
       onPositionsSet(positions);

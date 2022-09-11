@@ -1,28 +1,38 @@
-import { FunctionComponent, memo } from 'react';
+import { forwardRef, FunctionComponent, memo, RefObject } from 'react';
+import Positions from '../../containers/Positions';
 import Zones from '../../containers/Zones';
-import Positions from '../Positions';
 import classes from './index.module.css';
 
-export type Props = {};
+export const ZONES_CONTAINER_ID = 'zones-container';
 
-const BossRoom: FunctionComponent<Props> = memo(() => {
-  return (
-    <div className={classes.wrapper}>
-      <div className={classes.container}>
-        <p>Stairs</p>
-        <div className={classes.zones}>
-          <Zones />
-        </div>
-      </div>
-      <div className={`${classes.container} ${classes.positions}`}>
-        <Positions />
-      </div>
-      <div className={classes.entrance}>
-        <p>Entrance</p>
+export type Props = {
+  graphContainerRef: RefObject<HTMLDivElement>;
+};
+
+const _BossRoom: FunctionComponent<Props> = memo(({ graphContainerRef }) => (
+  <div className={classes.wrapper}>
+    <div className={classes.container} ref={graphContainerRef}>
+      <p>Stairs</p>
+      <div className={classes.zones} id={ZONES_CONTAINER_ID}>
+        <Zones />
       </div>
     </div>
-  );
-});
-BossRoom.displayName = 'BossRoom';
+    <div className={`${classes.container} ${classes.positions}`}>
+      <Positions />
+    </div>
+    <div className={classes.entrance}>
+      <p>Entrance</p>
+    </div>
+  </div>
+));
+_BossRoom.displayName = 'BossRoom';
+
+const BossRoom = forwardRef((props, ref) => (
+  <_BossRoom
+    {...(props as Omit<Props, 'graphContainerRef'>)}
+    graphContainerRef={ref as Props['graphContainerRef']}
+  />
+));
+BossRoom.displayName = 'BossRoomWithRef';
 
 export default BossRoom;

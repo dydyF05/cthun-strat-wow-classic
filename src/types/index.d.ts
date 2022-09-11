@@ -34,3 +34,9 @@ export enum ZoneColor {
   Blue = "#3fc6f5",
   Green = "#42b54b",
 }
+
+/**
+ * The number of minimum meters required between two players for
+ * them not to link each other when targeted by the nature beam of C'thun
+ */
+export const MINIMUM_SPACE_BETWEEN_PLAYERS = 9.144

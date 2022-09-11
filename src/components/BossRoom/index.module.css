@@ -1,8 +1,6 @@
 .wrapper {
-  --zone-height: 90vh;
-  --zone-width: calc(var(--zone-height) * 0.9);
-  --zone-top: 100px;
-  --zone-bottom: 20px;
+  --zone-top: 10%;
+  --zone-bottom: 2%;
   position: relative;
   display: flex;
   align-items: center;
@@ -13,10 +11,12 @@
 .container {
   border: 10px solid var(--color-grey);
   background-color: var(--color-grey-heavy);
-  height: var(--zone-height);
+  height: 90vh;
   min-height: 700px;
-  width: var(--zone-width);
-  min-width: 630px;
+  max-height: 2160px;
+  width: calc(90vh * 0.9);
+  max-width: calc(2160px * 0.9);
+  min-width: calc(700px * 0.9);
   border-radius: 100%;
   position: relative;
   overflow-x: hidden;
@@ -34,7 +34,7 @@
   overflow: initial;
   position: absolute;
   background: transparent;
-  top: calc(var(--zone-top) + 13px);
+  top: var(--zone-top);
   bottom: var(--zone-bottom);
   height: calc(var(--zone-height) - var(--zone-top) - var(--zone-bottom));
 }

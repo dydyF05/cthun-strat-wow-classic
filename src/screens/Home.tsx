@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import BossRoom from '../components/BossRoom';
+import BossRoom from '../containers/BossRoom';
 import PlayerList from '../containers/PlayerList';
 import classes from './Home.module.css';
 

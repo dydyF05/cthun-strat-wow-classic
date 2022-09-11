@@ -46,6 +46,6 @@ export const playersSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addMany, removeMany } = playersSlice.actions;
+export const { addMany: addManyAction, removeMany: removeManyAction } = playersSlice.actions;
 
 export default playersSlice.reducer;

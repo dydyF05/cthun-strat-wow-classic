@@ -19,17 +19,17 @@ const getTrianglePoints = ({
   svgWidth,
 }: Pick<Props, 'svgHeight' | 'svgWidth' | 'horizontal' | 'position'>): string => {
   if (!svgHeight || !svgWidth) return '';
-  const baseX = horizontal === 'left' ? '0' : svgHeight;
+  const baseX = horizontal === 'left' ? '0' : svgWidth;
 
   switch (position) {
     case 'up':
-      return `${baseX},0 ${svgHeight / 2},${svgWidth / 2}, ${svgHeight / 2},0`;
+      return `${baseX},0 ${svgWidth / 2},${svgHeight / 2}, ${svgWidth / 2},0`;
     case 'middle-up':
-      return `${baseX},0 ${svgHeight / 2},${svgWidth / 2} ${baseX},${svgWidth / 2}`;
+      return `${baseX},0 ${svgWidth / 2},${svgHeight / 2} ${baseX},${svgHeight / 2}`;
     case 'middle-bottom':
-      return `${baseX},${svgWidth / 2} ${svgHeight / 2},${svgWidth / 2} ${baseX},${svgWidth}`;
+      return `${baseX},${svgHeight / 2} ${svgWidth / 2},${svgHeight / 2} ${baseX},${svgHeight}`;
     case 'bottom':
-      return `${baseX},${svgWidth} ${svgHeight / 2},${svgWidth}, ${svgHeight / 2},${svgWidth / 2}`;
+      return `${baseX},${svgHeight} ${svgWidth / 2},${svgHeight}, ${svgWidth / 2},${svgHeight / 2}`;
     default:
       return '0';
   }
@@ -47,7 +47,7 @@ const getTextPoints = ({
     case 'up':
       return {
         x: horizontal === 'left' ? svgHeight * 0.3 : svgHeight * 0.6,
-        y: svgWidth * 0.2,
+        y: svgWidth * 0.125,
       };
     case 'middle-up':
       return {

@@ -1,14 +1,31 @@
 import { FunctionComponent } from 'react';
-import Component from '../components/Zones';
+import { shallowEqual } from 'react-redux';
+import Component, { Props as ComponentProps } from '../components/Zones';
 import { useSelector } from '../hooks/redux';
-import { zoneIdsSelector } from '../redux/Zones/selectors';
+import {
+  graphHeightSelector,
+  graphTopStairsHeight,
+  graphWidthSelector,
+  zoneIdsSelector,
+} from '../redux/Zones/selectors';
 
-export type Props = Record<string, never>;
+export type Props = Omit<ComponentProps, 'width' | 'height' | 'topStairsHeight'>;
 
-const Zones: FunctionComponent<Props> = () => {
-  const zoneIds = useSelector(zoneIdsSelector);
+const Zones: FunctionComponent<Props> = props => {
+  const zoneIds = useSelector(zoneIdsSelector, shallowEqual);
+  const height = useSelector(graphHeightSelector, shallowEqual);
+  const width = useSelector(graphWidthSelector, shallowEqual);
+  const topZoneHeight = useSelector(graphTopStairsHeight, shallowEqual);
 
-  return <Component ids={zoneIds} />;
+  return (
+    <Component
+      {...props}
+      width={width}
+      height={height}
+      topStairsHeight={topZoneHeight}
+      ids={zoneIds}
+    />
+  );
 };
 
 export default Zones;
