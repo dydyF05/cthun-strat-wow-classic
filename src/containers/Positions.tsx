@@ -4,6 +4,8 @@ import Component, { Props as ComponentProps } from '../components/Positions';
 import { useSelector } from '../hooks/redux';
 import {
   firstLineDistanceSelector,
+  graphHeightSelector,
+  graphTopStairsHeight,
   graphWidthSelector,
   secondLineDistanceSelector,
   thirdLineDistanceSelector,
@@ -11,7 +13,12 @@ import {
 
 export type Props = Omit<
   ComponentProps,
-  'firstLineDistance' | 'secondLineDistance' | 'thirdLineDistance' | 'graphWidth'
+  | 'firstLineDistance'
+  | 'secondLineDistance'
+  | 'thirdLineDistance'
+  | 'graphWidth'
+  | 'graphHeight'
+  | 'graphTopStairsHeight'
 >;
 
 const Positions: FunctionComponent<Props> = props => {
@@ -19,11 +26,15 @@ const Positions: FunctionComponent<Props> = props => {
   const secondLine = useSelector(secondLineDistanceSelector, shallowEqual);
   const thirdLine = useSelector(thirdLineDistanceSelector, shallowEqual);
   const graphWidth = useSelector(graphWidthSelector, shallowEqual);
+  const graphHeight = useSelector(graphHeightSelector, shallowEqual);
+  const graphTopZoneHeight = useSelector(graphTopStairsHeight, shallowEqual);
 
   return (
     <Component
       {...props}
       graphWidth={graphWidth}
+      graphHeight={graphHeight}
+      graphTopStairsHeight={graphTopZoneHeight}
       firstLineDistance={firstLine}
       secondLineDistance={secondLine}
       thirdLineDistance={thirdLine}

@@ -4,6 +4,8 @@ import classes from './index.module.css';
 
 export type Props = {
   graphWidth: number;
+  graphHeight: number;
+  graphTopStairsHeight: number;
   /** The meter distance separating the first line from the boss */
   firstLineDistance: number;
   /** The meter distance separating the second line from the boss */
@@ -16,7 +18,14 @@ const FIRST_LINE_PLAYER_COUNT = 8;
 const SECOND_LINE_PLAYER_COUNT = 12;
 
 const Positions: FunctionComponent<Props> = memo(
-  ({ firstLineDistance, secondLineDistance, thirdLineDistance, graphWidth }) => {
+  ({
+    firstLineDistance,
+    secondLineDistance,
+    thirdLineDistance,
+    graphWidth,
+    graphHeight,
+    graphTopStairsHeight,
+  }) => {
     const { firstLineRay, secondLineRay, thirdLineRay } = useMemo(() => {
       const firstRay = graphWidth * 0.1;
 
@@ -28,7 +37,11 @@ const Positions: FunctionComponent<Props> = memo(
     }, [graphWidth, firstLineDistance, secondLineDistance, thirdLineDistance]);
 
     return (
-      <div className={classes.container}>
+      <div
+        className={classes.container}
+        // Add 10px to top to count graph border
+        style={{ top: graphTopStairsHeight + 10, height: (graphHeight - graphTopStairsHeight) / 2 }}
+      >
         <PlayersLine
           line="first"
           ray={firstLineRay}
