@@ -39,7 +39,7 @@ export enum ZoneColor {
  * The number of minimum meters required between two players for
  * them not to link each other when targeted by the nature beam of C'thun
  */
-export const MINIMUM_SPACE_BETWEEN_PLAYERS = 9.144
+export const MINIMUM_SPACE_BETWEEN_LINES = 9.144
 
 /**
  * The delay of debounce before which a window resize triggers a measures dispatch

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Marker, MINIMUM_SPACE_BETWEEN_PLAYERS, ZoneColor } from '../../types/index.d';
+import { Marker, MINIMUM_SPACE_BETWEEN_LINES, ZoneColor } from '../../types/index.d';
 
 export enum ZoneId {
   One = '1',
@@ -35,8 +35,8 @@ export type State = {
 
 const initialState: State = {
   firstLineDistance: 5,
-  secondLineDistance: 5 + MINIMUM_SPACE_BETWEEN_PLAYERS,
-  thirdLineDistance: 5 + MINIMUM_SPACE_BETWEEN_PLAYERS * 2,
+  secondLineDistance: 5 + MINIMUM_SPACE_BETWEEN_LINES,
+  thirdLineDistance: 5 + MINIMUM_SPACE_BETWEEN_LINES * 2,
   graphHeight: 0,
   graphWidth: 0,
   topStairsHeight: 0,
