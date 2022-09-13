@@ -1,4 +1,4 @@
-import { FunctionComponent, memo } from 'react';
+import { ClassAttributes, forwardRef, FunctionComponent, memo } from 'react';
 import Circle from '../../assets/images/circle.webp';
 import Cross from '../../assets/images/cross.webp';
 import Diamond from '../../assets/images/diamond.webp';
@@ -17,6 +17,7 @@ export type Props = {
   bottom: number;
   left: number;
   marker?: PositionStateType['marker'];
+  containerRef: ClassAttributes<HTMLDivElement>['ref'];
 };
 
 const MARKER_IMAGE: Record<Marker, string> = {
@@ -30,9 +31,14 @@ const MARKER_IMAGE: Record<Marker, string> = {
   [Marker.Triangle]: Triangle,
 };
 
-const Position: FunctionComponent<Props> = memo(({ id, bottom, left, marker }) => {
+const _Position: FunctionComponent<Props> = memo(({ id, bottom, left, marker, containerRef }) => {
   return (
-    <div className={classes.container} data-marker={!!marker} style={{ bottom, left }}>
+    <div
+      className={classes.container}
+      data-marker={!!marker}
+      style={{ bottom, left }}
+      ref={containerRef}
+    >
       {!marker && <p>{id}</p>}
       {!!marker && (
         <img
@@ -44,6 +50,11 @@ const Position: FunctionComponent<Props> = memo(({ id, bottom, left, marker }) =
     </div>
   );
 });
-Position.displayName = 'Position';
+_Position.displayName = 'Position';
+
+const Position = forwardRef<HTMLDivElement, Omit<Props, 'containerRef'>>((props, ref) => (
+  <_Position {...props} containerRef={ref} />
+));
+Position.displayName = 'PositionWithRef';
 
 export default Position;

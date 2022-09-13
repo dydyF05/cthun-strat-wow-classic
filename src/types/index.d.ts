@@ -40,3 +40,8 @@ export enum ZoneColor {
  * them not to link each other when targeted by the nature beam of C'thun
  */
 export const MINIMUM_SPACE_BETWEEN_PLAYERS = 9.144
+
+/**
+ * The delay of debounce before which a window resize triggers a measures dispatch
+ */
+export const RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES = 500;

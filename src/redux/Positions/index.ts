@@ -10,6 +10,8 @@ export type Position = {
   zoneId: ZoneId;
   playerId?: Player['name'];
   marker?: Marker;
+  top?: number;
+  left?: number;
 };
 
 type State = Position[];
@@ -18,6 +20,9 @@ const initialState: State = [];
 
 type SetPlayerAction = PayloadAction<
   { player: Player['name'] | undefined } & Pick<Position, 'index' | 'line'>
+>;
+export type SetNeighborsAction = PayloadAction<
+  Record<Position['index'], { top: number; left: number }>
 >;
 
 const FIRST_LINE_MARKER = [
@@ -74,11 +79,22 @@ export const positionsSlice = createSlice({
           .map(position => ({ ...position, marker: getMarker(position) }))
       );
     },
+    computePositionsNeihbors: (state, { payload }: SetNeighborsAction) => {
+      state.forEach(pos => {
+        if (payload[pos.index]) {
+          pos.left = payload[pos.index].left;
+          pos.top = payload[pos.index].top;
+        }
+      });
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setPlayerPosition: setPlayerPositionAction, addPositions: addPositionsAction } =
-  positionsSlice.actions;
+export const {
+  addPositions: addPositionsAction,
+  computePositionsNeihbors: computePositionsNeihborsAction,
+  setPlayerPosition: setPlayerPositionAction,
+} = positionsSlice.actions;
 
 export default positionsSlice.reducer;

@@ -3,10 +3,10 @@ import Component, { Props as ComponentProps, ZONES_CONTAINER_ID } from '../compo
 import { useDispatch } from '../hooks/redux';
 import log from '../lib/log';
 import { setGraphMeasuresAction } from '../redux/Zones';
+import { RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES } from '../types/index.d';
 
 export type Props = Omit<ComponentProps, 'graphContainerRef'>;
 
-const RESIZE_DEBOUNCE_TRIGGER = 500;
 const INIT_LOAD_DELAY = 200;
 
 const BossRoom: FunctionComponent<Props> = props => {
@@ -36,7 +36,7 @@ const BossRoom: FunctionComponent<Props> = props => {
 
     const handleResize = () => {
       clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(updateWidth, RESIZE_DEBOUNCE_TRIGGER);
+      debounceRef.current = setTimeout(updateWidth, RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES);
     };
 
     setTimeout(updateWidth, INIT_LOAD_DELAY);
