@@ -5,101 +5,227 @@ export const playerFactory = (params?: Partial<Player>): Player => ({
   name: 'Rxr',
   className: ClassName.War,
   role: Role.DpsMelee,
-  build: ClassBuild.Fury,
+  build: ClassBuild.WarFury,
   ...params,
 });
 
 export const typicalRosterFactory = (): Player[] => [
   // 4 tanks
-  ...Array.from({ length: 3 }).map((_, index) =>
-    playerFactory({
-      name: `WarTank${index + 1}`,
-      role: Role.Tank,
-      build: ClassBuild.Prot,
-    })
-  ),
   playerFactory({
-    name: `DroodTank`,
+    name: `Azra`,
+    role: Role.Tank,
+    build: ClassBuild.WarProt,
+  }),
+  playerFactory({
+    name: `Ocb`,
+    role: Role.Tank,
+    build: ClassBuild.WarProt,
+  }),
+  playerFactory({
+    name: `Sacré`,
+    role: Role.Tank,
+    build: ClassBuild.WarProt,
+  }),
+  playerFactory({
+    name: `Kornak`,
     className: ClassName.Druid,
     role: Role.Tank,
-    build: ClassBuild.Feral,
+    build: ClassBuild.DroodFeral,
   }),
-  // 10 Heals
-  ...Array.from({ length: 4 }).map((_, index) =>
-    playerFactory({
-      name: `PriestHeal${index + 1}`,
-      role: Role.Heal,
-      className: ClassName.Priest,
-    })
-  ),
-  ...Array.from({ length: 2 }).map((_, index) =>
-    playerFactory({
-      name: `DroodHeal${index + 1}`,
-      role: Role.Heal,
-      className: ClassName.Druid,
-      build: ClassBuild.Restau,
-    })
-  ),
-  ...Array.from({ length: 4 }).map((_, index) =>
-    playerFactory({
-      name: `ShamHeal${index + 1}`,
-      role: Role.Heal,
-      className: ClassName.Shaman,
-      build: ClassBuild.Restau,
-    })
-  ),
-  // 12 casters
-  ...Array.from({ length: 6 }).map((_, index) =>
-    playerFactory({
-      name: `Mago${index + 1}`,
-      role: Role.DpsDistance,
-      className: ClassName.Mage,
-      build: ClassBuild.Fire,
-    })
-  ),
   playerFactory({
-    name: `Owl`,
+    name: `Zerk`,
+    className: ClassName.Druid,
+    role: Role.DpsMelee,
+    build: ClassBuild.DroodFeral,
+  }),
+  playerFactory({
+    name: `Anat`,
+    role: Role.Heal,
+    className: ClassName.Priest,
+    build: ClassBuild.PriestHoly,
+  }),
+  playerFactory({
+    name: `Mook`,
+    role: Role.Heal,
+    className: ClassName.Priest,
+    build: ClassBuild.PriestHoly,
+  }),
+  playerFactory({
+    name: `Garo`,
+    role: Role.Heal,
+    className: ClassName.Priest,
+    build: ClassBuild.PriestDiscipline,
+  }),
+  playerFactory({
+    name: `Vallabra`,
+    role: Role.Heal,
+    className: ClassName.Druid,
+    build: ClassBuild.DroodRestau,
+  }),
+  playerFactory({
+    name: `Pirz`,
+    role: Role.Heal,
+    className: ClassName.Druid,
+    build: ClassBuild.DroodRestau,
+  }),
+  playerFactory({
+    name: `Mowyn`,
+    role: Role.Heal,
+    className: ClassName.Druid,
+    build: ClassBuild.DroodRestau,
+  }),
+  playerFactory({
+    name: `Thogtom`,
+    role: Role.Heal,
+    className: ClassName.Shaman,
+    build: ClassBuild.ShamResto,
+  }),
+  playerFactory({
+    name: `Any`,
+    role: Role.Heal,
+    className: ClassName.Shaman,
+    build: ClassBuild.ShamResto,
+  }),
+  playerFactory({
+    name: `Sätïs`,
+    role: Role.DpsDistance,
+    className: ClassName.Shaman,
+    build: ClassBuild.ShamAmelio,
+  }),
+  playerFactory({
+    name: `Pyro`,
+    role: Role.DpsDistance,
+    className: ClassName.Mage,
+    build: ClassBuild.MageFrost,
+  }),
+  playerFactory({
+    name: `Peanuts`,
+    role: Role.DpsDistance,
+    className: ClassName.Mage,
+    build: ClassBuild.MageFire,
+  }),
+  playerFactory({
+    name: `Belladonas`,
+    role: Role.DpsDistance,
+    className: ClassName.Mage,
+    build: ClassBuild.MageFire,
+  }),
+  playerFactory({
+    name: `Guara`,
+    role: Role.DpsDistance,
+    className: ClassName.Mage,
+    build: ClassBuild.MageFire,
+  }),
+  playerFactory({
+    name: `Icecube`,
+    role: Role.DpsDistance,
+    className: ClassName.Mage,
+    build: ClassBuild.MageFire,
+  }),
+  playerFactory({
+    name: `Mimirr`,
+    role: Role.DpsDistance,
+    className: ClassName.Mage,
+    build: ClassBuild.MageFire,
+  }),
+  playerFactory({
+    name: `Drendé`,
     className: ClassName.Druid,
     role: Role.DpsDistance,
-    build: ClassBuild.Equi,
+    build: ClassBuild.DroodEqui,
   }),
-  ...Array.from({ length: 4 }).map((_, index) =>
-    playerFactory({
-      name: `Warlock${index + 1}`,
-      role: Role.DpsDistance,
-      className: ClassName.Warlock,
-      build: ClassBuild.Destruction,
-    })
-  ),
   playerFactory({
-    name: `ShadowPriest`,
+    name: `Raagnor`,
+    role: Role.DpsDistance,
+    className: ClassName.Warlock,
+    build: ClassBuild.WarlockDestruction,
+  }),
+  playerFactory({
+    name: `Deathroll`,
+    role: Role.DpsDistance,
+    className: ClassName.Warlock,
+    build: ClassBuild.WarlockDestruction,
+  }),
+  playerFactory({
+    name: `Yseult`,
     className: ClassName.Priest,
     role: Role.DpsDistance,
-    build: ClassBuild.Shadow,
+    build: ClassBuild.PriestShadow,
   }),
-  // 2 Hunts
-  ...Array.from({ length: 2 }).map((_, index) =>
-    playerFactory({
-      name: `Hunt${index + 1}`,
-      role: Role.DpsDistance,
-      className: ClassName.Hunt,
-      build: ClassBuild.Precision,
-    })
-  ),
-  // 12 Cac
-  ...Array.from({ length: 8 }).map((_, index) =>
-    playerFactory({
-      name: `WarDD${index + 1}`,
-      role: Role.DpsMelee,
-      build: ClassBuild.Fury,
-    })
-  ),
-  ...Array.from({ length: 4 }).map((_, index) =>
-    playerFactory({
-      name: `Rogue${index + 1}`,
-      role: Role.DpsMelee,
-      className: ClassName.Rogue,
-      build: ClassBuild.Combat,
-    })
-  ),
+  playerFactory({
+    name: `Nehz`,
+    role: Role.DpsDistance,
+    className: ClassName.Hunt,
+    build: ClassBuild.HuntPrecision,
+  }),
+  playerFactory({
+    name: `Skippy`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Boarr`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Bado`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Pepz/Xyaz`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Sheep/Ready`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Amps`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Yoggy`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Kalynne`,
+    role: Role.DpsMelee,
+    build: ClassBuild.WarFury,
+  }),
+  playerFactory({
+    name: `Ouantit`,
+    role: Role.DpsMelee,
+    className: ClassName.Rogue,
+    build: ClassBuild.RogueCombat,
+  }),
+  playerFactory({
+    name: `Taiho`,
+    role: Role.DpsMelee,
+    className: ClassName.Rogue,
+    build: ClassBuild.RogueCombat,
+  }),
+  playerFactory({
+    name: `Furadort`,
+    role: Role.DpsMelee,
+    className: ClassName.Rogue,
+    build: ClassBuild.RogueCombat,
+  }),
+  playerFactory({
+    name: `Boyserre`,
+    role: Role.DpsMelee,
+    className: ClassName.Rogue,
+    build: ClassBuild.RogueCombat,
+  }),
+  playerFactory({
+    name: `Jigotte`,
+    role: Role.DpsMelee,
+    className: ClassName.Rogue,
+    build: ClassBuild.RogueCombat,
+  }),
 ];

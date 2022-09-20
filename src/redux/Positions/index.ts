@@ -14,12 +14,12 @@ export type Position = {
   left?: number;
 };
 
-type State = Position[];
+export type State = Position[];
 
 const initialState: State = [];
 
 type SetPlayerAction = PayloadAction<
-  { player: Player['name'] | undefined } & Pick<Position, 'index' | 'line'>
+  { player: Player['name'] | undefined } & Pick<Position, 'index'>
 >;
 export type SetNeighborsAction = PayloadAction<
   Record<Position['index'], { top: number; left: number }>
@@ -46,9 +46,12 @@ export const positionsSlice = createSlice({
   initialState,
   reducers: {
     setPlayerPosition: (state, { payload }: SetPlayerAction) => {
-      const position = state.find(
-        ({ index, line }) => index === payload.index && line === payload.line
-      );
+      const position = state.find(({ index }) => index === payload.index);
+
+      // Nuke all previous occurrences of player
+      state
+        .filter(pos => pos.playerId === payload.player)
+        .forEach(pos => (pos.playerId = undefined));
 
       if (!position) {
         log({
@@ -87,6 +90,13 @@ export const positionsSlice = createSlice({
         }
       });
     },
+    removePlayerFromPosition: (state, { payload }: PayloadAction<Position['index']>) => {
+      const position = state.find(pos => pos.index === payload);
+
+      if (position) {
+        position.playerId = undefined;
+      }
+    },
   },
 });
 
@@ -95,6 +105,7 @@ export const {
   addPositions: addPositionsAction,
   computePositionsNeihbors: computePositionsNeihborsAction,
   setPlayerPosition: setPlayerPositionAction,
+  removePlayerFromPosition: removePlayerFromPositionAction,
 } = positionsSlice.actions;
 
 export default positionsSlice.reducer;

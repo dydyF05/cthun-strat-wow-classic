@@ -48,3 +48,6 @@ export const graphHeightSelector = (state: RootState): State['graphHeight'] =>
 
 export const graphTopStairsHeight = (state: RootState): State['topStairsHeight'] =>
   zonesSelector(state).topStairsHeight;
+
+export const selectedPlayerSelector = (state: RootState): State['selectedPlayer'] =>
+  zonesSelector(state).selectedPlayer;

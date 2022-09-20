@@ -1,3 +1,30 @@
+import DroodEqui from '../assets/images/build_drood_equi.webp';
+import DroodFeral from '../assets/images/build_drood_feral.webp';
+import DroodHeal from '../assets/images/build_drood_heal.webp';
+import HuntBeast from '../assets/images/build_hunt_beast.webp';
+import HuntPreci from '../assets/images/build_hunt_preci.webp';
+import HuntSurvi from '../assets/images/build_hunt_survival.webp';
+import MageArca from '../assets/images/build_mage_arcane.webp';
+import MageFire from '../assets/images/build_mage_fire.webp';
+import MageFrost from '../assets/images/build_mage_frost.webp';
+import PalHeal from '../assets/images/build_pala_holy.webp';
+import PalTank from '../assets/images/build_pala_prot.webp';
+import PalRet from '../assets/images/build_pala_ret.webp';
+import PriestDisci from '../assets/images/build_priest_disci.webp';
+import PriestHoly from '../assets/images/build_priest_holy.webp';
+import PriestShadow from '../assets/images/build_priest_shadow.webp';
+import RogueAss from '../assets/images/build_rogue_ass.webp';
+import RogueCombat from '../assets/images/build_rogue_combat.webp';
+import RogueSubt from '../assets/images/build_rogue_subt.webp';
+import ShamAmelio from '../assets/images/build_sham_amelio.webp';
+import ShamElem from '../assets/images/build_sham_elem.webp';
+import ShamResto from '../assets/images/build_sham_restau.webp';
+import WarlockAffli from '../assets/images/build_warlock_affli.webp';
+import WarlockDemono from '../assets/images/build_warlock_demono.webp';
+import WarlockDestru from '../assets/images/build_warlock_destru.webp';
+import WarArms from '../assets/images/build_war_arms.webp';
+import WarFury from '../assets/images/build_war_fury.webp';
+import WarProt from '../assets/images/build_war_prot.webp';
 import DpsDistance from '../assets/images/dps-distance.webp';
 import DpsMelee from '../assets/images/dps-melee.webp';
 import Druid from '../assets/images/druid.png';
@@ -32,30 +59,32 @@ export const CLASS_IMAGES: Record<ClassName, string> = {
   [ClassName.Warlock]: Warlock,
 };
 
-// @TODO add images
 export const BUILD_IMAGES: Record<ClassBuild, string> = {
-  [ClassBuild.Fury]: '',
-  [ClassBuild.Prot]: '',
-  [ClassBuild.TwoHands]: '',
-  [ClassBuild.Assassination]: '',
-  [ClassBuild.Combat]: '',
-  [ClassBuild.Hemo]: '',
-  [ClassBuild.Affli]: '',
-  [ClassBuild.Demono]: '',
-  [ClassBuild.Destruction]: '',
-  [ClassBuild.Feral]: '',
-  [ClassBuild.Equi]: '',
-  [ClassBuild.Restau]: '',
-  [ClassBuild.Discipline]: '',
-  [ClassBuild.Holy]: '',
-  [ClassBuild.Shadow]: '',
-  [ClassBuild.Frost]: '',
-  [ClassBuild.Fire]: '',
-  [ClassBuild.Arcanum]: '',
-  [ClassBuild.Vindic]: '',
-  [ClassBuild.Elem]: '',
-  [ClassBuild.Amelio]: '',
-  [ClassBuild.Beast]: '',
-  [ClassBuild.Precision]: '',
-  [ClassBuild.Survival]: '',
+  [ClassBuild.WarArms]: WarArms,
+  [ClassBuild.WarFury]: WarFury,
+  [ClassBuild.WarProt]: WarProt,
+  [ClassBuild.DroodEqui]: DroodEqui,
+  [ClassBuild.DroodFeral]: DroodFeral,
+  [ClassBuild.DroodRestau]: DroodHeal,
+  [ClassBuild.HuntBeast]: HuntBeast,
+  [ClassBuild.HuntPrecision]: HuntPreci,
+  [ClassBuild.HuntSurvival]: HuntSurvi,
+  [ClassBuild.MageArcanum]: MageArca,
+  [ClassBuild.MageFire]: MageFire,
+  [ClassBuild.MageFrost]: MageFrost,
+  [ClassBuild.PalaHoly]: PalHeal,
+  [ClassBuild.PalaProt]: PalTank,
+  [ClassBuild.PalaVindic]: PalRet,
+  [ClassBuild.PriestDiscipline]: PriestDisci,
+  [ClassBuild.PriestHoly]: PriestHoly,
+  [ClassBuild.PriestShadow]: PriestShadow,
+  [ClassBuild.WarlockAffliction]: WarlockAffli,
+  [ClassBuild.WarlockDemonology]: WarlockDemono,
+  [ClassBuild.WarlockDestruction]: WarlockDestru,
+  [ClassBuild.RogueAssass]: RogueAss,
+  [ClassBuild.RogueCombat]: RogueCombat,
+  [ClassBuild.RogueSubtelty]: RogueSubt,
+  [ClassBuild.ShamAmelio]: ShamAmelio,
+  [ClassBuild.ShamElem]: ShamElem,
+  [ClassBuild.ShamResto]: ShamResto,
 };

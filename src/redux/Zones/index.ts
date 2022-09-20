@@ -31,6 +31,7 @@ export type State = {
   graphHeight: number;
   graphWidth: number;
   topStairsHeight: number;
+  selectedPlayer?: string;
 };
 
 const initialState: State = {
@@ -112,6 +113,9 @@ export const zonesSlice = createSlice({
       state.graphWidth = payload.width;
       state.topStairsHeight = payload.topStairsHeight;
     },
+    setSelectedPlayer: (state, { payload }: PayloadAction<string | undefined>) => {
+      state.selectedPlayer = payload;
+    },
   },
 });
 
@@ -147,6 +151,9 @@ export const getZoneIdFromTrigoPosition = (
 };
 
 // Action creators are generated for each case reducer function
-export const { setGraphMeasures: setGraphMeasuresAction } = zonesSlice.actions;
+export const {
+  setGraphMeasures: setGraphMeasuresAction,
+  setSelectedPlayer: setSelectedPlayerAction,
+} = zonesSlice.actions;
 
 export default zonesSlice.reducer;

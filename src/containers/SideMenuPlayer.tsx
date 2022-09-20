@@ -1,18 +1,42 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useCallback } from 'react';
 import { shallowEqual } from 'react-redux';
-import Component from '../components/SideMenuPlayer';
-import { useSelector } from '../hooks/redux';
-import { Player } from '../redux/Players';
+import Component, { Props as ComponentProps } from '../components/SideMenuPlayer';
+import { useDispatch, useSelector } from '../hooks/redux';
+import { Player, removeManyAction } from '../redux/Players';
 import { playerSelector } from '../redux/Players/selectors';
+import { removePlayerFromPositionAction } from '../redux/Positions';
+import { positionForPlayer } from '../redux/Positions/selectors';
 
-export type Props = Pick<Player, 'name'>;
+export type Props = Pick<Player, 'name'> & Pick<ComponentProps, 'onPosition'>;
 
-const SideMenuPlayer: FunctionComponent<Props> = ({ name }) => {
+const SideMenuPlayer: FunctionComponent<Props> = ({ name, ...props }) => {
   const player = useSelector(playerSelector({ name }), shallowEqual);
+  const position = useSelector(positionForPlayer(name));
+  const dispatch = useDispatch();
+
+  const positionIndex = position?.index;
+
+  const handleDelete = useCallback(() => {
+    player && dispatch(removeManyAction([player.name]));
+  }, [player, dispatch]);
+
+  const handlePositionDelete = useCallback(() => {
+    positionIndex && dispatch(removePlayerFromPositionAction(positionIndex));
+  }, [positionIndex, dispatch]);
 
   if (!player) {
     return null;
   }
-  return <Component {...player} />;
+
+  return (
+    <Component
+      {...props}
+      {...player}
+      positionIndex={position?.index}
+      positionMarker={position?.marker}
+      onDeletePlayer={handleDelete}
+      onPositionDelete={handlePositionDelete}
+    />
+  );
 };
 export default SideMenuPlayer;

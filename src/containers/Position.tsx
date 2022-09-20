@@ -1,9 +1,11 @@
-import { FunctionComponent, useLayoutEffect, useRef } from 'react';
+import { FunctionComponent, useEffect, useLayoutEffect, useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/Position';
 import { useDispatch, useSelector } from '../hooks/redux';
-import { computePositionsNeihborsAction } from '../redux/Positions';
-import { positionMarkerSelector } from '../redux/Positions/selectors';
+import { playerSelector } from '../redux/Players/selectors';
+import { computePositionsNeihborsAction, removePlayerFromPositionAction } from '../redux/Positions';
+import { positionMarkerSelector, positionPlayerSelector } from '../redux/Positions/selectors';
+import { selectedPlayerSelector } from '../redux/Zones/selectors';
 import { RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES } from '../types/index.d';
 
 export type Props = Omit<ComponentProps, 'marker' | 'containerRef'>;
@@ -17,8 +19,25 @@ const Position: FunctionComponent<Props> = props => {
   const { id, line } = props;
 
   const dispatch = useDispatch();
+  const selectedPlayer = useSelector(selectedPlayerSelector, shallowEqual);
 
   const marker = useSelector(positionMarkerSelector({ index: id, line }), shallowEqual);
+  const positionPlayerName = useSelector(positionPlayerSelector({ index: id, line }), shallowEqual);
+
+  const positionPlayer = useSelector(
+    playerSelector({ name: positionPlayerName || '' }),
+    shallowEqual
+  );
+
+  const shouldDeletePlayerIdFromPosition = !!positionPlayerName && !positionPlayer;
+
+  useEffect(() => {
+    if (shouldDeletePlayerIdFromPosition) {
+      dispatch(removePlayerFromPositionAction(id));
+    }
+  }, [shouldDeletePlayerIdFromPosition, id, dispatch]);
+
+  const hasPlayer = !!positionPlayerName;
 
   useLayoutEffect(() => {
     const triggerComputePosition = () => {
@@ -49,6 +68,15 @@ const Position: FunctionComponent<Props> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <Component {...props} marker={marker} ref={ref} />;
+  return (
+    <Component
+      {...props}
+      {...(positionPlayer || {})}
+      marker={marker}
+      isChoosingPositionForPlayer={!!selectedPlayer}
+      hasPlayer={hasPlayer}
+      ref={ref}
+    />
+  );
 };
 export default Position;

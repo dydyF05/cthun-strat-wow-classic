@@ -3,7 +3,7 @@ import { RootState } from '../store';
 
 type PositionTargetParams = Pick<Position, 'line' | 'index'>;
 
-const positionsSelector = (state: RootState): RootState['positions'] => state.positions;
+export const positionsSelector = (state: RootState): RootState['positions'] => state.positions;
 
 const positionSelector =
   ({ line, index }: PositionTargetParams) =>
@@ -14,3 +14,15 @@ export const positionMarkerSelector =
   (params: PositionTargetParams) =>
   (state: RootState): Position['marker'] | undefined =>
     positionSelector(params)(state)?.marker;
+
+export const positionPlayerSelector =
+  (params: PositionTargetParams) =>
+  (state: RootState): Position['playerId'] =>
+    positionSelector(params)(state)?.playerId;
+
+export const positionForPlayer =
+  (playerName: string) =>
+  (state: RootState): Position | undefined => {
+    const positions = positionsSelector(state);
+    return positions.find(position => position.playerId === playerName);
+  };

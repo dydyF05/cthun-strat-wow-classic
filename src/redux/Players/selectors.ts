@@ -3,7 +3,23 @@ import { Player } from '.';
 import { ClassName, Role } from '../../types/index.d';
 import { RootState } from '../store';
 
-const playersSelector = (state: RootState): RootState['players'] => state.players;
+export const playersSelector = (state: RootState): RootState['players'] => state.players;
+
+export const playerCountSelector = (state: RootState): number => playersSelector(state).length;
+
+export const playerStatsSelector = (state: RootState) => {
+  const total = playerCountSelector(state);
+
+  const all = playersSelector(state);
+
+  return {
+    total,
+    tank: all.filter(player => player.role === Role.Tank).length,
+    heal: all.filter(player => player.role === Role.Heal).length,
+    dpsMelee: all.filter(player => player.role === Role.DpsMelee).length,
+    dpsDistance: all.filter(player => player.role === Role.DpsDistance).length,
+  };
+};
 
 type PlayerSelectorParams = Pick<Player, 'name'>;
 

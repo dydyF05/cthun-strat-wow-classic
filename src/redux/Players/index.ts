@@ -11,7 +11,7 @@ export type Player = {
   role: Role;
 };
 
-type State = Player[];
+export type State = Player[];
 
 const initialState: State = typicalRosterFactory();
 
@@ -42,7 +42,10 @@ export const playersSlice = createSlice({
       state.push(...addablePlayers);
     },
     removeMany: (state, { payload }: PayloadAction<Player['name'][]>) => {
-      state.filter(({ name }) => !payload.includes(name));
+      const nextState = state.filter(({ name }) => !payload.includes(name));
+
+      state.splice(0, state.length);
+      state.push(...nextState);
     },
   },
 });

@@ -1,14 +1,17 @@
 .container {
+  position: fixed;
+  top: 0;
+  right: 0;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  flex: 1;
+  width: 50%;
   min-width: 400px;
+  max-width: 800px;
   background-color: rgb(244, 242, 242);
   box-shadow: -2px 1px 5px 0px var(--color-grey);
-  overflow-y: scroll;
 }
 .container[data-visible="false"] {
   min-width: 56px;
@@ -17,6 +20,7 @@
   position: absolute;
   right: 0;
 }
+
 .container[data-visible="true"] > .title {
   padding: 12px;
 }
@@ -37,6 +41,17 @@
   color: #fff;
   font-size: 20px;
   padding: 16px;
+  position: relative;
+}
+
+.title > h2  > span {
+  font-size: 15px;
+}
+
+.addPlayer {
+  position: absolute;
+  right: -25px;
+  top: 10px;
 }
 
 .burger {
@@ -62,4 +77,19 @@
 
 .burger > div:not(:nth-child(1)) {
   margin-top: 6px;
+}
+
+.players {
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  max-width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.addPlayer {
+
 }

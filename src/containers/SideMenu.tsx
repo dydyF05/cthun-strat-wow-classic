@@ -1,16 +1,35 @@
 import { FunctionComponent, memo, useCallback, useState } from 'react';
-import Component from '../components/SideMenu';
+import { shallowEqual } from 'react-redux';
+import Component, { Props as ComponentProps } from '../components/SideMenu';
+import { useSelector } from '../hooks/redux';
+import { playerStatsSelector } from '../redux/Players/selectors';
 
-export type Props = Record<string, never>;
+export type Props = Pick<ComponentProps, 'onAddPlayer'>;
 
-const SideMenu: FunctionComponent<Props> = memo(() => {
+const SideMenu: FunctionComponent<Props> = memo(props => {
   const [isVisible, setIsVisible] = useState(true);
+
+  const { total, dpsDistance, dpsMelee, tank, heal } = useSelector(
+    playerStatsSelector,
+    shallowEqual
+  );
 
   const handleToggle = useCallback(() => {
     setIsVisible(!isVisible);
   }, [isVisible]);
 
-  return <Component isVisible={isVisible} onToggle={handleToggle} />;
+  return (
+    <Component
+      {...props}
+      totalCount={total}
+      dpsDistanceCount={dpsDistance}
+      dpsMeleeCount={dpsMelee}
+      healCount={heal}
+      tankCount={tank}
+      isVisible={isVisible}
+      onToggle={handleToggle}
+    />
+  );
 });
 SideMenu.displayName = 'SideMenu';
 
