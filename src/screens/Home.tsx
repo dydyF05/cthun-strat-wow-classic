@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import BossRoom from '../containers/BossRoom';
-import PlayerList from '../containers/PlayerList';
+import SideMenu from '../containers/SideMenu';
 import classes from './Home.module.css';
 
 export type Props = Record<string, never>;
@@ -10,7 +10,7 @@ const Home: FunctionComponent<Props> = () => {
     <div className={classes.container}>
       <BossRoom />
       <div className={classes.spacer} />
-      <PlayerList />
+      <SideMenu />
     </div>
   );
 };

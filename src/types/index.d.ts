@@ -10,6 +10,33 @@ export enum ClassName {
   Warlock = 'Warlock',
 }
 
+export enum ClassBuild {
+  Fury = 'Fury',
+  Prot = 'Prot',
+  TwoHands = 'TwoHands',
+  Assassination = 'Assassination',
+  Combat = 'Combat',
+  Hemo = 'Hemo',
+  Affli = 'Affli',
+  Demono = 'Demono',
+  Destruction = 'Destruction',
+  Feral = 'Feral',
+  Equi = 'Equi',
+  Restau = 'Restau',
+  Discipline = 'Discipline',
+  Holy = 'Holy',
+  Shadow = 'Shadow',
+  Frost = 'Frost',
+  Fire = 'Fire',
+  Arcanum = 'Arcanum',
+  Vindic = 'Vindic',
+  Elem = 'Elem',
+  Amelio = 'Amelio',
+  Beast = 'Beast',
+  Precision = 'Precision',
+  Survival = 'Survival',
+}
+
 export enum Role {
   Tank = 'Tank',
   Heal = 'Heal',

@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import log from '../../lib/log';
-import { ClassName, Role } from '../../types/index.d';
+import { ClassBuild, ClassName, Role } from '../../types/index.d';
 import { typicalRosterFactory } from './mock';
 
 export type Player = {
   /** Also used as ID in WoW */
   name: string;
   className: ClassName;
+  build: ClassBuild;
   role: Role;
 };
 
