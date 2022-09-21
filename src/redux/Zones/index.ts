@@ -32,6 +32,8 @@ export type State = {
   graphWidth: number;
   topStairsHeight: number;
   selectedPlayer?: string;
+  /** Are we trying to place players. Disable to take a screenshot ;) */
+  isConfiguring: boolean;
 };
 
 const initialState: State = {
@@ -41,6 +43,7 @@ const initialState: State = {
   graphHeight: 0,
   graphWidth: 0,
   topStairsHeight: 0,
+  isConfiguring: true,
   slices: [
     {
       id: ZoneId.One,
@@ -116,6 +119,9 @@ export const zonesSlice = createSlice({
     setSelectedPlayer: (state, { payload }: PayloadAction<string | undefined>) => {
       state.selectedPlayer = payload;
     },
+    setIsConfiguring: (state, { payload }: PayloadAction<boolean>) => {
+      state.isConfiguring = payload;
+    },
   },
 });
 
@@ -154,6 +160,7 @@ export const getZoneIdFromTrigoPosition = (
 export const {
   setGraphMeasures: setGraphMeasuresAction,
   setSelectedPlayer: setSelectedPlayerAction,
+  setIsConfiguring: setIsConfiguringAction,
 } = zonesSlice.actions;
 
 export default zonesSlice.reducer;

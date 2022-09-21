@@ -8,6 +8,7 @@ import classes from './index.module.css';
 export type Props = Pick<Player, 'name' | 'build'> & {
   positionIndex?: Position['index'];
   positionMarker?: Position['marker'];
+  isEditing?: boolean;
   onPosition: (name: Player['name']) => void;
   onDeletePlayer: () => void;
   onPositionDelete: () => void;
@@ -19,6 +20,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
     positionMarker,
     name,
     build,
+    isEditing,
     onPosition,
     onDeletePlayer,
     onPositionDelete,
@@ -46,19 +48,21 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
           {!!positionMarker && <img src={MARKER_IMAGE[positionMarker]} />}
           <p className={classes.name}>{name}</p>
         </div>
-        <div className={classes.actions}>
-          <p className={classes.delete} onClick={handleDeletePlayer}>
-            RM
-          </p>
-          <p className={classes.choosePosition} onClick={handlePosition}>
-            pos
-          </p>
-          {!!positionIndex && (
-            <p className={classes.deletePosition} onClick={onPositionDelete}>
-              rm pos
+        {isEditing && (
+          <div className={classes.actions}>
+            <p className={classes.delete} onClick={handleDeletePlayer}>
+              RM
             </p>
-          )}
-        </div>
+            <p className={classes.choosePosition} onClick={handlePosition}>
+              pos
+            </p>
+            {!!positionIndex && (
+              <p className={classes.deletePosition} onClick={onPositionDelete}>
+                rm pos
+              </p>
+            )}
+          </div>
+        )}
       </div>
     );
   }

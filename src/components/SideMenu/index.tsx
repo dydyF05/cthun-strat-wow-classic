@@ -11,9 +11,9 @@ export type Props = {
   healCount: number;
   dpsMeleeCount: number;
   dpsDistanceCount: number;
-  isVisible: boolean;
+  isEditing: boolean;
   onAddPlayer: () => void;
-  onToggle: () => void;
+  onToggleConfiguring: () => void;
 };
 
 const SideMenu: FunctionComponent<Props> = memo(
@@ -23,29 +23,27 @@ const SideMenu: FunctionComponent<Props> = memo(
     healCount,
     dpsMeleeCount,
     dpsDistanceCount,
-    isVisible,
-    onToggle,
+    isEditing,
+    onToggleConfiguring,
     onAddPlayer,
   }) => {
     return (
-      <div className={classes.container} data-visible={isVisible}>
+      <div className={classes.container}>
         <div className={classes.title}>
-          {isVisible && (
-            <h2>
-              Players({totalCount}){' '}
-              <span>
-                tank({tankCount}), heal({healCount}), melee({dpsMeleeCount}
-                ), distance({dpsDistanceCount})
-              </span>
-              <div className={classes.addPlayer}>
-                <AddPlayerButton onPress={onAddPlayer} />
-              </div>
-            </h2>
-          )}
-          <div className={classes.burger} onClick={onToggle}>
-            <div />
-            <div />
-            <div />
+          <h2>
+            Players({totalCount}){' '}
+            <span>
+              tank({tankCount}), heal({healCount}), melee({dpsMeleeCount}
+              ), distance({dpsDistanceCount})
+            </span>
+            <div className={classes.addPlayer}>
+              <AddPlayerButton onPress={onAddPlayer} />
+            </div>
+          </h2>
+
+          <div className={classes.configuring}>
+            <p onClick={onToggleConfiguring}>Editing</p>
+            <input type="checkbox" checked={isEditing} onChange={onToggleConfiguring} />
           </div>
         </div>
         <div className={classes.players}>

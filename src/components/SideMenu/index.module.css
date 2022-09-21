@@ -13,21 +13,6 @@
   background-color: rgb(244, 242, 242);
   box-shadow: -2px 1px 5px 0px var(--color-grey);
 }
-.container[data-visible="false"] {
-  min-width: 56px;
-  width: 56px;
-  flex: none;
-  position: absolute;
-  right: 0;
-}
-
-.container[data-visible="true"] > .title {
-  padding: 12px;
-}
-.container[data-visible="false"] > .title {
-  padding-top: 24px;
-  padding-bottom: 8px;
-}
 
 .container > .title {
   width: 100%;
@@ -54,29 +39,21 @@
   top: 10px;
 }
 
-.burger {
+.configuring {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   padding: 8px;
-  cursor: pointer;
 }
-
-.burger:hover > div {
-  background-color: var(--color-grey-light);
+.configuring > p {
+  color: white;
+  font-size: 18px;
+  padding-right: 8px;
 }
-
-.burger > div {
-  background-color: #fff;
-  border-radius: 5px;
-  height: 4px;
+.configuring > input {
+  height: 40px;
   width: 40px;
-  transition: background-color .2s;
-}
-
-.burger > div:not(:nth-child(1)) {
-  margin-top: 6px;
 }
 
 .players {
@@ -88,8 +65,5 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
-}
-
-.addPlayer {
-
+  overflow-y: scroll;
 }
