@@ -39,7 +39,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
     }, [name, onPosition]);
 
     return (
-      <div className={classes.container} data-isplaced={positionIndex !== undefined}>
+      <div className={classes.container} data-isplaced={positionIndex !== undefined && !isEditing}>
         <div className={classes.player}>
           <img src={BUILD_IMAGES[build]} />
           {positionIndex !== undefined && !positionMarker && (

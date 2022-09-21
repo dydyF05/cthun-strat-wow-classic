@@ -25,7 +25,8 @@
 .positionIndex {
   border-radius: 100%;
   padding: 3px;
-  background-color: white;
+  background-color: var(--color-grey);
+  color: white;
 }
 
 .delete {

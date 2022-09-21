@@ -31,7 +31,7 @@ const SideMenu: FunctionComponent<Props> = memo(
       <div className={classes.container}>
         <div className={classes.title}>
           <h2>
-            Players({totalCount}){' '}
+            Players({totalCount}) <br />
             <span>
               tank({tankCount}), heal({healCount}), melee({dpsMeleeCount}
               ), distance({dpsDistanceCount})
