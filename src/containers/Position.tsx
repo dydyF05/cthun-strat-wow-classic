@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '../hooks/redux';
 import { playerSelector } from '../redux/Players/selectors';
 import { computePositionsNeihborsAction, removePlayerFromPositionAction } from '../redux/Positions';
 import { positionMarkerSelector, positionPlayerSelector } from '../redux/Positions/selectors';
-import { selectedPlayerSelector } from '../redux/Zones/selectors';
+import { selectedPlayerSelector } from '../redux/Settings/selectors';
 import { RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES } from '../types/index.d';
 
 export type Props = Omit<ComponentProps, 'marker' | 'containerRef'>;

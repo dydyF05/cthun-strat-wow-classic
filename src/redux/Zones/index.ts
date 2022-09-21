@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Marker, MINIMUM_SPACE_BETWEEN_LINES, ZoneColor } from '../../types/index.d';
+import { createSlice } from '@reduxjs/toolkit';
+import { Marker, ZoneColor } from '../../types/index.d';
 
 export enum ZoneId {
   One = '1',
@@ -20,109 +20,71 @@ export type Zone = {
   color: ZoneColor;
 };
 
-export type State = {
-  slices: Zone[];
-  /** The meter distance separating the first line from the boss */
-  firstLineDistance: number;
-  /** The meter distance separating the second line from the boss */
-  secondLineDistance: number;
-  /** The meter distance separating the third line from the boss */
-  thirdLineDistance: number;
-  graphHeight: number;
-  graphWidth: number;
-  topStairsHeight: number;
-  selectedPlayer?: string;
-  /** Are we trying to place players. Disable to take a screenshot ;) */
-  isConfiguring: boolean;
-};
+export type State = Zone[];
 
-const initialState: State = {
-  firstLineDistance: 5,
-  secondLineDistance: 5 + MINIMUM_SPACE_BETWEEN_LINES,
-  thirdLineDistance: 5 + MINIMUM_SPACE_BETWEEN_LINES * 2,
-  graphHeight: 0,
-  graphWidth: 0,
-  topStairsHeight: 0,
-  isConfiguring: true,
-  slices: [
-    {
-      id: ZoneId.One,
-      marker: Marker.Star,
-      color: ZoneColor.Green,
-      isLeft: true,
-      position: 'up',
-    },
-    {
-      id: ZoneId.Two,
-      marker: Marker.Square,
-      color: ZoneColor.Red,
-      isLeft: true,
-      position: 'middle-up',
-    },
-    {
-      id: ZoneId.Three,
-      marker: Marker.Cross,
-      color: ZoneColor.Yellow,
-      isLeft: true,
-      position: 'middle-bottom',
-    },
-    {
-      id: ZoneId.Four,
-      marker: Marker.Skull,
-      color: ZoneColor.Blue,
-      isLeft: true,
-      position: 'bottom',
-    },
-    {
-      id: ZoneId.Five,
-      marker: Marker.Circle,
-      color: ZoneColor.Green,
-      isLeft: false,
-      position: 'bottom',
-    },
-    {
-      id: ZoneId.Six,
-      marker: Marker.Moon,
-      color: ZoneColor.Red,
-      isLeft: false,
-      position: 'middle-bottom',
-    },
-    {
-      id: ZoneId.Seven,
-      marker: Marker.Triangle,
-      color: ZoneColor.Yellow,
-      isLeft: false,
-      position: 'middle-up',
-    },
-    {
-      id: ZoneId.Eight,
-      marker: Marker.Diamond,
-      color: ZoneColor.Blue,
-      isLeft: false,
-      position: 'up',
-    },
-  ],
-};
+const initialState: State = [
+  {
+    id: ZoneId.One,
+    marker: Marker.Star,
+    color: ZoneColor.Green,
+    isLeft: true,
+    position: 'up',
+  },
+  {
+    id: ZoneId.Two,
+    marker: Marker.Square,
+    color: ZoneColor.Red,
+    isLeft: true,
+    position: 'middle-up',
+  },
+  {
+    id: ZoneId.Three,
+    marker: Marker.Cross,
+    color: ZoneColor.Yellow,
+    isLeft: true,
+    position: 'middle-bottom',
+  },
+  {
+    id: ZoneId.Four,
+    marker: Marker.Skull,
+    color: ZoneColor.Blue,
+    isLeft: true,
+    position: 'bottom',
+  },
+  {
+    id: ZoneId.Five,
+    marker: Marker.Circle,
+    color: ZoneColor.Green,
+    isLeft: false,
+    position: 'bottom',
+  },
+  {
+    id: ZoneId.Six,
+    marker: Marker.Moon,
+    color: ZoneColor.Red,
+    isLeft: false,
+    position: 'middle-bottom',
+  },
+  {
+    id: ZoneId.Seven,
+    marker: Marker.Triangle,
+    color: ZoneColor.Yellow,
+    isLeft: false,
+    position: 'middle-up',
+  },
+  {
+    id: ZoneId.Eight,
+    marker: Marker.Diamond,
+    color: ZoneColor.Blue,
+    isLeft: false,
+    position: 'up',
+  },
+];
 
 export const zonesSlice = createSlice({
   name: 'zones',
   initialState,
-  reducers: {
-    setGraphMeasures: (
-      state,
-      { payload }: PayloadAction<{ width: number; height: number; topStairsHeight: number }>
-    ) => {
-      state.graphHeight = payload.height;
-      state.graphWidth = payload.width;
-      state.topStairsHeight = payload.topStairsHeight;
-    },
-    setSelectedPlayer: (state, { payload }: PayloadAction<string | undefined>) => {
-      state.selectedPlayer = payload;
-    },
-    setIsConfiguring: (state, { payload }: PayloadAction<boolean>) => {
-      state.isConfiguring = payload;
-    },
-  },
+  reducers: {},
 });
 
 const isUp = (pointY: number, pointX: number, isLeft: boolean): boolean => {
@@ -153,14 +115,10 @@ export const getZoneIdFromTrigoPosition = (
 ): ZoneId | undefined => {
   const position = getPositionFromTrigoPoint(trigoPosition, isLeft);
 
-  return initialState.slices.find(zone => zone.isLeft === isLeft && zone.position === position)?.id;
+  return initialState.find(zone => zone.isLeft === isLeft && zone.position === position)?.id;
 };
 
 // Action creators are generated for each case reducer function
-export const {
-  setGraphMeasures: setGraphMeasuresAction,
-  setSelectedPlayer: setSelectedPlayerAction,
-  setIsConfiguring: setIsConfiguringAction,
-} = zonesSlice.actions;
+// export const {} = zonesSlice.actions;
 
 export default zonesSlice.reducer;

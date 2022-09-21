@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useRef } from 'react';
 import Component, { Props as ComponentProps, ZONES_CONTAINER_ID } from '../components/BossRoom';
 import { useDispatch } from '../hooks/redux';
 import log from '../lib/log';
-import { setGraphMeasuresAction } from '../redux/Zones';
+import { setGraphMeasuresAction } from '../redux/Settings';
 import { RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES } from '../types/index.d';
 
 export type Props = Omit<ComponentProps, 'graphContainerRef'>;

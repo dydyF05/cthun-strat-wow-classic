@@ -4,7 +4,7 @@ import Component, { Props as ComponentProps } from '../components/ModalPositions
 import { useSelector } from '../hooks/redux';
 import { playerSelector } from '../redux/Players/selectors';
 import { positionsSelector } from '../redux/Positions/selectors';
-import { selectedPlayerSelector } from '../redux/Zones/selectors';
+import { selectedPlayerSelector } from '../redux/Settings/selectors';
 
 export type Props = Pick<ComponentProps, 'onSelect'>;
 

@@ -7,8 +7,8 @@ import Component, { Props as ComponentProps } from '../components/SideMenuPlayer
 import { useDispatch, useSelector } from '../hooks/redux';
 import { filteredPlayersSelector, PlayersSelectorFilters } from '../redux/Players/selectors';
 import { setPlayerPositionAction } from '../redux/Positions';
-import { setSelectedPlayerAction } from '../redux/Zones';
-import { selectedPlayerSelector } from '../redux/Zones/selectors';
+import { setSelectedPlayerAction } from '../redux/Settings';
+import { selectedPlayerSelector } from '../redux/Settings/selectors';
 
 export type Props = PlayersSelectorFilters & Pick<ComponentProps, 'image' | 'title'>;
 

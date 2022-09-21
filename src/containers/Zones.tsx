@@ -6,9 +6,8 @@ import {
   graphHeightSelector,
   graphTopStairsHeight,
   graphWidthSelector,
-  zoneIdsSelector,
-} from '../redux/Zones/selectors';
-
+} from '../redux/Settings/selectors';
+import { zoneIdsSelector } from '../redux/Zones/selectors';
 export type Props = Omit<ComponentProps, 'width' | 'height' | 'topStairsHeight'>;
 
 const Zones: FunctionComponent<Props> = props => {

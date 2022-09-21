@@ -9,7 +9,7 @@ import {
   graphWidthSelector,
   secondLineDistanceSelector,
   thirdLineDistanceSelector,
-} from '../redux/Zones/selectors';
+} from '../redux/Settings/selectors';
 
 export type Props = Omit<
   ComponentProps,

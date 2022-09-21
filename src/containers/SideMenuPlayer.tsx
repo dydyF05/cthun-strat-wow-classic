@@ -6,7 +6,7 @@ import { Player, removeManyAction } from '../redux/Players';
 import { playerSelector } from '../redux/Players/selectors';
 import { removePlayerFromPositionAction } from '../redux/Positions';
 import { positionForPlayer } from '../redux/Positions/selectors';
-import { isConfuringSelector } from '../redux/Zones/selectors';
+import { isConfuringSelector } from '../redux/Settings/selectors';
 
 export type Props = Pick<Player, 'name'> & Pick<ComponentProps, 'onPosition'>;
 

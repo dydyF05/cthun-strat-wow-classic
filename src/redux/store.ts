@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import playersReducer from './Players';
 import positionsReducer from './Positions';
+import settingsReducer from './Settings';
 import zonesReducer from './Zones';
 
 const store = configureStore({
@@ -8,6 +9,7 @@ const store = configureStore({
     players: playersReducer,
     positions: positionsReducer,
     zones: zonesReducer,
+    settings: settingsReducer,
   },
 });
 
