@@ -23,6 +23,7 @@ const Home: FunctionComponent<Props> = () => {
   const handleValidate = useCallback<AddPlayerProps['onValidate']>(
     player => {
       dispatch(addManyAction([player]));
+      setIsAddingPlayer(false);
     },
     [dispatch]
   );
@@ -30,7 +31,6 @@ const Home: FunctionComponent<Props> = () => {
   return (
     <div className={classes.container}>
       <BossRoom />
-      <div className={classes.spacer} />
       <SideMenu onAddPlayer={handleAddPlayer} />
       <ModalAddPlayer
         isVisible={isAddingPlayer}

@@ -40,6 +40,18 @@ export enum ClassBuild {
   HuntSurvival = 'HuntSurvival',
 }
 
+export const BUILD_PER_CLASS: Record<ClassName, ClassBuild[]> = {
+  [ClassName.Druid]: [ClassBuild.DroodEqui, ClassBuild.DroodFeral, ClassBuild.DroodRestau],
+  [ClassName.Hunt]: [ClassBuild.HuntBeast, ClassBuild.HuntPrecision, ClassBuild.HuntSurvival],
+  [ClassName.Mage]: [ClassBuild.MageArcanum, ClassBuild.MageFire, ClassBuild.MageFrost],
+  [ClassName.Paladin]: [ClassBuild.PalaHoly, ClassBuild.PalaProt, ClassBuild.PalaVindic],
+  [ClassName.Priest]: [ClassBuild.PriestDiscipline, ClassBuild.PriestHoly, ClassBuild.PriestShadow],
+  [ClassName.Rogue]: [ClassBuild.RogueAssass, ClassBuild.RogueCombat, ClassBuild.RogueSubtelty],
+  [ClassName.Shaman]: [ClassBuild.ShamAmelio, ClassBuild.ShamElem, ClassBuild.ShamResto],
+  [ClassName.War]: [ClassBuild.WarArms, ClassBuild.WarFury, ClassBuild.WarProt],
+  [ClassName.Warlock]: [ClassBuild.WarlockAffliction, ClassBuild.WarlockDemonology, ClassBuild.WarlockDestruction],
+};
+
 export enum Role {
   Tank = 'Tank',
   Heal = 'Heal',

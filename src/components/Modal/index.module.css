@@ -1,0 +1,55 @@
+.container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  transition: opacity .4s ease-in-out, transform 0s ease-in-out;
+}
+
+.container[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.container[data-visible="false"] {
+  opacity: 0;
+  transform: translateY(100vh);
+}
+
+
+.overlay {
+  background-color: #000;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+}
+
+.content {
+  position: relative;
+  background: white;
+  width: 100%;
+  max-width: 600px;
+  height: 80%;
+  margin: auto;
+  margin-top: 5%;
+  overflow: scroll;
+  z-index: 5;
+  transition: transform .4s ease-in-out;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+
+.container[data-visible="true"] .content {
+  transform: translateY(0);
+}
+
+.container[data-visible="false"] .content {
+  transform: translateY(100vh);
+}

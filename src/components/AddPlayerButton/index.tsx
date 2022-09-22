@@ -8,7 +8,7 @@ export type Props = {
 const AddPlayerButton: FunctionComponent<Props> = memo(({ onPress }) => {
   return (
     <div className={classes.container} onClick={onPress}>
-      <span>&#43;</span>
+      <p>&#43;</p>
     </div>
   );
 });

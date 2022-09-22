@@ -53,3 +53,6 @@ export const filteredPlayersSelector =
       )
       .map(player => player.name);
   };
+
+export const allPlayerNamesSelector = (state: RootState): Player['name'][] =>
+  playersSelector(state).map(({ name }) => name);

@@ -1,2 +1,49 @@
 .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  padding: 12px;
+}
+
+.form {
+  padding: 16px;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.input {
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+}
+.label {
+  padding-bottom: 8px;
+  font-size: 18px;
+}
+
+.optionImage {
+  height: 24px;
+  width: 24px;
+  border-radius: 100%;
+}
+
+.optionLabel {
+  padding-left: 12px;
+}
+
+.container > .buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.container > .buttons > button {
+  flex: 1;
+  height: 60px;
 }

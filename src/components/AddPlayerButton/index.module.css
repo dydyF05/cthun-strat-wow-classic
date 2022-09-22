@@ -1,15 +1,21 @@
 .container {
-  background-color: white;
-  color: var(--color-grey);
+  color: white;
+  background-color: var(--color-grey);
   border-radius: 100%;
   justify-content: center;
   align-items: center;
-  padding: 8px 11px;
+  height: 75px;
+  width: 75px;
   cursor: pointer;
-  transition: all .2s ease-in-out;
+  transition: background .2s ease-in-out;
 }
 
 .container:hover {
   background: black;
-  color: white
+}
+
+.container p {
+  font-size: 60px;
+  text-align: center;
+  padding-top: 2px;
 }
