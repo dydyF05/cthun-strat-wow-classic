@@ -1,17 +1,49 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore as _persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'reduxjs-toolkit-persist';
+import storage from 'reduxjs-toolkit-persist/lib/storage';
+import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 import playersReducer from './Players';
 import positionsReducer from './Positions';
 import settingsReducer from './Settings';
 import zonesReducer from './Zones';
 
-const store = configureStore({
-  reducer: {
-    players: playersReducer,
-    positions: positionsReducer,
-    zones: zonesReducer,
-    settings: settingsReducer,
-  },
+const reducers = combineReducers({
+  players: playersReducer,
+  positions: positionsReducer,
+  zones: zonesReducer,
+  settings: settingsReducer,
 });
+
+const blacklist: (keyof RootState)[] = ['settings'];
+
+const persistConfig: PersistConfig<RootState> = {
+  key: 'root',
+  storage,
+  blacklist: blacklist as string[],
+};
+
+const _persistedReducer = persistReducer(persistConfig, reducers) as typeof reducers;
+
+const store = configureStore({
+  reducer: _persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      /* ignore persistance actions */
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+});
+
+export const persistStore = _persistStore(store);
 
 export default store;
 

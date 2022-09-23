@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import log from '../../lib/log';
 import { ClassBuild, ClassName, Role } from '../../types/index.d';
-import { typicalRosterFactory } from './mock';
 
 export type Player = {
   /** Also used as ID in WoW */
@@ -13,7 +12,7 @@ export type Player = {
 
 export type State = Player[];
 
-const initialState: State = typicalRosterFactory();
+const initialState: State = [];
 
 export const playersSlice = createSlice({
   name: 'players',
