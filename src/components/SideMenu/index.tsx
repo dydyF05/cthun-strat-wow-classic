@@ -1,3 +1,4 @@
+import { Checkbox, PageHeader } from 'antd';
 import { FunctionComponent, memo } from 'react';
 import SideMenuPlayers from '../../containers/SideMenuPlayers';
 import { CLASS_IMAGES, ROLE_IMAGES } from '../../lib/player';
@@ -7,6 +8,7 @@ import classes from './index.module.css';
 
 export type Props = {
   totalCount: number;
+  playerPositionedCount: number;
   tankCount: number;
   healCount: number;
   dpsMeleeCount: number;
@@ -19,6 +21,7 @@ export type Props = {
 const SideMenu: FunctionComponent<Props> = memo(
   ({
     totalCount,
+    playerPositionedCount,
     tankCount,
     healCount,
     dpsMeleeCount,
@@ -28,20 +31,23 @@ const SideMenu: FunctionComponent<Props> = memo(
     onAddPlayer,
   }) => (
     <div className={classes.container}>
-      <div className={classes.title}>
-        <h2>
-          Players({totalCount}) <br />
-          <span>
-            tank({tankCount}), heal({healCount}), melee({dpsMeleeCount}
-            ), distance({dpsDistanceCount})
-          </span>
-        </h2>
-
-        <div className={classes.configuring}>
-          <p onClick={onToggleConfiguring}>Editing</p>
-          <input type="checkbox" checked={isEditing} onChange={onToggleConfiguring} />
-        </div>
-      </div>
+      <PageHeader
+        ghost={false}
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+        className={classes.header}
+        title={`Players (${playerPositionedCount} / ${totalCount})`}
+        subTitle={`tank(${tankCount}), heal(${healCount}), melee(${dpsMeleeCount}), distance(${dpsDistanceCount})`}
+        extra={[
+          <Checkbox onChange={onToggleConfiguring} checked={isEditing} key="title-edition-checkbox">
+            Edit
+          </Checkbox>,
+        ]}
+      ></PageHeader>
       <div className={classes.players}>
         <SideMenuPlayers
           title="Tanks"

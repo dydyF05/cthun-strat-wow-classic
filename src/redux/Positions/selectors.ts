@@ -26,3 +26,6 @@ export const positionForPlayer =
     const positions = positionsSelector(state);
     return positions.find(position => position.playerId === playerName);
   };
+
+export const positionWithPlayerCountSelector = (state: RootState): number =>
+  positionsSelector(state).filter(({ playerId }) => !!playerId).length;

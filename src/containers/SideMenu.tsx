@@ -2,7 +2,7 @@ import { FunctionComponent, memo, useCallback } from 'react';
 import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/SideMenu';
 import { useDispatch, useSelector } from '../hooks/redux';
-import { playerStatsSelector } from '../redux/Players/selectors';
+import usePlayerStats from '../hooks/use-player-stats';
 import { setIsConfiguringAction } from '../redux/Settings';
 import { isConfuringSelector } from '../redux/Settings/selectors';
 
@@ -12,10 +12,7 @@ const SideMenu: FunctionComponent<Props> = memo(props => {
   const isEditing = useSelector(isConfuringSelector, shallowEqual);
   const dispatch = useDispatch();
 
-  const { total, dpsDistance, dpsMelee, tank, heal } = useSelector(
-    playerStatsSelector,
-    shallowEqual
-  );
+  const { distance, melee, tank, heal, positionsWithPlayer, total } = usePlayerStats();
 
   const handleToggle = useCallback(() => {
     dispatch(setIsConfiguringAction(!isEditing));
@@ -25,8 +22,9 @@ const SideMenu: FunctionComponent<Props> = memo(props => {
     <Component
       {...props}
       totalCount={total}
-      dpsDistanceCount={dpsDistance}
-      dpsMeleeCount={dpsMelee}
+      playerPositionedCount={positionsWithPlayer}
+      dpsDistanceCount={distance}
+      dpsMeleeCount={melee}
       healCount={heal}
       tankCount={tank}
       isEditing={isEditing}

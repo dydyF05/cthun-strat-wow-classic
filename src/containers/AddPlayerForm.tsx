@@ -1,13 +1,11 @@
-import { compact, entries, keys, map, pipe, values } from 'lodash/fp';
+import { compact, entries, map, pipe, values } from 'lodash/fp';
 import { FunctionComponent, useCallback, useMemo, useState } from 'react';
 import { shallowEqual } from 'react-redux';
 import Component, { BaseInput, Form } from '../components/AddPlayerForm';
 import { useSelector } from '../hooks/redux';
-import { BUILD_LABELS, CLASS_LABELS, ROLE_LABELS } from '../lib/i18n';
-import { BUILD_IMAGES, CLASS_IMAGES, ROLE_IMAGES } from '../lib/player';
+import { correctAddPlayer, getInitialAddPlayer } from '../lib/form';
 import { Player } from '../redux/Players';
 import { allPlayerNamesSelector } from '../redux/Players/selectors';
-import { BUILD_PER_CLASS, ClassBuild, ClassName, Role } from '../types/index.d';
 
 export type Props = {
   onCancel: () => void;
@@ -35,54 +33,19 @@ const getErrors = ({
     errors.name = nameError;
   }
 
+  if (!form.className.value) {
+    errors.className = 'Class is required';
+  }
+
+  if (!form.build.value) {
+    errors.build = 'Build is required';
+  }
+
   return errors;
 };
 
-const getInitialState = (): Form => ({
-  name: {
-    label: 'Name',
-    type: 'text',
-    placeholder: 'Character name',
-  },
-  role: {
-    label: 'Role',
-    type: 'select',
-    placeholder: 'The role this character holds',
-    options: keys(Role).map(roleKey => ({
-      label: ROLE_LABELS[roleKey as Role],
-      value: Role[roleKey as Role],
-      image: ROLE_IMAGES[roleKey as Role],
-    })),
-  },
-  className: {
-    label: 'Class',
-    type: 'select',
-    placeholder: 'The class of this character',
-    options: keys(ClassName).map(classKey => ({
-      label: CLASS_LABELS[classKey as ClassName],
-      value: ClassName[classKey as ClassName],
-      image: CLASS_IMAGES[classKey as ClassName],
-    })),
-  },
-  build: {
-    label: 'Specialization',
-    type: 'select',
-    placeholder: 'The class build it has',
-    options: keys(ClassBuild).map(buildKey => ({
-      label: BUILD_LABELS[buildKey as ClassBuild],
-      value: ClassBuild[buildKey as ClassBuild],
-      image: BUILD_IMAGES[buildKey as ClassBuild],
-    })),
-  },
-});
-
-const getBuildsForClass = (className: ClassName): Form['build']['options'] =>
-  getInitialState().build.options.filter(option =>
-    BUILD_PER_CLASS[className].includes(option.value)
-  );
-
 const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
-  const [state, setState] = useState<Form>(getInitialState());
+  const [state, setState] = useState<Form>(getInitialAddPlayer());
 
   const isValid = !pipe(
     map<BaseInput, string | undefined>(formProp => formProp.error),
@@ -103,43 +66,21 @@ const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
         value,
         wasTouched: true,
       };
-      const nextState = {
+      const nextState: typeof state = {
         ...state,
         [prop]: nextPropValue,
       };
+
+      correctAddPlayer(nextState, state);
 
       // Handle errors
       const errors = getErrors({ form: nextState, currentPlayerNames });
 
       entries(errors).forEach(([_formProp, error]) => {
         const formProp = _formProp as keyof Form;
-
-        nextState[formProp] = {
-          ...nextState[formProp],
-          error,
-        } as any;
+        const nextItemValue = nextState[formProp];
+        nextItemValue.error = error;
       });
-
-      // Handle class builds
-      if (nextState.className.value) {
-        nextState.build.options = getBuildsForClass(nextState.className.value);
-      } else {
-        nextState.build.options = getInitialState().build.options;
-      }
-
-      // Handle class / classBuild mismatch
-      if (
-        nextState.className.value &&
-        nextState.build.value &&
-        !BUILD_PER_CLASS[nextState.className.value].includes(nextState.build.value)
-      ) {
-        const nextOptions = getBuildsForClass(nextState.className.value);
-        nextState.build = {
-          ...nextState.build,
-          value: nextOptions[0].value,
-          options: nextOptions,
-        };
-      }
 
       setState(nextState);
     },
@@ -154,12 +95,12 @@ const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
         name: state.name.value as NonNullable<typeof state.name.value>,
         role: state.role.value as NonNullable<typeof state.role.value>,
       });
-    setState(getInitialState());
+    setState(getInitialAddPlayer());
   }, [isValid, state, onValidate]);
 
   const handleCancel = useCallback(() => {
     onCancel();
-    setState(getInitialState());
+    setState(getInitialAddPlayer());
   }, [onCancel]);
 
   return (

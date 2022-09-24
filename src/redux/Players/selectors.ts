@@ -7,19 +7,10 @@ export const playersSelector = (state: RootState): RootState['players'] => state
 
 export const playerCountSelector = (state: RootState): number => playersSelector(state).length;
 
-export const playerStatsSelector = (state: RootState) => {
-  const total = playerCountSelector(state);
-
-  const all = playersSelector(state);
-
-  return {
-    total,
-    tank: all.filter(player => player.role === Role.Tank).length,
-    heal: all.filter(player => player.role === Role.Heal).length,
-    dpsMelee: all.filter(player => player.role === Role.DpsMelee).length,
-    dpsDistance: all.filter(player => player.role === Role.DpsDistance).length,
-  };
-};
+export const playerWithRoleCount =
+  (role: Role) =>
+  (state: RootState): number =>
+    playersSelector(state).filter(player => player.role === role).length;
 
 type PlayerSelectorParams = Pick<Player, 'name'>;
 

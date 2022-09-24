@@ -1,3 +1,4 @@
+import { PlusCircleFilled } from '@ant-design/icons';
 import { FunctionComponent, memo } from 'react';
 import classes from './index.module.css';
 
@@ -5,13 +6,15 @@ export type Props = {
   onPress: () => void;
 };
 
-const AddPlayerButton: FunctionComponent<Props> = memo(({ onPress }) => {
-  return (
-    <div className={classes.container} onClick={onPress}>
-      <p>&#43;</p>
-    </div>
-  );
-});
+const SIZE = 80;
+
+const AddPlayerButton: FunctionComponent<Props> = memo(({ onPress }) => (
+  <PlusCircleFilled
+    onClick={onPress}
+    style={{ fontSize: SIZE, color: '#1890ff' }}
+    className={classes.container}
+  />
+));
 AddPlayerButton.displayName = 'AddPlayerButton';
 
 export default AddPlayerButton;

@@ -14,6 +14,7 @@ export type BaseInput = {
   placeholder: string;
   error?: InputError;
   wasTouched?: boolean;
+  isDisabled?: boolean;
 };
 
 type TextInput = {
@@ -51,9 +52,7 @@ const AddPlayerForm: FunctionComponent<Props> = memo(
   ({ isValid, onChange, onValidate, onCancel, ...form }) => (
     <div className={classes.container}>
       <div>
-        <Typography.Title underline className={classes.title}>
-          Player creation
-        </Typography.Title>
+        <Typography.Title className={classes.title}>Player creation</Typography.Title>
 
         <div className={classes.form}>
           {entries(form).map(([prop, item], index) => (
@@ -73,6 +72,7 @@ const AddPlayerForm: FunctionComponent<Props> = memo(
                   maxLength={item.maxLength}
                   minLength={item.minLength}
                   autoFocus={!index}
+                  disabled={item.isDisabled}
                   allowClear
                   onChange={event => onChange(prop as keyof Player, event.target.value)}
                 />
@@ -82,6 +82,7 @@ const AddPlayerForm: FunctionComponent<Props> = memo(
                   id={item.label}
                   value={item.value}
                   placeholder={item.placeholder}
+                  disabled={item.isDisabled}
                   allowClear
                   onChange={nextValue => onChange(prop as keyof Player, nextValue)}
                 >
