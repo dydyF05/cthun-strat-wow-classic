@@ -20,15 +20,15 @@ export const playerSelector =
     playersSelector(state).find(player => player.name === name);
 
 type PlayersSelectorFiltersStrict = {
-  role: Role[];
-  className: ClassName[];
+  roles: Role[];
+  classNames: ClassName[];
 };
 export type PlayersSelectorFilters = Partial<PlayersSelectorFiltersStrict>;
 
 export const filteredPlayersSelector =
   (filters: PlayersSelectorFilters) =>
   (state: RootState): Player['name'][] | undefined => {
-    if (!filters.className?.length && !filters.role?.length) return undefined;
+    if (!filters.classNames?.length && !filters.roles?.length) return undefined;
 
     const allPlayers = playersSelector(state);
 
@@ -37,9 +37,10 @@ export const filteredPlayersSelector =
     return allPlayers
       .filter(
         player =>
-          !safeFilters.some(([_filterKey, filterValue]) => {
-            const filterKey = _filterKey as keyof Player;
-            return !(filterValue as any).includes(player[filterKey]);
+          !safeFilters.some(([filterKey, filterValue]) => {
+            const playerProp: keyof Player = filterKey.startsWith('role') ? 'role' : 'className';
+
+            return !(filterValue as any).includes(player[playerProp]);
           })
       )
       .map(player => player.name);

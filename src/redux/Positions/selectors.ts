@@ -1,4 +1,5 @@
 import { Position } from '.';
+import { Player } from '../Players';
 import { RootState } from '../store';
 
 type PositionTargetParams = Pick<Position, 'line' | 'index'>;
@@ -29,3 +30,11 @@ export const positionForPlayer =
 
 export const positionWithPlayerCountSelector = (state: RootState): number =>
   positionsSelector(state).filter(({ playerId }) => !!playerId).length;
+
+export const positionWithPlayersCountSelector =
+  (players?: Player['name'][]) =>
+  (state: RootState): number =>
+    players?.length
+      ? positionsSelector(state).filter(({ playerId }) => !!playerId && players.includes(playerId))
+          .length
+      : 0;

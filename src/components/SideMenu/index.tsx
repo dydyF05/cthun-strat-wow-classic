@@ -51,44 +51,44 @@ const SideMenu: FunctionComponent<Props> = memo(
       <div className={classes.players}>
         <SideMenuPlayers
           title="Tanks"
-          role={[Role.Tank]}
-          className={[ClassName.War, ClassName.Druid, ClassName.Paladin]}
+          roles={[Role.Tank]}
+          classNames={[ClassName.War, ClassName.Druid, ClassName.Paladin]}
           image={ROLE_IMAGES.Tank}
         />
         <SideMenuPlayers
           title="DD"
-          role={[Role.DpsMelee]}
-          className={[ClassName.War]}
+          roles={[Role.DpsMelee]}
+          classNames={[ClassName.War]}
           image={CLASS_IMAGES.War}
         />
-        <SideMenuPlayers title="Rogues" className={[ClassName.Rogue]} image={CLASS_IMAGES.Rogue} />
+        <SideMenuPlayers title="Rogues" classNames={[ClassName.Rogue]} image={CLASS_IMAGES.Rogue} />
         <SideMenuPlayers
           title="Droods"
-          className={[ClassName.Druid]}
+          classNames={[ClassName.Druid]}
           image={CLASS_IMAGES.Druid}
-          role={[Role.DpsDistance, Role.Heal, Role.DpsMelee]}
+          roles={[Role.DpsDistance, Role.Heal, Role.DpsMelee]}
         />
         <SideMenuPlayers
           title="Priests"
-          className={[ClassName.Priest]}
+          classNames={[ClassName.Priest]}
           image={CLASS_IMAGES.Priest}
         />
         <SideMenuPlayers
           title="Shamans"
-          className={[ClassName.Shaman]}
+          classNames={[ClassName.Shaman]}
           image={CLASS_IMAGES.Shaman}
         />
         <SideMenuPlayers
           title="Paladins"
-          role={[Role.DpsMelee, Role.Heal]}
-          className={[ClassName.Paladin]}
+          roles={[Role.DpsMelee, Role.Heal]}
+          classNames={[ClassName.Paladin]}
           image={CLASS_IMAGES.Paladin}
         />
-        <SideMenuPlayers title="Hunters" className={[ClassName.Hunt]} image={CLASS_IMAGES.Hunt} />
-        <SideMenuPlayers title="Mages" className={[ClassName.Mage]} image={CLASS_IMAGES.Mage} />
+        <SideMenuPlayers title="Hunters" classNames={[ClassName.Hunt]} image={CLASS_IMAGES.Hunt} />
+        <SideMenuPlayers title="Mages" classNames={[ClassName.Mage]} image={CLASS_IMAGES.Mage} />
         <SideMenuPlayers
           title="Warlocks"
-          className={[ClassName.Warlock]}
+          classNames={[ClassName.Warlock]}
           image={CLASS_IMAGES.Warlock}
         />
       </div>

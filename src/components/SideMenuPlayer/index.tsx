@@ -1,8 +1,11 @@
-import { FunctionComponent, memo, useCallback } from 'react';
+import { DeleteOutlined, MinusCircleOutlined, TagOutlined } from '@ant-design/icons';
+import { Avatar, Card, CardProps, Typography } from 'antd';
+import { FunctionComponent, memo, useCallback, useMemo } from 'react';
 import { BUILD_IMAGES } from '../../lib/player';
 import { MARKER_IMAGE } from '../../lib/position';
 import { Player } from '../../redux/Players';
 import { Position } from '../../redux/Positions';
+import { Marker } from '../../types/index.d';
 import classes from './index.module.css';
 
 export type Props = Pick<Player, 'name' | 'build'> & {
@@ -38,32 +41,41 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
       onPosition(name);
     }, [name, onPosition]);
 
+    const actions = useMemo<CardProps['actions']>(
+      () =>
+        isEditing
+          ? [
+              <DeleteOutlined key="delete" onClick={handleDeletePlayer} />,
+              positionIndex ? (
+                <MinusCircleOutlined onClick={onPositionDelete} />
+              ) : (
+                <TagOutlined key="localize" onClick={handlePosition} />
+              ),
+            ]
+          : undefined,
+      [positionIndex, onPositionDelete, handleDeletePlayer, handlePosition, isEditing]
+    );
+
     return (
-      <div className={classes.container} data-isplaced={positionIndex !== undefined && !isEditing}>
-        <div className={classes.player}>
-          <img src={BUILD_IMAGES[build]} />
-          {positionIndex !== undefined && !positionMarker && (
-            <p className={classes.positionIndex}>{positionIndex}</p>
-          )}
-          {!!positionMarker && <img src={MARKER_IMAGE[positionMarker]} />}
-          <p className={classes.name}>{name}</p>
-        </div>
-        {isEditing && (
-          <div className={classes.actions}>
-            <p className={classes.delete} onClick={handleDeletePlayer}>
-              RM
-            </p>
-            <p className={classes.choosePosition} onClick={handlePosition}>
-              pos
-            </p>
-            {!!positionIndex && (
-              <p className={classes.deletePosition} onClick={onPositionDelete}>
-                rm pos
-              </p>
-            )}
-          </div>
-        )}
-      </div>
+      <Card className={classes.container} actions={actions}>
+        <Card.Meta
+          avatar={
+            <div className={classes.avatar}>
+              <Avatar src={BUILD_IMAGES[build]} />
+              {positionIndex
+                ? (!positionMarker && (
+                    <Typography.Title level={5} className={classes.positionIndex}>
+                      {positionIndex}
+                    </Typography.Title>
+                  )) || (
+                    <img className={classes.marker} src={MARKER_IMAGE[positionMarker as Marker]} />
+                  )
+                : null}
+            </div>
+          }
+          title={name}
+        />
+      </Card>
     );
   }
 );

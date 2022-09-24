@@ -7,6 +7,7 @@ import Component, { Props as ComponentProps } from '../components/SideMenuPlayer
 import { useDispatch, useSelector } from '../hooks/redux';
 import { filteredPlayersSelector, PlayersSelectorFilters } from '../redux/Players/selectors';
 import { setPlayerPositionAction } from '../redux/Positions';
+import { positionWithPlayersCountSelector } from '../redux/Positions/selectors';
 import { setSelectedPlayerAction } from '../redux/Settings';
 import { selectedPlayerSelector } from '../redux/Settings/selectors';
 
@@ -14,12 +15,16 @@ export type Props = PlayersSelectorFilters & Pick<ComponentProps, 'image' | 'tit
 
 const DEFAULT_PLAYERS: ComponentProps['players'] = [];
 
-const SideMenuPlayers: FunctionComponent<Props> = ({ role, className, ...props }) => {
+const SideMenuPlayers: FunctionComponent<Props> = ({ roles, classNames, ...props }) => {
   const selectedPlayer = useSelector(selectedPlayerSelector, shallowEqual);
-  const players = useSelector(filteredPlayersSelector({ role, className }), shallowEqual);
+  const players = useSelector(filteredPlayersSelector({ roles, classNames }), shallowEqual);
+  const playersPositionedCount = useSelector(
+    positionWithPlayersCountSelector(players),
+    shallowEqual
+  );
   const dispatch = useDispatch();
 
-  const handlePlayerPress = useCallback<ComponentProps['onPlayerPress']>(
+  const handlePositionPlayer = useCallback<ComponentProps['onPositionPlayer']>(
     name => {
       dispatch(setSelectedPlayerAction(name));
     },
@@ -52,8 +57,9 @@ const SideMenuPlayers: FunctionComponent<Props> = ({ role, className, ...props }
       />
       <Component
         {...props}
+        playerPlacedCount={playersPositionedCount}
         players={players || DEFAULT_PLAYERS}
-        onPlayerPress={handlePlayerPress}
+        onPositionPlayer={handlePositionPlayer}
       />
     </>
   );

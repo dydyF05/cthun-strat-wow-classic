@@ -1,32 +1,30 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  margin-left: 8px;
-  background-color: var(--color-grey-light);
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  background-color: white;
+  flex: 1;
+  min-width: 200px;
+}
+
+.container > div:first-of-type {
+  padding: 0;
 }
 
 .title {
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: var(--color-grey);
-  padding: 8px;
+  justify-content: flex-start;
+  width: 100%;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  padding: 12px 24px;
+  padding-left: 12px;
 }
 
 .title img {
   width: 30px;
   height: auto;
   border-radius: 100%;
-}
-
-.title h4 {
-  color: white;
-  margin-left: 8px;
+  margin-right: 10px;
 }
 
 .players {

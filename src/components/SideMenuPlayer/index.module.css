@@ -7,67 +7,30 @@
   background-color: white;
   border: 1px solid var(--color-grey-light);
 }
-.container[data-isplaced="true"] {
-  background-color: var(--color-grey-light);
-  opacity: .5;
-}
 
-.player > img {
-  border-radius: 100%;
-  height: 20px;
-  width: auto;
-}
-
-.name {
-  margin-left: 12px;
-}
-
-.positionIndex {
-  border-radius: 100%;
-  padding: 3px;
-  background-color: var(--color-grey);
-  color: white;
-}
-
-.delete {
-  cursor: pointer;
-}
-
-.player {
+.avatar {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
-.actions {
-  height: 40px;
-  display: flex;
-  margin-top: 4px;
+.marker {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  right: 12px;
 }
-
-.actions > p {
-  height: 100%;
-  display: flex;
+.positionIndex {
+  height: 33px;
+  width: 35px;
+  padding-top: 2px;
+  text-align: center;
+  position: absolute;
+  right: 12px;
+  color: white;
+  border: 2px solid black;
+  border-radius: 100%;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  text-transform: uppercase;
-  flex: 1;
-  transition: opacity .2s ease-in-out;
-  color: white;
-  cursor: pointer;
-  opacity: 0.5;
-}
-.actions > p:hover {
-  opacity: 1;
-}
-
-.delete {
-  background-color: var(--color-red);
-}
-
-.choosePosition {
-  background-color: var(--color-blue);
-}
-
-.deletePosition {
-  background-color: var(--color-yellow);
 }
