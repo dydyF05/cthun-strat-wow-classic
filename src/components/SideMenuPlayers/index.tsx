@@ -1,4 +1,4 @@
-import { Image, List, ListProps, Typography } from 'antd';
+import { List, ListProps, Typography } from 'antd';
 
 import { FunctionComponent, memo, useCallback, useMemo } from 'react';
 import SideMenuPlayer, { Props as SideMenuPlayerProps } from '../../containers/SideMenuPlayer';
@@ -29,7 +29,7 @@ const Players: FunctionComponent<Props> = memo(
     const header = useMemo(
       () => (
         <div className={classes.title}>
-          <Image src={image} />
+          <img src={image} />
           <Typography.Text type="secondary">
             {title} ({playerPlacedCount}/{playerCount})
           </Typography.Text>

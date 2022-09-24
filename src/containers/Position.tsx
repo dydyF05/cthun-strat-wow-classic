@@ -1,14 +1,19 @@
-import { FunctionComponent, useEffect, useLayoutEffect, useRef } from 'react';
+import { FunctionComponent, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/Position';
 import { useDispatch, useSelector } from '../hooks/redux';
 import { playerSelector } from '../redux/Players/selectors';
-import { computePositionsNeihborsAction, removePlayerFromPositionAction } from '../redux/Positions';
+import {
+  computePositionsNeihborsAction,
+  removePlayerFromPositionAction,
+  setPlayerPositionAction,
+} from '../redux/Positions';
 import { positionMarkerSelector, positionPlayerSelector } from '../redux/Positions/selectors';
-import { selectedPlayerSelector } from '../redux/Settings/selectors';
+import { setSelectedPlayerAction } from '../redux/Settings';
+import { isConfuringSelector, selectedPlayerSelector } from '../redux/Settings/selectors';
 import { RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES } from '../types/index.d';
 
-export type Props = Omit<ComponentProps, 'marker' | 'containerRef'>;
+export type Props = Omit<ComponentProps, 'marker' | 'containerRef' | 'onPress'>;
 
 let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -20,6 +25,7 @@ const Position: FunctionComponent<Props> = props => {
 
   const dispatch = useDispatch();
   const selectedPlayer = useSelector(selectedPlayerSelector, shallowEqual);
+  const isEditing = useSelector(isConfuringSelector, shallowEqual);
 
   const marker = useSelector(positionMarkerSelector({ index: id, line }), shallowEqual);
   const positionPlayerName = useSelector(positionPlayerSelector({ index: id, line }), shallowEqual);
@@ -28,6 +34,18 @@ const Position: FunctionComponent<Props> = props => {
     playerSelector({ name: positionPlayerName || '' }),
     shallowEqual
   );
+
+  const handlePress = useCallback(() => {
+    if (selectedPlayer) {
+      dispatch(
+        setPlayerPositionAction({
+          index: id,
+          player: selectedPlayer,
+        })
+      );
+      dispatch(setSelectedPlayerAction(undefined));
+    }
+  }, [id, selectedPlayer, dispatch]);
 
   const shouldDeletePlayerIdFromPosition = !!positionPlayerName && !positionPlayer;
 
@@ -73,9 +91,10 @@ const Position: FunctionComponent<Props> = props => {
       {...props}
       {...(positionPlayer || {})}
       marker={marker}
-      isChoosingPositionForPlayer={!!selectedPlayer}
       hasPlayer={hasPlayer}
+      isEditing={isEditing}
       ref={ref}
+      onPress={selectedPlayer ? handlePress : undefined}
     />
   );
 };

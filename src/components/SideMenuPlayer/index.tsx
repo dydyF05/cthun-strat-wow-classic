@@ -11,7 +11,7 @@ import classes from './index.module.css';
 export type Props = Pick<Player, 'name' | 'build'> & {
   positionIndex?: Position['index'];
   positionMarker?: Position['marker'];
-  isEditing?: boolean;
+  areActionsHidden?: boolean;
   onPosition: (name: Player['name']) => void;
   onDeletePlayer: () => void;
   onPositionDelete: () => void;
@@ -23,7 +23,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
     positionMarker,
     name,
     build,
-    isEditing,
+    areActionsHidden,
     onPosition,
     onDeletePlayer,
     onPositionDelete,
@@ -43,17 +43,17 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
 
     const actions = useMemo<CardProps['actions']>(
       () =>
-        isEditing
-          ? [
+        areActionsHidden
+          ? undefined
+          : [
               <DeleteOutlined key="delete" onClick={handleDeletePlayer} />,
               positionIndex ? (
                 <MinusCircleOutlined onClick={onPositionDelete} />
               ) : (
                 <TagOutlined key="localize" onClick={handlePosition} />
               ),
-            ]
-          : undefined,
-      [positionIndex, onPositionDelete, handleDeletePlayer, handlePosition, isEditing]
+            ],
+      [positionIndex, onPositionDelete, handleDeletePlayer, handlePosition, areActionsHidden]
     );
 
     return (

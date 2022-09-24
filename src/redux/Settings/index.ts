@@ -43,6 +43,9 @@ export const settingsSlice = createSlice({
     },
     setIsConfiguring: (state, { payload }: PayloadAction<boolean>) => {
       state.isConfiguring = payload;
+      if (!payload) {
+        state.selectedPlayer = undefined;
+      }
     },
   },
 });

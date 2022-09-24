@@ -1,4 +1,4 @@
-import { Checkbox, PageHeader } from 'antd';
+import { Checkbox, PageHeader, Typography } from 'antd';
 import { FunctionComponent, memo } from 'react';
 import SideMenuPlayers from '../../containers/SideMenuPlayers';
 import { CLASS_IMAGES, ROLE_IMAGES } from '../../lib/player';
@@ -44,7 +44,7 @@ const SideMenu: FunctionComponent<Props> = memo(
         subTitle={`tank(${tankCount}), heal(${healCount}), melee(${dpsMeleeCount}), distance(${dpsDistanceCount})`}
         extra={[
           <Checkbox onChange={onToggleConfiguring} checked={isEditing} key="title-edition-checkbox">
-            Edit
+            <Typography.Text type="secondary">Edit</Typography.Text>
           </Checkbox>,
         ]}
       ></PageHeader>

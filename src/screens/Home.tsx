@@ -1,6 +1,7 @@
 import { FunctionComponent, useCallback, useState } from 'react';
 import ModalAddPlayer, { Props as AddPlayerProps } from '../components/ModalAddPlayer';
 import BossRoom from '../containers/BossRoom';
+import SelectedPlayer from '../containers/SelectedPlayer';
 import SideMenu from '../containers/SideMenu';
 import { useDispatch } from '../hooks/redux';
 import { addManyAction } from '../redux/Players';
@@ -37,6 +38,8 @@ const Home: FunctionComponent<Props> = () => {
         onCancel={handleCancelAddPlayer}
         onValidate={handleValidate}
       />
+
+      <SelectedPlayer />
     </div>
   );
 };

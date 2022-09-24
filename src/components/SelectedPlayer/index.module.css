@@ -1,0 +1,57 @@
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(200px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.container {
+  position: fixed;
+  left: 40%;
+  bottom: 12px;
+  padding: 0 4px;
+  box-shadow: 10px 10px 10px var(--color-secondary);
+  border-radius: 2px;
+  width: 200px;
+  background-color: var(--color-secondary);
+  animation: fadeIn .4s linear 0s 1;
+}
+
+.header {
+  padding: 12px 8px;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid white;
+}
+
+.header > span {
+  margin-top: 4px;
+}
+.header > span > svg {
+  fill: white;
+}
+
+.title {
+  color: white !important;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  margin-left: 12px;
+  padding-bottom: 8px;
+}
+
+.player > img {
+  width: 24px;
+  height: auto;
+  border-radius: 100%;
+}
+
+.player > span {
+  color: white;
+  margin-left: 8px;
+}
