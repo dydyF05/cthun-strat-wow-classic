@@ -1,6 +1,11 @@
 .container {
   opacity: 0.7;
   transition: opacity .2s ease-in-out;
+  background-color: #1890ff;
+  border-radius: 100%;
+  border: 1px solid #1890ff;
+  box-shadow: 0px 2px 2px #1890ff;
+  padding: 12px;
 }
 
 .container:hover {

@@ -36,6 +36,9 @@ const Zones: FunctionComponent<Props> = memo(
           r={bossZoneSize / 2}
           className={classes.center}
         />
+        <text x={width / 2 - 40} y={(height * 0.88) / 2 + 10} fill="grey" fontSize={30}>
+          CThun
+        </text>
       </svg>
     </div>
   )

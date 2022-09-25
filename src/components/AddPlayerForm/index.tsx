@@ -117,7 +117,7 @@ const AddPlayerForm: FunctionComponent<Props> = memo(
         <Button onClick={onCancel} type="default">
           cancel
         </Button>
-        <Button disabled={!isValid} onClick={onValidate} type="primary">
+        <Button disabled={!isValid} onClick={isValid ? onValidate : undefined} type="primary">
           create
         </Button>
       </Button.Group>

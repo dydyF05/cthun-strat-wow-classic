@@ -1,4 +1,4 @@
-import { compact, entries, map, pipe, values } from 'lodash/fp';
+import { compact, entries, map, pipe, some, values } from 'lodash/fp';
 import { FunctionComponent, useCallback, useMemo, useState } from 'react';
 import { shallowEqual } from 'react-redux';
 import Component, { BaseInput, Form } from '../components/AddPlayerForm';
@@ -47,10 +47,14 @@ const getErrors = ({
 const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
   const [state, setState] = useState<Form>(getInitialAddPlayer());
 
-  const isValid = !pipe(
-    map<BaseInput, string | undefined>(formProp => formProp.error),
-    compact
-  )(values(state)).length;
+  const isValid = useMemo<boolean>(() => {
+    const _isValid = !pipe(
+      map<BaseInput, string | undefined>(formProp => formProp.error),
+      compact
+    )(values(state)).length;
+
+    return _isValid && pipe(some<BaseInput>(formProp => !!formProp.wasTouched))(values(state));
+  }, [state]);
 
   const _currentPlayerNames = useSelector(allPlayerNamesSelector, shallowEqual);
   const currentPlayerNames = useMemo(

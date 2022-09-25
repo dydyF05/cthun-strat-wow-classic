@@ -1,4 +1,4 @@
-import { DeleteOutlined, MinusCircleOutlined, TagOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EnvironmentOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { Avatar, Card, CardProps, Typography } from 'antd';
 import { FunctionComponent, memo, useCallback, useMemo } from 'react';
 import { BUILD_IMAGES } from '../../lib/player';
@@ -50,7 +50,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
               positionIndex ? (
                 <MinusCircleOutlined onClick={onPositionDelete} />
               ) : (
-                <TagOutlined key="localize" onClick={handlePosition} />
+                <EnvironmentOutlined key="localize" onClick={handlePosition} />
               ),
             ],
       [positionIndex, onPositionDelete, handleDeletePlayer, handlePosition, areActionsHidden]

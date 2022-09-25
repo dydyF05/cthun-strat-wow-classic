@@ -1,4 +1,4 @@
-import { Col, Row, Spin } from 'antd';
+import { Row, Spin } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -14,10 +14,16 @@ root.render(
     <Provider store={store}>
       <PersistGate
         loading={
-          <Row>
-            <Col span={24}>
-              <Spin size="large" spinning />
-            </Col>
+          <Row
+            style={{
+              width: '100vw',
+              height: '100vh',
+              justifyContent: 'center',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Spin size="large" spinning />
           </Row>
         }
         persistor={persistStore}
