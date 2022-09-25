@@ -1,6 +1,7 @@
 import { FunctionComponent, memo } from 'react';
 import Zone from '../../containers/Zone';
 import { ZoneId } from '../../redux/Zones';
+import RoomPillars from '../RoomPillars';
 import classes from './index.module.css';
 
 export type Props = {
@@ -36,9 +37,10 @@ const Zones: FunctionComponent<Props> = memo(
           r={bossZoneSize / 2}
           className={classes.center}
         />
-        <text x={width / 2 - 40} y={(height * 0.88) / 2 + 10} fill="grey" fontSize={30}>
+        <text x={width / 2 - 40} y={(height - topStairsHeight) / 2 + 10} fill="grey" fontSize={30}>
           CThun
         </text>
+        <RoomPillars height={height - topStairsHeight} width={width} />
       </svg>
     </div>
   )

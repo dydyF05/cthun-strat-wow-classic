@@ -26,7 +26,7 @@ const initialState: State = {
   graphHeight: 0,
   graphWidth: 0,
   topStairsHeight: 0,
-  bossZoneSizeRatio: 0.35,
+  bossZoneSizeRatio: 0.3,
   isConfiguring: true,
 };
 
