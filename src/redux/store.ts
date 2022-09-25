@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   FLUSH,
   PAUSE,
@@ -14,6 +14,7 @@ import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
 import playersReducer from './Players';
 import positionsReducer from './Positions';
 import settingsReducer from './Settings';
+import settingsMiddleware from './Settings/effects';
 import zonesReducer from './Zones';
 
 const reducers = combineReducers({
@@ -35,12 +36,13 @@ const _persistedReducer = persistReducer(persistConfig, reducers) as typeof redu
 
 const store = configureStore({
   reducer: _persistedReducer,
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      /* ignore persistance actions */
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        /* ignore persistance actions */
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).prepend(settingsMiddleware),
 });
 
 export const persistStore = _persistStore(store);

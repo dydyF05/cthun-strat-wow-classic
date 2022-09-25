@@ -6,9 +6,5 @@
 }
 
 .center {
-  position: absolute;
-  width: 16%;
-  height: 16%;
-  left: 42.5%;
-  top: 42%;
+  opacity: 0.95;
 }

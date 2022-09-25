@@ -1,22 +1,22 @@
 import { FunctionComponent, memo } from 'react';
 import Zone from '../../containers/Zone';
 import { ZoneId } from '../../redux/Zones';
-import BossZone from '../CenterZone';
 import classes from './index.module.css';
 
 export type Props = {
+  /** Graph width */
   width: number;
+  /** Graph height */
   height: number;
   topStairsHeight: number;
+  /** The number in pixel */
+  bossZoneSize: number;
   ids?: ZoneId[];
 };
 
-const Zones: FunctionComponent<Props> = memo(({ ids, width, height, topStairsHeight }) => {
-  return (
+const Zones: FunctionComponent<Props> = memo(
+  ({ ids, width, height, bossZoneSize, topStairsHeight }) => (
     <div className={classes.container}>
-      <div className={classes.center}>
-        <BossZone />
-      </div>
       <svg width={width} height={height}>
         {!!ids &&
           ids.map(id => (
@@ -27,10 +27,19 @@ const Zones: FunctionComponent<Props> = memo(({ ids, width, height, topStairsHei
               svgWidth={width}
             />
           ))}
+        {/* BOSS CENTER ZONE */}
+        {/* Removing 12% representing top stairs zone percentate (10%) and bottom zone percentage (2%) */}
+        <circle
+          fill="var(--color-grey)"
+          cx={width / 2}
+          cy={(height * 0.88) / 2}
+          r={bossZoneSize / 2}
+          className={classes.center}
+        />
       </svg>
     </div>
-  );
-});
+  )
+);
 Zones.displayName = 'Zones';
 
 export default Zones;

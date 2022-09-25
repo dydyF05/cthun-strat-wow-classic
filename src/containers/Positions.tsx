@@ -3,12 +3,11 @@ import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/Positions';
 import { useSelector } from '../hooks/redux';
 import {
-  firstLineDistanceSelector,
+  bossZoneSizeRatioSelector,
   graphHeightSelector,
   graphTopStairsHeight,
   graphWidthSelector,
-  secondLineDistanceSelector,
-  thirdLineDistanceSelector,
+  minimalPixelDistanceBetweenPlayersSelector,
 } from '../redux/Settings/selectors';
 
 export type Props = Omit<
@@ -19,15 +18,18 @@ export type Props = Omit<
   | 'graphWidth'
   | 'graphHeight'
   | 'graphTopStairsHeight'
+  | 'bossZoneRatio'
 >;
 
 const Positions: FunctionComponent<Props> = props => {
-  const firstLine = useSelector(firstLineDistanceSelector, shallowEqual);
-  const secondLine = useSelector(secondLineDistanceSelector, shallowEqual);
-  const thirdLine = useSelector(thirdLineDistanceSelector, shallowEqual);
+  const minimalPixelDistanceBetweenPlayers = useSelector(
+    minimalPixelDistanceBetweenPlayersSelector,
+    shallowEqual
+  );
   const graphWidth = useSelector(graphWidthSelector, shallowEqual);
   const graphHeight = useSelector(graphHeightSelector, shallowEqual);
   const graphTopZoneHeight = useSelector(graphTopStairsHeight, shallowEqual);
+  const bossZoneRatio = useSelector(bossZoneSizeRatioSelector, shallowEqual);
 
   return (
     <Component
@@ -35,9 +37,8 @@ const Positions: FunctionComponent<Props> = props => {
       graphWidth={graphWidth}
       graphHeight={graphHeight}
       graphTopStairsHeight={graphTopZoneHeight}
-      firstLineDistance={firstLine}
-      secondLineDistance={secondLine}
-      thirdLineDistance={thirdLine}
+      minimalPixelDistanceBetweenPlayers={minimalPixelDistanceBetweenPlayers}
+      bossZoneRatio={bossZoneRatio}
     />
   );
 };

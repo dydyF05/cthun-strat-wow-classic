@@ -1,3 +1,4 @@
+import { Typography } from 'antd';
 import { ClassAttributes, forwardRef, FunctionComponent, memo } from 'react';
 import { BUILD_IMAGES } from '../../lib/player';
 import { MARKER_IMAGE } from '../../lib/position';
@@ -42,7 +43,7 @@ const _Position: FunctionComponent<Props> = memo(
       {!!hasPlayer && !!build && !!name && (
         <div className={classes.player}>
           <img src={BUILD_IMAGES[build]} />
-          <p>{name.slice(0, 5)}</p>
+          <Typography.Text italic>{name.slice(0, 7)}</Typography.Text>
         </div>
       )}
     </div>

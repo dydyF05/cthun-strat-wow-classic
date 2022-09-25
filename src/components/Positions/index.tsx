@@ -6,12 +6,8 @@ export type Props = {
   graphWidth: number;
   graphHeight: number;
   graphTopStairsHeight: number;
-  /** The meter distance separating the first line from the boss */
-  firstLineDistance: number;
-  /** The meter distance separating the second line from the boss */
-  secondLineDistance: number;
-  /** The meter distance separating the third line from the boss */
-  thirdLineDistance: number;
+  minimalPixelDistanceBetweenPlayers?: number;
+  bossZoneRatio: number;
 };
 
 const FIRST_LINE_PLAYER_COUNT = 8;
@@ -19,22 +15,26 @@ const SECOND_LINE_PLAYER_COUNT = 12;
 
 const Positions: FunctionComponent<Props> = memo(
   ({
-    firstLineDistance,
-    secondLineDistance,
-    thirdLineDistance,
+    minimalPixelDistanceBetweenPlayers,
     graphWidth,
     graphHeight,
     graphTopStairsHeight,
+    bossZoneRatio,
   }) => {
     const { firstLineRay, secondLineRay, thirdLineRay } = useMemo(() => {
-      const firstRay = graphWidth * 0.1;
+      // We're looking for ray, not diamaeter hence the 2 divider
+      const firstRay = (graphWidth * bossZoneRatio) / 2;
 
       return {
         firstLineRay: firstRay,
-        secondLineRay: (firstRay * secondLineDistance) / firstLineDistance,
-        thirdLineRay: (firstRay * thirdLineDistance) / firstLineDistance,
+        secondLineRay: minimalPixelDistanceBetweenPlayers
+          ? firstRay + minimalPixelDistanceBetweenPlayers
+          : undefined,
+        thirdLineRay: minimalPixelDistanceBetweenPlayers
+          ? firstRay + minimalPixelDistanceBetweenPlayers * 2
+          : undefined,
       };
-    }, [graphWidth, firstLineDistance, secondLineDistance, thirdLineDistance]);
+    }, [graphWidth, minimalPixelDistanceBetweenPlayers, bossZoneRatio]);
 
     return (
       <div
@@ -49,19 +49,23 @@ const Positions: FunctionComponent<Props> = memo(
           numberOfPositionsBeforeLine={0}
           trigoDelta={Math.PI / 8}
         />
-        <PlayersLine
-          line="second"
-          ray={secondLineRay}
-          numberOfPlayers={SECOND_LINE_PLAYER_COUNT}
-          numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT}
-        />
-        <PlayersLine
-          line="third"
-          ray={thirdLineRay}
-          numberOfPlayers={20}
-          numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT + SECOND_LINE_PLAYER_COUNT}
-          trigoDelta={Math.PI / 4}
-        />
+        {!!secondLineRay && (
+          <PlayersLine
+            line="second"
+            ray={secondLineRay}
+            numberOfPlayers={SECOND_LINE_PLAYER_COUNT}
+            numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT}
+          />
+        )}
+        {!!thirdLineRay && (
+          <PlayersLine
+            line="third"
+            ray={thirdLineRay}
+            numberOfPlayers={20}
+            numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT + SECOND_LINE_PLAYER_COUNT}
+            trigoDelta={Math.PI / 4}
+          />
+        )}
       </div>
     );
   }

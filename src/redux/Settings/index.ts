@@ -8,8 +8,11 @@ export type State = {
   secondLineDistance: number;
   /** The meter distance separating the third line from the boss */
   thirdLineDistance: number;
+  minimalPixelDistanceBetweenPlayers?: number;
   graphHeight: number;
   graphWidth: number;
+  /** The ratio (0 to 1) the central boss zone occupates within the graph */
+  bossZoneSizeRatio: number;
   topStairsHeight: number;
   selectedPlayer?: string;
   /** Are we trying to place players. Disable to take a screenshot ;) */
@@ -23,6 +26,7 @@ const initialState: State = {
   graphHeight: 0,
   graphWidth: 0,
   topStairsHeight: 0,
+  bossZoneSizeRatio: 0.35,
   isConfiguring: true,
 };
 
@@ -47,6 +51,9 @@ export const settingsSlice = createSlice({
         state.selectedPlayer = undefined;
       }
     },
+    setMinimalDistanceBetweenPlayers: (state, { payload }: PayloadAction<number>) => {
+      state.minimalPixelDistanceBetweenPlayers = payload;
+    },
   },
 });
 
@@ -55,6 +62,7 @@ export const {
   setGraphMeasures: setGraphMeasuresAction,
   setSelectedPlayer: setSelectedPlayerAction,
   setIsConfiguring: setIsConfiguringAction,
+  setMinimalDistanceBetweenPlayers: setMinimalDistanceBetweenPlayersAction,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

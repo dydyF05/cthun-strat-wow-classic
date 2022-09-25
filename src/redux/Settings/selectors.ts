@@ -26,3 +26,11 @@ export const selectedPlayerSelector = (state: RootState): State['selectedPlayer'
 
 export const isConfuringSelector = (state: RootState): State['isConfiguring'] =>
   settingsSelector(state).isConfiguring;
+
+export const bossZoneSizeRatioSelector = (state: RootState): State['bossZoneSizeRatio'] =>
+  settingsSelector(state).bossZoneSizeRatio;
+
+export const minimalPixelDistanceBetweenPlayersSelector = (
+  state: RootState
+): State['minimalPixelDistanceBetweenPlayers'] =>
+  settingsSelector(state).minimalPixelDistanceBetweenPlayers;
