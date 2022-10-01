@@ -10,7 +10,7 @@ import {
 } from '../redux/Positions';
 import { positionMarkerSelector, positionPlayerSelector } from '../redux/Positions/selectors';
 import { setSelectedPlayerAction } from '../redux/Settings';
-import { isConfuringSelector, selectedPlayerSelector } from '../redux/Settings/selectors';
+import { selectedPlayerSelector } from '../redux/Settings/selectors';
 import { RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES } from '../types/index.d';
 
 export type Props = Omit<ComponentProps, 'marker' | 'containerRef' | 'onPress'>;
@@ -25,7 +25,6 @@ const Position: FunctionComponent<Props> = props => {
 
   const dispatch = useDispatch();
   const selectedPlayer = useSelector(selectedPlayerSelector, shallowEqual);
-  const isEditing = useSelector(isConfuringSelector, shallowEqual);
 
   const marker = useSelector(positionMarkerSelector({ index: id, line }), shallowEqual);
   const positionPlayerName = useSelector(positionPlayerSelector({ index: id, line }), shallowEqual);
@@ -92,7 +91,6 @@ const Position: FunctionComponent<Props> = props => {
       {...(positionPlayer || {})}
       marker={marker}
       hasPlayer={hasPlayer}
-      isEditing={isEditing}
       ref={ref}
       onPress={selectedPlayer ? handlePress : undefined}
     />

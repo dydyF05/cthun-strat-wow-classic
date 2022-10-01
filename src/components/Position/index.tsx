@@ -12,14 +12,13 @@ export type Props = {
   bottom: number;
   left: number;
   hasPlayer?: boolean;
-  isEditing?: boolean;
   marker?: PositionStateType['marker'];
   containerRef: ClassAttributes<HTMLDivElement>['ref'];
   onPress?: () => void;
 } & Partial<Player>;
 
 const _Position: FunctionComponent<Props> = memo(
-  ({ id, bottom, left, marker, hasPlayer, isEditing, build, name, onPress, containerRef }) => (
+  ({ id, bottom, left, marker, hasPlayer, build, name, onPress, containerRef }) => (
     <div
       className={classes.container}
       data-marker={!!marker}
@@ -27,12 +26,16 @@ const _Position: FunctionComponent<Props> = memo(
       style={{
         bottom,
         left,
-        opacity: hasPlayer && isEditing ? 0.5 : 1,
+        backgroundImage: build ? `url(${BUILD_IMAGES[build]})` : undefined,
       }}
       ref={containerRef}
       onClick={onPress}
     >
-      {!marker && <p>{id}</p>}
+      {!marker && (
+        <p className={classes.positionIndex} data-hasplayer={!!hasPlayer}>
+          {id}
+        </p>
+      )}
       {!!marker && (
         <img
           className={classes.raidImage}
@@ -42,7 +45,7 @@ const _Position: FunctionComponent<Props> = memo(
       )}
       {!!hasPlayer && !!build && !!name && (
         <div className={classes.player}>
-          <img src={BUILD_IMAGES[build]} />
+          {!!marker && <img className={classes.markerPlayerBuild} src={BUILD_IMAGES[build]} />}
           <Typography.Text italic>{name.slice(0, 7)}</Typography.Text>
         </div>
       )}

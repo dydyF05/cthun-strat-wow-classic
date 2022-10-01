@@ -38,3 +38,12 @@
 .container ul > li > span > span > svg {
   font-size: 22px;
 }
+
+.container div[class="ant-card-body"] {
+  max-width: 100%;
+}
+
+.container div[class="ant-card-body"] div[class="ant-card-meta"] div[class="ant-card-meta-detail"] {
+  flex: 1;
+  max-width: 45%;
+}

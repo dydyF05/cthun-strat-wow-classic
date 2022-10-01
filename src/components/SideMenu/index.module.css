@@ -28,8 +28,8 @@
   align-items: flex-start;
 }
 
-.header > div > div > span:first-of-type {
-  /* color: var(--antd-wave-shadow-color) */
+.container > div[class="ant-tabs-top"] {
+  overflow-y: scroll;
 }
 
 .addPlayer {
@@ -37,11 +37,26 @@
   right: 15px;
   bottom: 10px;
 }
+.container div[role="tablist"] {
+  padding-left: 32px;
+}
 
 .players {
   display: flex;
   flex-direction: row;
   padding: 12px;
+  max-width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  background-color: rgb(244, 242, 242);
+}
+
+.raidGroups {
+  display: flex;
+  flex-direction: row;
   max-width: 100%;
   height: 100%;
   justify-content: flex-start;
