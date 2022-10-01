@@ -10,8 +10,12 @@ export type Props = {
   bossZoneRatio: number;
 };
 
-const FIRST_LINE_PLAYER_COUNT = 8;
-const SECOND_LINE_PLAYER_COUNT = 12;
+const LINES = {
+  1: 8,
+  2: 8,
+  3: 16,
+  4: 8,
+};
 
 const Positions: FunctionComponent<Props> = memo(
   ({
@@ -21,18 +25,26 @@ const Positions: FunctionComponent<Props> = memo(
     graphTopStairsHeight,
     bossZoneRatio,
   }) => {
-    const { firstLineRay, secondLineRay, thirdLineRay } = useMemo(() => {
-      // We're looking for ray, not diamaeter hence the 2 divider
+    const { firstLineRay, secondLineRay, thirdLineRay, fourthLineRay } = useMemo(() => {
+      // We're looking for ray, not diameter, hence the 2 divider
       const firstRay = (graphWidth * bossZoneRatio) / 2;
+      const secondRay = minimalPixelDistanceBetweenPlayers
+        ? firstRay + minimalPixelDistanceBetweenPlayers
+        : undefined;
+      const thirdRay =
+        secondRay && minimalPixelDistanceBetweenPlayers
+          ? secondRay + minimalPixelDistanceBetweenPlayers * 1.1
+          : undefined;
+      const fourthRay =
+        thirdRay && minimalPixelDistanceBetweenPlayers
+          ? thirdRay + minimalPixelDistanceBetweenPlayers * 1.1
+          : undefined;
 
       return {
         firstLineRay: firstRay,
-        secondLineRay: minimalPixelDistanceBetweenPlayers
-          ? firstRay + minimalPixelDistanceBetweenPlayers
-          : undefined,
-        thirdLineRay: minimalPixelDistanceBetweenPlayers
-          ? firstRay + minimalPixelDistanceBetweenPlayers * 2
-          : undefined,
+        secondLineRay: secondRay,
+        thirdLineRay: thirdRay,
+        fourthLineRay: fourthRay,
       };
     }, [graphWidth, minimalPixelDistanceBetweenPlayers, bossZoneRatio]);
 
@@ -45,7 +57,7 @@ const Positions: FunctionComponent<Props> = memo(
         <PlayersLine
           line="first"
           ray={firstLineRay}
-          numberOfPlayers={FIRST_LINE_PLAYER_COUNT}
+          numberOfPlayers={LINES[1]}
           numberOfPositionsBeforeLine={0}
           trigoDelta={Math.PI / 8}
         />
@@ -53,17 +65,27 @@ const Positions: FunctionComponent<Props> = memo(
           <PlayersLine
             line="second"
             ray={secondLineRay}
-            numberOfPlayers={SECOND_LINE_PLAYER_COUNT}
-            numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT}
+            numberOfPlayers={LINES[2]}
+            numberOfPositionsBeforeLine={LINES[1]}
+            trigoDelta={Math.PI / 8}
           />
         )}
         {!!thirdLineRay && (
           <PlayersLine
             line="third"
             ray={thirdLineRay}
-            numberOfPlayers={20}
-            numberOfPositionsBeforeLine={FIRST_LINE_PLAYER_COUNT + SECOND_LINE_PLAYER_COUNT}
-            trigoDelta={Math.PI / 4}
+            numberOfPlayers={LINES[3]}
+            numberOfPositionsBeforeLine={LINES[1] + LINES[2]}
+            trigoDelta={(Math.PI * 0.5) / 8}
+          />
+        )}
+        {!!fourthLineRay && (
+          <PlayersLine
+            line="fourth"
+            ray={fourthLineRay}
+            numberOfPlayers={LINES[4]}
+            numberOfPositionsBeforeLine={LINES[1] + LINES[2] + LINES[3]}
+            trigoDelta={Math.PI / 8}
           />
         )}
       </div>

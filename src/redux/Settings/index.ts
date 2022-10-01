@@ -1,13 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MINIMUM_SPACE_BETWEEN_LINES } from '../../types/index.d';
 
 export type State = {
-  /** The meter distance separating the first line from the boss */
-  firstLineDistance: number;
-  /** The meter distance separating the second line from the boss */
-  secondLineDistance: number;
-  /** The meter distance separating the third line from the boss */
-  thirdLineDistance: number;
   minimalPixelDistanceBetweenPlayers?: number;
   graphHeight: number;
   graphWidth: number;
@@ -20,13 +13,10 @@ export type State = {
 };
 
 const initialState: State = {
-  firstLineDistance: 5,
-  secondLineDistance: 5 + MINIMUM_SPACE_BETWEEN_LINES,
-  thirdLineDistance: 5 + MINIMUM_SPACE_BETWEEN_LINES * 2,
   graphHeight: 0,
   graphWidth: 0,
   topStairsHeight: 0,
-  bossZoneSizeRatio: 0.3,
+  bossZoneSizeRatio: 0.25,
   isConfiguring: true,
 };
 

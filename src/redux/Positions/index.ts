@@ -6,7 +6,7 @@ import { ZoneId } from '../Zones';
 
 export type Position = {
   index: number;
-  line: 'first' | 'second' | 'third';
+  line: 'first' | 'second' | 'third' | 'fourth';
   zoneId: ZoneId;
   playerId?: Player['name'];
   marker?: Marker;

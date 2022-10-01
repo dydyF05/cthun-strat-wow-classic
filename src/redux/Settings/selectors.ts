@@ -3,15 +3,6 @@ import { RootState } from '../store';
 
 export const settingsSelector = (state: RootState): RootState['settings'] => state.settings;
 
-export const firstLineDistanceSelector = (state: RootState): State['firstLineDistance'] =>
-  settingsSelector(state).firstLineDistance;
-
-export const secondLineDistanceSelector = (state: RootState): State['secondLineDistance'] =>
-  settingsSelector(state).secondLineDistance;
-
-export const thirdLineDistanceSelector = (state: RootState): State['thirdLineDistance'] =>
-  settingsSelector(state).thirdLineDistance;
-
 export const graphWidthSelector = (state: RootState): State['graphWidth'] =>
   settingsSelector(state).graphWidth;
 
