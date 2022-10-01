@@ -90,12 +90,14 @@ export const positionsSlice = createSlice({
         }
       });
     },
-    removePlayerFromPosition: (state, { payload }: PayloadAction<Position['index']>) => {
-      const position = state.find(pos => pos.index === payload);
+    removePlayersFromPosition: (state, { payload }: PayloadAction<Position['index'][]>) => {
+      payload.forEach(targetPositionId => {
+        const position = state.find(pos => pos.index === targetPositionId);
 
-      if (position) {
-        position.playerId = undefined;
-      }
+        if (position) {
+          position.playerId = undefined;
+        }
+      });
     },
   },
 });
@@ -105,7 +107,7 @@ export const {
   addPositions: addPositionsAction,
   computePositionsNeihbors: computePositionsNeihborsAction,
   setPlayerPosition: setPlayerPositionAction,
-  removePlayerFromPosition: removePlayerFromPositionAction,
+  removePlayersFromPosition: removePlayersFromPositionAction,
 } = positionsSlice.actions;
 
 export default positionsSlice.reducer;

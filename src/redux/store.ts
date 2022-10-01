@@ -11,8 +11,11 @@ import {
 } from 'reduxjs-toolkit-persist';
 import storage from 'reduxjs-toolkit-persist/lib/storage';
 import { PersistConfig } from 'reduxjs-toolkit-persist/lib/types';
+import groupsReducer from './Groups';
+import groupsMiddleware from './Groups/effects';
 import playersReducer from './Players';
 import positionsReducer from './Positions';
+import positionsMiddleware from './Positions/effects';
 import settingsReducer from './Settings';
 import settingsMiddleware from './Settings/effects';
 import zonesReducer from './Zones';
@@ -22,6 +25,7 @@ const reducers = combineReducers({
   positions: positionsReducer,
   zones: zonesReducer,
   settings: settingsReducer,
+  groups: groupsReducer,
 });
 
 const blacklist: (keyof RootState)[] = ['settings'];
@@ -42,7 +46,10 @@ const store = configureStore({
         /* ignore persistance actions */
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).prepend(settingsMiddleware),
+    })
+      .prepend(settingsMiddleware)
+      .prepend(positionsMiddleware)
+      .prepend(groupsMiddleware),
 });
 
 export const persistStore = _persistStore(store);

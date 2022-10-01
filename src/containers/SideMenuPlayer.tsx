@@ -4,7 +4,7 @@ import Component, { Props as ComponentProps } from '../components/SideMenuPlayer
 import { useDispatch, useSelector } from '../hooks/redux';
 import { Player, removeManyAction } from '../redux/Players';
 import { playerSelector } from '../redux/Players/selectors';
-import { removePlayerFromPositionAction } from '../redux/Positions';
+import { removePlayersFromPositionAction } from '../redux/Positions';
 import { positionForPlayer } from '../redux/Positions/selectors';
 import { isConfuringSelector, selectedPlayerSelector } from '../redux/Settings/selectors';
 
@@ -24,7 +24,7 @@ const SideMenuPlayer: FunctionComponent<Props> = ({ name, ...props }) => {
   }, [player, dispatch]);
 
   const handlePositionDelete = useCallback(() => {
-    positionIndex && dispatch(removePlayerFromPositionAction(positionIndex));
+    positionIndex && dispatch(removePlayersFromPositionAction([positionIndex]));
   }, [positionIndex, dispatch]);
 
   if (!player) {

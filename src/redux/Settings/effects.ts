@@ -17,7 +17,7 @@ listener.startListening({
     if (!positions) {
       return log({
         message:
-          'Failled to find positions state during settings middleware effect watching computePositionsNeihborsAction',
+          '[Settings effect] Failed to find positions state after computePositionsNeihborsAction',
       });
     }
 
@@ -26,8 +26,7 @@ listener.startListening({
       .sort((p1, p2) => p1.index - p2.index);
     if (firstLinePositions.length < 2) {
       return log({
-        message:
-          'Missing position data during computePositionsNeihborsAction effect in settings middleware',
+        message: '[Settings effect] Missing position data after computePositionsNeihborsAction',
       });
     }
 
@@ -38,10 +37,11 @@ listener.startListening({
         Math.pow((p1.top as number) - (p2.top as number), 2)
     );
 
-    log({
-      message: 'distance between two consecutive first line positions in pixels: ',
-      context: { positionDistance },
-    });
+    (window as unknown as Record<string, boolean>).__DEV__ &&
+      log({
+        message: 'distance between two consecutive first line positions in pixels: ',
+        context: { positionDistance },
+      });
 
     if (positionDistance) {
       dispatch(setMinimalDistanceBetweenPlayersAction(positionDistance));

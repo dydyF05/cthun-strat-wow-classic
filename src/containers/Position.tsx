@@ -1,13 +1,9 @@
-import { FunctionComponent, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { FunctionComponent, useCallback, useLayoutEffect, useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/Position';
 import { useDispatch, useSelector } from '../hooks/redux';
 import { playerSelector } from '../redux/Players/selectors';
-import {
-  computePositionsNeihborsAction,
-  removePlayerFromPositionAction,
-  setPlayerPositionAction,
-} from '../redux/Positions';
+import { computePositionsNeihborsAction, setPlayerPositionAction } from '../redux/Positions';
 import { positionMarkerSelector, positionPlayerSelector } from '../redux/Positions/selectors';
 import { setSelectedPlayerAction } from '../redux/Settings';
 import { selectedPlayerSelector } from '../redux/Settings/selectors';
@@ -45,14 +41,6 @@ const Position: FunctionComponent<Props> = props => {
       dispatch(setSelectedPlayerAction(undefined));
     }
   }, [id, selectedPlayer, dispatch]);
-
-  const shouldDeletePlayerIdFromPosition = !!positionPlayerName && !positionPlayer;
-
-  useEffect(() => {
-    if (shouldDeletePlayerIdFromPosition) {
-      dispatch(removePlayerFromPositionAction(id));
-    }
-  }, [shouldDeletePlayerIdFromPosition, id, dispatch]);
 
   const hasPlayer = !!positionPlayerName;
 
