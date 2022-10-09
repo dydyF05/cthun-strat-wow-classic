@@ -2,6 +2,10 @@
   background-color: white;
   flex: 1;
   min-width: 200px;
+  max-width: 250px;
+}
+.container[data-preview="true"] {
+  min-width: 150px;
 }
 
 .container > div:first-of-type {

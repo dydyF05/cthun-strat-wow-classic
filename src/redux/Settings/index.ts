@@ -44,6 +44,9 @@ export const settingsSlice = createSlice({
     setMinimalDistanceBetweenPlayers: (state, { payload }: PayloadAction<number>) => {
       state.minimalPixelDistanceBetweenPlayers = payload;
     },
+    reset: state => {
+      state.selectedPlayer = undefined;
+    },
   },
 });
 
@@ -53,6 +56,7 @@ export const {
   setSelectedPlayer: setSelectedPlayerAction,
   setIsConfiguring: setIsConfiguringAction,
   setMinimalDistanceBetweenPlayers: setMinimalDistanceBetweenPlayersAction,
+  reset: resetAction,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

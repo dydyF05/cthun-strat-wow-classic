@@ -11,7 +11,7 @@ import classes from './index.module.css';
 export type Props = Pick<Player, 'name' | 'build'> & {
   positionIndex?: Position['index'];
   positionMarker?: Position['marker'];
-  areActionsHidden?: boolean;
+  isPreview?: boolean;
   onPosition: (name: Player['name']) => void;
   onDeletePlayer: () => void;
   onPositionDelete: () => void;
@@ -23,11 +23,12 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
     positionMarker,
     name,
     build,
-    areActionsHidden,
+    isPreview = false,
     onPosition,
     onDeletePlayer,
     onPositionDelete,
   }) => {
+    const hasPosition = !!positionIndex || !!positionMarker;
     const handleDeletePlayer = useCallback(
       (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
         event.preventDefault();
@@ -43,7 +44,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
 
     const actions = useMemo<CardProps['actions']>(
       () =>
-        areActionsHidden
+        isPreview
           ? undefined
           : [
               <DeleteOutlined key="delete" onClick={handleDeletePlayer} />,
@@ -53,11 +54,16 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
                 <EnvironmentOutlined key="localize" onClick={handlePosition} />
               ),
             ],
-      [positionIndex, onPositionDelete, handleDeletePlayer, handlePosition, areActionsHidden]
+      [positionIndex, onPositionDelete, handleDeletePlayer, handlePosition, isPreview]
     );
 
     return (
-      <Card className={classes.container} actions={actions}>
+      <Card
+        data-preview={isPreview}
+        data-positioned={hasPosition}
+        className={classes.container}
+        actions={actions}
+      >
         <Card.Meta
           avatar={
             <div className={classes.avatar}>

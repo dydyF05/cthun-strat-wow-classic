@@ -8,13 +8,14 @@ import classes from './index.module.css';
 export type Props = {
   title: string;
   image: string;
-  players: Player['name'][];
   playerPlacedCount: number;
+  isPreview?: boolean;
+  players: Player['name'][];
   onPositionPlayer: SideMenuPlayerProps['onPosition'];
 };
 
-const Players: FunctionComponent<Props> = memo(
-  ({ title, image, playerPlacedCount, players, onPositionPlayer }) => {
+const SideMenuPlayers: FunctionComponent<Props> = memo(
+  ({ title, image, playerPlacedCount, isPreview = false, players, onPositionPlayer }) => {
     const playerCount = players.length;
 
     const renderItem = useCallback<NonNullable<ListProps<Props['players'][0]>['renderItem']>>(
@@ -40,15 +41,16 @@ const Players: FunctionComponent<Props> = memo(
 
     return (
       <List<Props['players'][0]>
+        data-preview={isPreview}
         className={classes.container}
         dataSource={players}
         renderItem={renderItem}
-        header={header}
+        header={isPreview ? null : header}
         bordered
       />
     );
   }
 );
-Players.displayName = 'Players';
+SideMenuPlayers.displayName = 'Players';
 
-export default Players;
+export default SideMenuPlayers;

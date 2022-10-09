@@ -30,15 +30,15 @@
   opacity: 1!important;
 }
 
-.container[data-marker=true] {
+.container[data-marker="true"] {
   height: 2.5vh;
   width: 2vh;
   background-color: transparent;
 }
-.container[data-marker=true]:hover {
+.container[data-marker="true"]:hover {
   background-color: transparent;
 }
-.container[data-marker=true][data-touchable="true"]:hover .raidImage {
+.container[data-marker="true"][data-touchable="true"]:hover .raidImage {
   transform: rotateZ(10deg);
 }
 
@@ -66,10 +66,14 @@
 }
 .player > span {
   color: black;
-  font-weight: 900;
   margin-left: 3px;
 }
+
+.container[data-marker="true"] .positionIndex[data-hasplayer="true"] {
+  background-color: #fff;
+}
 .positionIndex[data-hasplayer="true"] {
+  color: #fff;
   font-weight: 700;
 }
 .markerPlayerBuild {

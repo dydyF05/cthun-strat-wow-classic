@@ -37,7 +37,7 @@ const SideMenuPlayer: FunctionComponent<Props> = ({ name, ...props }) => {
       {...player}
       positionIndex={position?.index}
       positionMarker={position?.marker}
-      areActionsHidden={!isEditing || !!isPositioningSomePlayer}
+      isPreview={!isEditing || !!isPositioningSomePlayer}
       onDeletePlayer={handleDelete}
       onPositionDelete={handlePositionDelete}
     />

@@ -1,6 +1,6 @@
-import { MoreOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Dropdown, Menu, PageHeader, Tabs, Typography } from 'antd';
+import { Checkbox, PageHeader, Tabs, Typography } from 'antd';
 import { FunctionComponent, memo } from 'react';
+import Dropdown from '../../containers/SideMenuDropdown';
 import AddPlayerButton from '../AddPlayerButton';
 import RaidGroups from '../RaidGroups';
 import RaidHelperPlayers from '../RaidHelperPlayers';
@@ -17,27 +17,6 @@ export type Props = {
   onAddPlayer: () => void;
   onToggleConfiguring: () => void;
 };
-
-const menu = (
-  <Menu
-    items={[
-      {
-        key: '1',
-        label: (
-          <a target="_blank" rel="noopener noreferrer" href="#">
-            tazydguefhijogkprezijuf
-          </a>
-        ),
-      },
-    ]}
-  />
-);
-
-const DropdownMenu = () => (
-  <Dropdown key="more" overlay={menu} placement="bottomRight">
-    <Button type="text" icon={<MoreOutlined style={{ fontSize: 20 }} />} />
-  </Dropdown>
-);
 
 const SideMenu: FunctionComponent<Props> = memo(
   ({
@@ -67,7 +46,7 @@ const SideMenu: FunctionComponent<Props> = memo(
           <Checkbox onChange={onToggleConfiguring} checked={isEditing} key="title-edition-checkbox">
             <Typography.Text type="secondary">Edit</Typography.Text>
           </Checkbox>,
-          <DropdownMenu key="more" />,
+          <Dropdown key="side-menu-dropdown" />,
         ]}
       ></PageHeader>
       <Tabs

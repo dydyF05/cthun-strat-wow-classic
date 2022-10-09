@@ -26,7 +26,7 @@ const _Position: FunctionComponent<Props> = memo(
       style={{
         bottom,
         left,
-        backgroundImage: build ? `url(${BUILD_IMAGES[build]})` : undefined,
+        backgroundImage: build && !marker ? `url(${BUILD_IMAGES[build]})` : undefined,
       }}
       ref={containerRef}
       onClick={onPress}
@@ -45,8 +45,10 @@ const _Position: FunctionComponent<Props> = memo(
       )}
       {!!hasPlayer && !!build && !!name && (
         <div className={classes.player}>
-          {!!marker && <img className={classes.markerPlayerBuild} src={BUILD_IMAGES[build]} />}
-          <Typography.Text italic>{name.slice(0, 7)}</Typography.Text>
+          {/* {!!marker && <img className={classes.markerPlayerBuild} src={BUILD_IMAGES[build]} />} */}
+          <Typography.Text style={{ margin: marker ? 'none' : '1vh' }} italic>
+            {name.slice(0, 7)}
+          </Typography.Text>
         </div>
       )}
     </div>

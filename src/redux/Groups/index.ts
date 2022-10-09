@@ -51,9 +51,14 @@ export const groupsSlice = createSlice({
         group.playerIds = group.playerIds.filter(id => !playerIdsToRemove.includes(id));
       });
     },
+    reset: state => {
+      state.splice(0, state.length);
+      state.push(...getInitialState());
+    },
   },
 });
 // Action creators are generated for each case reducer function
-export const { removePlayersFromGroups: removePlayersFromGroupsAction } = groupsSlice.actions;
+export const { removePlayersFromGroups: removePlayersFromGroupsAction, reset: resetAction } =
+  groupsSlice.actions;
 
 export default groupsSlice.reducer;

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CaseReducerWithPrepare, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import log from '../../lib/log';
 import { Marker } from '../../types/index.d';
 import { Player } from '../Players';
@@ -41,31 +41,39 @@ const getMarker = ({ line, index }: Pick<Position, 'line' | 'index'>): Position[
   return FIRST_LINE_MARKER[index - 1];
 };
 
+const writePositionPlayer: CaseReducerWithPrepare<State, any>['reducer'] = (
+  state,
+  { payload }: SetPlayerAction
+) => {
+  const position = state.find(({ index }) => index === payload.index);
+
+  // Nuke all previous occurrences of player
+  state.filter(pos => pos.playerId === payload.player).forEach(pos => (pos.playerId = undefined));
+
+  if (!position) {
+    log({
+      message:
+        '[Positions reducer] [setPlayerPosition] failed to find target position to set player',
+      context: {
+        payload,
+        state,
+      },
+    });
+    return;
+  }
+
+  position.playerId = payload.player;
+};
+
 export const positionsSlice = createSlice({
   name: 'zones',
   initialState,
   reducers: {
-    setPlayerPosition: (state, { payload }: SetPlayerAction) => {
-      const position = state.find(({ index }) => index === payload.index);
-
-      // Nuke all previous occurrences of player
-      state
-        .filter(pos => pos.playerId === payload.player)
-        .forEach(pos => (pos.playerId = undefined));
-
-      if (!position) {
-        log({
-          message:
-            '[Positions reducer] [setPlayerPosition] failed to find target position to set player',
-          context: {
-            payload,
-            state,
-          },
-        });
-        return;
-      }
-
-      position.playerId = payload.player;
+    setPlayerPosition: (state, action: SetPlayerAction) => {
+      writePositionPlayer(state, action);
+    },
+    setPositionsPlayers: (state, { payload }: PayloadAction<SetPlayerAction[]>) => {
+      payload.forEach(item => writePositionPlayer(state, item));
     },
     addPositions: (state, { payload }: PayloadAction<Position[]>) => {
       state.push(
@@ -99,6 +107,11 @@ export const positionsSlice = createSlice({
         }
       });
     },
+    reset: state => {
+      state.forEach(position => {
+        position.playerId = undefined;
+      });
+    },
   },
 });
 
@@ -107,7 +120,9 @@ export const {
   addPositions: addPositionsAction,
   computePositionsNeihbors: computePositionsNeihborsAction,
   setPlayerPosition: setPlayerPositionAction,
+  setPositionsPlayers: setPositionsPlayersAction,
   removePlayersFromPosition: removePlayersFromPositionAction,
+  reset: resetAction,
 } = positionsSlice.actions;
 
 export default positionsSlice.reducer;

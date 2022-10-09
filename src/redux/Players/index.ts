@@ -46,10 +46,17 @@ export const playersSlice = createSlice({
       state.splice(0, state.length);
       state.push(...nextState);
     },
+    reset: state => {
+      state.splice(0, state.length);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addMany: addManyAction, removeMany: removeManyAction } = playersSlice.actions;
+export const {
+  addMany: addManyAction,
+  removeMany: removeManyAction,
+  reset: resetAction,
+} = playersSlice.actions;
 
 export default playersSlice.reducer;
