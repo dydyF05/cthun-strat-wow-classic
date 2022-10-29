@@ -1,5 +1,6 @@
 import { keys } from 'lodash/fp';
-import { Form } from '../components/AddPlayerForm';
+import { Form } from '../components/UpsertPlayerForm';
+import { Player } from '../redux/Players';
 import {
   BUILD_PER_CLASS,
   BUILD_PER_ROLE,
@@ -11,13 +12,15 @@ import {
 import { BUILD_LABELS, CLASS_LABELS, ROLE_LABELS } from './i18n';
 import { BUILD_IMAGES, CLASS_IMAGES, ROLE_IMAGES } from './player';
 
-export const getInitialAddPlayer = (): Form => ({
+export const getInitialAddPlayer = (player?: Omit<Player, 'id'>): Form => ({
   name: {
+    value: player?.name,
     label: 'Name',
     type: 'text',
     placeholder: 'Character name',
   },
   role: {
+    value: player?.role,
     label: 'Role',
     type: 'select',
     placeholder: 'The role this character holds',
@@ -28,6 +31,7 @@ export const getInitialAddPlayer = (): Form => ({
     })),
   },
   className: {
+    value: player?.className,
     label: 'Class',
     type: 'select',
     placeholder: 'The class of this character',
@@ -36,9 +40,10 @@ export const getInitialAddPlayer = (): Form => ({
       value: ClassName[classKey as ClassName],
       image: CLASS_IMAGES[classKey as ClassName],
     })),
-    isDisabled: true,
+    isDisabled: !player,
   },
   build: {
+    value: player?.build,
     label: 'Specialization',
     type: 'select',
     placeholder: 'The class build it has',
@@ -47,7 +52,7 @@ export const getInitialAddPlayer = (): Form => ({
       value: ClassBuild[buildKey as ClassBuild],
       image: BUILD_IMAGES[buildKey as ClassBuild],
     })),
-    isDisabled: true,
+    isDisabled: !player,
   },
 });
 

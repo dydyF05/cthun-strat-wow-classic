@@ -1,13 +1,14 @@
-import { compact, entries, map, pipe, some, values } from 'lodash/fp';
+import { compact, entries, isEmpty, map, pipe, some, values } from 'lodash/fp';
 import { FunctionComponent, useCallback, useMemo, useState } from 'react';
 import { shallowEqual } from 'react-redux';
-import Component, { BaseInput, Form } from '../components/AddPlayerForm';
+import Component, { BaseInput, Form } from '../components/UpsertPlayerForm';
 import { useSelector } from '../hooks/redux';
 import { correctAddPlayer, getInitialAddPlayer } from '../lib/form';
 import { Player } from '../redux/Players';
 import { allPlayerNamesSelector } from '../redux/Players/selectors';
 
 export type Props = {
+  playerToUpdate?: Omit<Player, 'id'>;
   onCancel: () => void;
   onValidate: (player: Omit<Player, 'id'>) => void;
 };
@@ -44,8 +45,11 @@ const getErrors = ({
   return errors;
 };
 
-const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
-  const [state, setState] = useState<Form>(getInitialAddPlayer());
+const UpsertPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate, playerToUpdate }) => {
+  const originalPlayerName = playerToUpdate?.name.toLowerCase();
+  const [state, setState] = useState<Form>(
+    getInitialAddPlayer(isEmpty(playerToUpdate) ? undefined : playerToUpdate)
+  );
 
   const isValid = useMemo<boolean>(() => {
     const _isValid = !pipe(
@@ -59,8 +63,11 @@ const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
   const _currentPlayerNames = useSelector(allPlayerNamesSelector, shallowEqual);
   // Make sure there is no useless reload of the whole handleChange function
   const currentPlayerNames = useMemo(
-    () => _currentPlayerNames.map(name => name.toLowerCase()),
-    [_currentPlayerNames.length]
+    () =>
+      _currentPlayerNames
+        .map(name => name.toLowerCase())
+        .filter(name => name !== originalPlayerName),
+    [_currentPlayerNames.length, originalPlayerName]
   );
 
   const handleChange = useCallback(
@@ -111,6 +118,7 @@ const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
   return (
     <Component
       {...state}
+      isUpdate={!!playerToUpdate}
       isValid={isValid}
       onChange={handleChange}
       onValidate={handleValidate}
@@ -118,4 +126,4 @@ const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
     />
   );
 };
-export default AddPlayerForm;
+export default UpsertPlayerForm;

@@ -2,7 +2,7 @@ import { Button, Input, Select, Typography } from 'antd';
 import { entries } from 'lodash/fp';
 import { FunctionComponent, memo } from 'react';
 import { Player } from '../../redux/Players';
-import { ClassBuild, ClassName, Role } from '../../types/index.d';
+import { ClassBuild, ClassName, Role } from '../../types';
 import classes from './index.module.css';
 
 type InputError = string;
@@ -43,13 +43,14 @@ export type Form = {
 
 export type Props = {
   isValid?: boolean;
+  isUpdate?: boolean;
   onChange: (prop: keyof Omit<Player, 'id'>, value: unknown) => void;
   onValidate: () => void;
   onCancel: () => void;
 } & Form;
 
-const AddPlayerForm: FunctionComponent<Props> = memo(
-  ({ isValid, onChange, onValidate, onCancel, ...form }) => (
+const UpsertPlayerForm: FunctionComponent<Props> = memo(
+  ({ isValid, isUpdate, onChange, onValidate, onCancel, ...form }) => (
     <div className={classes.container}>
       <div>
         <Typography.Title className={classes.title}>Player creation</Typography.Title>
@@ -118,12 +119,12 @@ const AddPlayerForm: FunctionComponent<Props> = memo(
           cancel
         </Button>
         <Button disabled={!isValid} onClick={isValid ? onValidate : undefined} type="primary">
-          create
+          {isUpdate ? 'update' : 'create'}
         </Button>
       </Button.Group>
     </div>
   )
 );
-AddPlayerForm.displayName = 'AddPlayerForm';
+UpsertPlayerForm.displayName = 'UpsertPlayerForm';
 
-export default AddPlayerForm;
+export default UpsertPlayerForm;

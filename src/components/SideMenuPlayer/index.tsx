@@ -1,4 +1,9 @@
-import { DeleteOutlined, EnvironmentOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EnvironmentOutlined,
+  MinusCircleOutlined,
+} from '@ant-design/icons';
 import { Avatar, Card, CardProps, Typography } from 'antd';
 import { FunctionComponent, memo, useCallback, useMemo } from 'react';
 import { BUILD_IMAGES } from '../../lib/player';
@@ -15,6 +20,7 @@ export type Props = Pick<Player, 'id' | 'name' | 'build'> & {
   onPosition: (id: Player['id']) => void;
   onDeletePlayer: () => void;
   onPositionDelete: () => void;
+  onEditPlayer: () => void;
 };
 
 const SideMenuPlayer: FunctionComponent<Props> = memo(
@@ -28,8 +34,10 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
     onPosition,
     onDeletePlayer,
     onPositionDelete,
+    onEditPlayer,
   }) => {
     const hasPosition = !!positionIndex || !!positionMarker;
+
     const handleDeletePlayer = useCallback(
       (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
         event.preventDefault();
@@ -48,6 +56,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
         isPreview
           ? undefined
           : [
+              <EditOutlined key="edit" onClick={onEditPlayer} />,
               <DeleteOutlined key="delete" onClick={handleDeletePlayer} />,
               positionIndex ? (
                 <MinusCircleOutlined onClick={onPositionDelete} />
@@ -55,7 +64,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
                 <EnvironmentOutlined key="localize" onClick={handlePosition} />
               ),
             ],
-      [positionIndex, onPositionDelete, handleDeletePlayer, handlePosition, isPreview]
+      [positionIndex, isPreview, onPositionDelete, handleDeletePlayer, handlePosition, onEditPlayer]
     );
 
     return (

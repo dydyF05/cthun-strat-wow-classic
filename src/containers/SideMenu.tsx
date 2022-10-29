@@ -6,7 +6,7 @@ import usePlayerStats from '../hooks/use-player-stats';
 import { setIsConfiguringAction } from '../redux/Settings';
 import { isAllianceSelector, isConfuringSelector } from '../redux/Settings/selectors';
 
-export type Props = Pick<ComponentProps, 'onAddPlayer'>;
+export type Props = Pick<ComponentProps, 'onAddPlayer' | 'onEditPlayer'>;
 
 const SideMenu: FunctionComponent<Props> = memo(props => {
   const isEditing = useSelector(isConfuringSelector, shallowEqual);

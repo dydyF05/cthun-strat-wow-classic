@@ -44,6 +44,39 @@ export const playersSlice = createSlice({
 
       state.push(...addablePlayers);
     },
+    updateMany: (state, { payload }: PayloadAction<Player[]>) => {
+      // Can't add already existing player
+      const updatablePlayers = payload.filter(
+        payloadPlayer => !!state.map(statePlayer => statePlayer.id).includes(payloadPlayer.id)
+      );
+      if (!updatablePlayers.length) {
+        payload.length &&
+          log({
+            message: "Cannot update any of the received players for their ids don't exist in store",
+            context: { state, updatablePlayers, payload },
+          });
+        return;
+      }
+
+      if (payload.length !== updatablePlayers.length) {
+        log({
+          message: 'Some of the players were filtered out for their id were not found in store',
+          context: { state, updatablePlayers, payload },
+        });
+      }
+
+      for (const player of updatablePlayers) {
+        const tarIndex = state.findIndex(statePlayer => statePlayer.id === player.id);
+        if (tarIndex !== -1) {
+          const update = {
+            ...state[tarIndex],
+            ...player,
+          };
+
+          state[tarIndex] = update;
+        }
+      }
+    },
     removeMany: (state, { payload }: PayloadAction<Player['id'][]>) => {
       const nextState = state.filter(({ id }) => !payload.includes(id));
 
@@ -59,6 +92,7 @@ export const playersSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   addMany: addManyAction,
+  updateMany: updateManyAction,
   removeMany: removeManyAction,
   reset: resetAction,
 } = playersSlice.actions;

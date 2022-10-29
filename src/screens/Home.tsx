@@ -2,47 +2,63 @@ import { FunctionComponent, useCallback, useState } from 'react';
 import ModalAddPlayer, { Props as AddPlayerProps } from '../components/ModalAddPlayer';
 import BossRoom from '../containers/BossRoom';
 import SelectedPlayer from '../containers/SelectedPlayer';
-import SideMenu from '../containers/SideMenu';
-import { useDispatch } from '../hooks/redux';
+import SideMenu, { Props as SideMenuProps } from '../containers/SideMenu';
+import { useDispatch, useSelector } from '../hooks/redux';
 import { generatePlayerId } from '../lib/player';
-import { addManyAction } from '../redux/Players';
+import { addManyAction, updateManyAction } from '../redux/Players';
+import { playerSelector } from '../redux/Players/selectors';
 import classes from './Home.module.css';
 
 export type Props = Record<string, never>;
 
 const Home: FunctionComponent<Props> = () => {
-  const [isAddingPlayer, setIsAddingPlayer] = useState(false);
+  const [playerIdToUpsert, setUpsertedPlayerId] = useState<boolean | string>(false);
+  const playerToEdit = useSelector(
+    playerSelector({ id: typeof playerIdToUpsert === 'string' ? playerIdToUpsert : '' })
+  );
   const dispatch = useDispatch();
 
   const handleCancelAddPlayer = useCallback(() => {
-    setIsAddingPlayer(false);
+    setUpsertedPlayerId(false);
   }, []);
 
   const handleAddPlayer = useCallback(() => {
-    setIsAddingPlayer(true);
+    setUpsertedPlayerId(true);
+  }, []);
+
+  const handleEditPlayer = useCallback<SideMenuProps['onEditPlayer']>(playerId => {
+    setUpsertedPlayerId(playerId);
   }, []);
 
   const handleValidate = useCallback<AddPlayerProps['onValidate']>(
     player => {
       dispatch(
-        addManyAction([
-          {
-            id: generatePlayerId(),
-            ...player,
-          },
-        ])
+        typeof playerIdToUpsert === 'string'
+          ? updateManyAction([
+              {
+                id: playerIdToUpsert,
+                ...player,
+              },
+            ])
+          : addManyAction([
+              {
+                id: generatePlayerId(),
+                ...player,
+              },
+            ])
       );
-      setIsAddingPlayer(false);
+      setUpsertedPlayerId(false);
     },
-    [dispatch]
+    [playerIdToUpsert, dispatch]
   );
 
   return (
     <div className={classes.container}>
       <BossRoom />
-      <SideMenu onAddPlayer={handleAddPlayer} />
+      <SideMenu onAddPlayer={handleAddPlayer} onEditPlayer={handleEditPlayer} />
       <ModalAddPlayer
-        isVisible={isAddingPlayer}
+        player={playerToEdit}
+        isVisible={!!playerIdToUpsert}
         onCancel={handleCancelAddPlayer}
         onValidate={handleValidate}
       />

@@ -8,7 +8,8 @@ import { positionWithPlayersCountSelector } from '../redux/Positions/selectors';
 import { setSelectedPlayerAction } from '../redux/Settings';
 import { isConfuringSelector } from '../redux/Settings/selectors';
 
-export type Props = PlayersSelectorFilters & Pick<ComponentProps, 'image' | 'title'>;
+export type Props = PlayersSelectorFilters &
+  Pick<ComponentProps, 'image' | 'title' | 'onEditPlayer'>;
 
 const DEFAULT_PLAYERS: ComponentProps['players'] = [];
 
