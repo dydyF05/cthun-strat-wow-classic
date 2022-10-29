@@ -15,7 +15,7 @@ export type Props = {
   marker?: PositionStateType['marker'];
   containerRef: ClassAttributes<HTMLDivElement>['ref'];
   onPress?: () => void;
-} & Partial<Player>;
+} & Partial<Pick<Player, 'name' | 'build'>>;
 
 const _Position: FunctionComponent<Props> = memo(
   ({ id, bottom, left, marker, hasPlayer, build, name, onPress, containerRef }) => (

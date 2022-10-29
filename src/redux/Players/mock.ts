@@ -1,10 +1,12 @@
 import { Player } from '.';
+import { generatePlayerId } from '../../lib/player';
 import { ClassBuild, ClassName, Role } from '../../types/index.d';
 import { Position } from '../Positions';
 
 type PlayerWithPositionId = Player & { positionId?: Position['index'] };
 
 export const playerFactory = (params?: Partial<Player>): Player => ({
+  id: generatePlayerId(),
   name: 'Rxr',
   className: ClassName.War,
   role: Role.DpsMelee,

@@ -34,7 +34,7 @@ export const createClassicConfigAction = (dispatch: ReturnType<typeof useDispatc
         .map(player =>
           setPlayerPositionAction({
             index: player.positionId as NonNullable<typeof player['positionId']>,
-            player: player.name,
+            player: player.id,
           })
         )
     )

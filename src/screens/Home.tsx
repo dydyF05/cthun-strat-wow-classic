@@ -4,6 +4,7 @@ import BossRoom from '../containers/BossRoom';
 import SelectedPlayer from '../containers/SelectedPlayer';
 import SideMenu from '../containers/SideMenu';
 import { useDispatch } from '../hooks/redux';
+import { generatePlayerId } from '../lib/player';
 import { addManyAction } from '../redux/Players';
 import classes from './Home.module.css';
 
@@ -23,7 +24,14 @@ const Home: FunctionComponent<Props> = () => {
 
   const handleValidate = useCallback<AddPlayerProps['onValidate']>(
     player => {
-      dispatch(addManyAction([player]));
+      dispatch(
+        addManyAction([
+          {
+            id: generatePlayerId(),
+            ...player,
+          },
+        ])
+      );
       setIsAddingPlayer(false);
     },
     [dispatch]

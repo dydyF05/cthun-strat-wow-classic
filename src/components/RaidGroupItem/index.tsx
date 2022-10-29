@@ -4,9 +4,10 @@ import classes from './index.module.css';
 
 export type Props = {
   id: number;
-  playerIds: Player['name'][];
+  playerIds: Player['id'][];
 };
 
+// @TODO create a generic InlinePlayer container+component to print a player
 const RaidGroupItem: FunctionComponent<Props> = memo(({ id, playerIds }) => (
   <div className={classes.container}>
     <p>Group {id}</p>

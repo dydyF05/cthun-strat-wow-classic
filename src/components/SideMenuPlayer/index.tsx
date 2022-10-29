@@ -8,11 +8,11 @@ import { Position } from '../../redux/Positions';
 import { Marker } from '../../types/index.d';
 import classes from './index.module.css';
 
-export type Props = Pick<Player, 'name' | 'build'> & {
+export type Props = Pick<Player, 'id' | 'name' | 'build'> & {
   positionIndex?: Position['index'];
   positionMarker?: Position['marker'];
   isPreview?: boolean;
-  onPosition: (name: Player['name']) => void;
+  onPosition: (id: Player['id']) => void;
   onDeletePlayer: () => void;
   onPositionDelete: () => void;
 };
@@ -21,6 +21,7 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
   ({
     positionIndex,
     positionMarker,
+    id,
     name,
     build,
     isPreview = false,
@@ -39,8 +40,8 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
     );
 
     const handlePosition = useCallback(() => {
-      onPosition(name);
-    }, [name, onPosition]);
+      onPosition(id);
+    }, [id, onPosition]);
 
     const actions = useMemo<CardProps['actions']>(
       () =>

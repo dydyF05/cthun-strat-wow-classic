@@ -9,7 +9,7 @@ import { allPlayerNamesSelector } from '../redux/Players/selectors';
 
 export type Props = {
   onCancel: () => void;
-  onValidate: (player: Player) => void;
+  onValidate: (player: Omit<Player, 'id'>) => void;
 };
 
 type ValidityParams = {
@@ -57,13 +57,14 @@ const AddPlayerForm: FunctionComponent<Props> = ({ onCancel, onValidate }) => {
   }, [state]);
 
   const _currentPlayerNames = useSelector(allPlayerNamesSelector, shallowEqual);
+  // Make sure there is no useless reload of the whole handleChange function
   const currentPlayerNames = useMemo(
     () => _currentPlayerNames.map(name => name.toLowerCase()),
     [_currentPlayerNames.length]
   );
 
   const handleChange = useCallback(
-    (prop: keyof Player, value: unknown) => {
+    (prop: keyof Omit<Player, 'id'>, value: unknown) => {
       const nextPropValue: BaseInput = {
         ...state[prop],
         error: undefined,

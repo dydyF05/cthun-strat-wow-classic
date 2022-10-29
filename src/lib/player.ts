@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import DroodEqui from '../assets/images/build_drood_equi.webp';
 import DroodFeral from '../assets/images/build_drood_feral.webp';
 import DroodHeal from '../assets/images/build_drood_heal.webp';
@@ -88,3 +89,5 @@ export const BUILD_IMAGES: Record<ClassBuild, string> = {
   [ClassBuild.ShamElem]: ShamElem,
   [ClassBuild.ShamResto]: ShamResto,
 };
+
+export const generatePlayerId = () => uuid();

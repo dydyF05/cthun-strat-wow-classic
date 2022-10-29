@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Player } from '../Players';
 
 export type State = {
   minimalPixelDistanceBetweenPlayers?: number;
@@ -32,7 +33,7 @@ export const settingsSlice = createSlice({
       state.graphWidth = payload.width;
       state.topStairsHeight = payload.topStairsHeight;
     },
-    setSelectedPlayer: (state, { payload }: PayloadAction<string | undefined>) => {
+    setSelectedPlayer: (state, { payload }: PayloadAction<Player['id'] | undefined>) => {
       state.selectedPlayer = payload;
     },
     setIsConfiguring: (state, { payload }: PayloadAction<boolean>) => {

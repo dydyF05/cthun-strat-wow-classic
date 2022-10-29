@@ -22,17 +22,17 @@ export const positionPlayerSelector =
     positionSelector(params)(state)?.playerId;
 
 export const positionForPlayer =
-  (playerName: string) =>
+  (playerId: string) =>
   (state: RootState): Position | undefined => {
     const positions = positionsSelector(state);
-    return positions.find(position => position.playerId === playerName);
+    return positions.find(position => position.playerId === playerId);
   };
 
 export const positionWithPlayerCountSelector = (state: RootState): number =>
   positionsSelector(state).filter(({ playerId }) => !!playerId).length;
 
 export const positionWithPlayersCountSelector =
-  (players?: Player['name'][]) =>
+  (players?: Player['id'][]) =>
   (state: RootState): number =>
     players?.length
       ? positionsSelector(state).filter(({ playerId }) => !!playerId && players.includes(playerId))

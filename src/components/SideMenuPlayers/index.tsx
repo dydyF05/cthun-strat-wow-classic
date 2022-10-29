@@ -10,7 +10,7 @@ export type Props = {
   image: string;
   playerPlacedCount: number;
   isPreview?: boolean;
-  players: Player['name'][];
+  players: Player['id'][];
   onPositionPlayer: SideMenuPlayerProps['onPosition'];
 };
 
@@ -21,7 +21,7 @@ const SideMenuPlayers: FunctionComponent<Props> = memo(
     const renderItem = useCallback<NonNullable<ListProps<Props['players'][0]>['renderItem']>>(
       player => (
         <div key={`discord-player-${player}`} className={classes.player}>
-          <SideMenuPlayer name={player} onPosition={onPositionPlayer} />
+          <SideMenuPlayer id={player} onPosition={onPositionPlayer} />
         </div>
       ),
       [onPositionPlayer]

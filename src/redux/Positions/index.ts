@@ -8,7 +8,7 @@ export type Position = {
   index: number;
   line: 'first' | 'second' | 'third' | 'fourth';
   zoneId: ZoneId;
-  playerId?: Player['name'];
+  playerId?: Player['id'];
   marker?: Marker;
   top?: number;
   left?: number;
@@ -19,7 +19,7 @@ export type State = Position[];
 const initialState: State = [];
 
 type SetPlayerAction = PayloadAction<
-  { player: Player['name'] | undefined } & Pick<Position, 'index'>
+  { player: Player['id'] | undefined } & Pick<Position, 'index'>
 >;
 export type SetNeighborsAction = PayloadAction<
   Record<Position['index'], { top: number; left: number }>

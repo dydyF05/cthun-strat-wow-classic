@@ -10,7 +10,7 @@ export type Props = Record<string, never>;
 
 const SelectedPlayer: FunctionComponent<Props> = () => {
   const playerId = useSelector(selectedPlayerSelector, shallowEqual);
-  const player = useSelector(playerSelector({ name: playerId || '' }), shallowEqual);
+  const player = useSelector(playerSelector({ id: playerId || '' }), shallowEqual);
   const dispatch = useDispatch();
 
   const handleCancel = useCallback(() => {

@@ -8,11 +8,11 @@ import { removePlayersFromPositionAction } from '../redux/Positions';
 import { positionForPlayer } from '../redux/Positions/selectors';
 import { isConfuringSelector, selectedPlayerSelector } from '../redux/Settings/selectors';
 
-export type Props = Pick<Player, 'name'> & Pick<ComponentProps, 'onPosition'>;
+export type Props = Pick<Player, 'id'> & Pick<ComponentProps, 'onPosition'>;
 
-const SideMenuPlayer: FunctionComponent<Props> = ({ name, ...props }) => {
-  const player = useSelector(playerSelector({ name }), shallowEqual);
-  const position = useSelector(positionForPlayer(name));
+const SideMenuPlayer: FunctionComponent<Props> = ({ id, ...props }) => {
+  const player = useSelector(playerSelector({ id }), shallowEqual);
+  const position = useSelector(positionForPlayer(id));
   const isEditing = useSelector(isConfuringSelector, shallowEqual);
   const isPositioningSomePlayer = useSelector(selectedPlayerSelector, shallowEqual);
   const dispatch = useDispatch();
@@ -20,8 +20,8 @@ const SideMenuPlayer: FunctionComponent<Props> = ({ name, ...props }) => {
   const positionIndex = position?.index;
 
   const handleDelete = useCallback(() => {
-    player && dispatch(removeManyAction([player.name]));
-  }, [player, dispatch]);
+    dispatch(removeManyAction([id]));
+  }, [id, dispatch]);
 
   const handlePositionDelete = useCallback(() => {
     positionIndex && dispatch(removePlayersFromPositionAction([positionIndex]));

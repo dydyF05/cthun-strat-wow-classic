@@ -12,12 +12,12 @@ export const playerWithRoleCount =
   (state: RootState): number =>
     playersSelector(state).filter(player => player.role === role).length;
 
-type PlayerSelectorParams = Pick<Player, 'name'>;
+type PlayerSelectorParams = Pick<Player, 'id'>;
 
 export const playerSelector =
-  ({ name }: PlayerSelectorParams) =>
+  ({ id }: PlayerSelectorParams) =>
   (state: RootState): Player | undefined =>
-    playersSelector(state).find(player => player.name === name);
+    playersSelector(state).find(player => player.id === id);
 
 type PlayersSelectorFiltersStrict = {
   roles: Role[];
@@ -27,7 +27,7 @@ export type PlayersSelectorFilters = Partial<PlayersSelectorFiltersStrict>;
 
 export const filteredPlayersSelector =
   (filters: PlayersSelectorFilters) =>
-  (state: RootState): Player['name'][] | undefined => {
+  (state: RootState): Player['id'][] | undefined => {
     if (!filters.classNames?.length && !filters.roles?.length) return undefined;
 
     const allPlayers = playersSelector(state);
@@ -43,7 +43,7 @@ export const filteredPlayersSelector =
             return !(filterValue as any).includes(player[playerProp]);
           })
       )
-      .map(player => player.name);
+      .map(player => player.id);
   };
 
 export const allPlayerNamesSelector = (state: RootState): Player['name'][] =>

@@ -1,3 +1,4 @@
+import { omit } from 'lodash/fp';
 import { FunctionComponent, useCallback, useLayoutEffect, useRef } from 'react';
 import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/Position';
@@ -20,29 +21,26 @@ const Position: FunctionComponent<Props> = props => {
   const { id, line } = props;
 
   const dispatch = useDispatch();
-  const selectedPlayer = useSelector(selectedPlayerSelector, shallowEqual);
+  const selectedPlayerId = useSelector(selectedPlayerSelector, shallowEqual);
 
   const marker = useSelector(positionMarkerSelector({ index: id, line }), shallowEqual);
-  const positionPlayerName = useSelector(positionPlayerSelector({ index: id, line }), shallowEqual);
+  const positionPlayerId = useSelector(positionPlayerSelector({ index: id, line }), shallowEqual);
 
-  const positionPlayer = useSelector(
-    playerSelector({ name: positionPlayerName || '' }),
-    shallowEqual
-  );
+  const positionPlayer = useSelector(playerSelector({ id: positionPlayerId || '' }), shallowEqual);
 
   const handlePress = useCallback(() => {
-    if (selectedPlayer) {
+    if (selectedPlayerId) {
       dispatch(
         setPlayerPositionAction({
           index: id,
-          player: selectedPlayer,
+          player: selectedPlayerId,
         })
       );
       dispatch(setSelectedPlayerAction(undefined));
     }
-  }, [id, selectedPlayer, dispatch]);
+  }, [id, selectedPlayerId, dispatch]);
 
-  const hasPlayer = !!positionPlayerName;
+  const hasPlayer = !!positionPlayerId;
 
   useLayoutEffect(() => {
     const triggerComputePosition = () => {
@@ -76,11 +74,11 @@ const Position: FunctionComponent<Props> = props => {
   return (
     <Component
       {...props}
-      {...(positionPlayer || {})}
+      {...omit(['id'], positionPlayer || {})}
       marker={marker}
       hasPlayer={hasPlayer}
       ref={ref}
-      onPress={selectedPlayer ? handlePress : undefined}
+      onPress={selectedPlayerId ? handlePress : undefined}
     />
   );
 };

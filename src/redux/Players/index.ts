@@ -3,7 +3,9 @@ import log from '../../lib/log';
 import { ClassBuild, ClassName, Role } from '../../types/index.d';
 
 export type Player = {
-  /** Also used as ID in WoW */
+  /** Front generated unique uuid on player creation */
+  id: string;
+  /** Name of the player */
   name: string;
   className: ClassName;
   build: ClassBuild;
@@ -20,7 +22,9 @@ export const playersSlice = createSlice({
   reducers: {
     addMany: (state, { payload }: PayloadAction<Player[]>) => {
       // Can't add already existing player
-      const addablePlayers = payload.filter(player => !state.includes(player));
+      const addablePlayers = payload.filter(
+        payloadPlayer => !state.map(statePlayer => statePlayer.name).includes(payloadPlayer.name)
+      );
       if (!addablePlayers.length) {
         payload.length &&
           log({
@@ -40,8 +44,8 @@ export const playersSlice = createSlice({
 
       state.push(...addablePlayers);
     },
-    removeMany: (state, { payload }: PayloadAction<Player['name'][]>) => {
-      const nextState = state.filter(({ name }) => !payload.includes(name));
+    removeMany: (state, { payload }: PayloadAction<Player['id'][]>) => {
+      const nextState = state.filter(({ id }) => !payload.includes(id));
 
       state.splice(0, state.length);
       state.push(...nextState);

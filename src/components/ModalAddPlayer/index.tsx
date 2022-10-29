@@ -4,7 +4,7 @@ import { Player } from '../../redux/Players';
 import Modal, { Props as ModalProps } from '../Modal';
 
 export type Props = {
-  onValidate: (player: Player) => void;
+  onValidate: (player: Omit<Player, 'id'>) => void;
 } & Omit<ModalProps, 'children'>;
 
 const ModalAddPlayer: FunctionComponent<Props> = memo(({ onValidate, ...props }) => (

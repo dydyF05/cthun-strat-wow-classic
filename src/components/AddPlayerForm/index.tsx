@@ -43,7 +43,7 @@ export type Form = {
 
 export type Props = {
   isValid?: boolean;
-  onChange: (prop: keyof Player, value: unknown) => void;
+  onChange: (prop: keyof Omit<Player, 'id'>, value: unknown) => void;
   onValidate: () => void;
   onCancel: () => void;
 } & Form;
@@ -74,7 +74,7 @@ const AddPlayerForm: FunctionComponent<Props> = memo(
                   autoFocus={!index}
                   disabled={item.isDisabled}
                   allowClear
-                  onChange={event => onChange(prop as keyof Player, event.target.value)}
+                  onChange={event => onChange(prop as keyof Omit<Player, 'id'>, event.target.value)}
                 />
               )}
               {item.type === 'select' && (
@@ -84,7 +84,7 @@ const AddPlayerForm: FunctionComponent<Props> = memo(
                   placeholder={item.placeholder}
                   disabled={item.isDisabled}
                   allowClear
-                  onChange={nextValue => onChange(prop as keyof Player, nextValue)}
+                  onChange={nextValue => onChange(prop as keyof Omit<Player, 'id'>, nextValue)}
                 >
                   {item.options.map(option => (
                     <Select.Option

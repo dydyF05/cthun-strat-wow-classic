@@ -23,8 +23,8 @@ const SideMenuPlayers: FunctionComponent<Props> = ({ roles, classNames, ...props
   const dispatch = useDispatch();
 
   const handlePositionPlayer = useCallback<ComponentProps['onPositionPlayer']>(
-    name => {
-      dispatch(setSelectedPlayerAction(name));
+    id => {
+      dispatch(setSelectedPlayerAction(id));
     },
     [dispatch]
   );
