@@ -3,9 +3,11 @@ import SideMenuPlayers from '../../containers/SideMenuPlayers';
 import { CLASS_IMAGES, ROLE_IMAGES } from '../../lib/player';
 import { ClassName, Role } from '../../types/index.d';
 
-export type Props = Record<string, never>;
+export type Props = {
+  isAlliance?: boolean;
+};
 
-const SideMenu: FunctionComponent<Props> = memo(() => (
+const SideMenu: FunctionComponent<Props> = memo(({ isAlliance = false }) => (
   <>
     <SideMenuPlayers
       title="Tanks"
@@ -27,13 +29,21 @@ const SideMenu: FunctionComponent<Props> = memo(() => (
       roles={[Role.DpsDistance, Role.Heal, Role.DpsMelee]}
     />
     <SideMenuPlayers title="Priests" classNames={[ClassName.Priest]} image={CLASS_IMAGES.Priest} />
-    <SideMenuPlayers title="Shamans" classNames={[ClassName.Shaman]} image={CLASS_IMAGES.Shaman} />
-    <SideMenuPlayers
-      title="Paladins"
-      roles={[Role.DpsMelee, Role.Heal]}
-      classNames={[ClassName.Paladin]}
-      image={CLASS_IMAGES.Paladin}
-    />
+    {!isAlliance && (
+      <SideMenuPlayers
+        title="Shamans"
+        classNames={[ClassName.Shaman]}
+        image={CLASS_IMAGES.Shaman}
+      />
+    )}
+    {isAlliance && (
+      <SideMenuPlayers
+        title="Paladins"
+        roles={[Role.DpsMelee, Role.Heal]}
+        classNames={[ClassName.Paladin]}
+        image={CLASS_IMAGES.Paladin}
+      />
+    )}
     <SideMenuPlayers title="Hunters" classNames={[ClassName.Hunt]} image={CLASS_IMAGES.Hunt} />
     <SideMenuPlayers title="Mages" classNames={[ClassName.Mage]} image={CLASS_IMAGES.Mage} />
     <SideMenuPlayers

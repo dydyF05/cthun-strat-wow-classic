@@ -1,7 +1,10 @@
 import { FunctionComponent, useCallback } from 'react';
+import { shallowEqual } from 'react-redux';
 import Component from '../components/SideMenuDropdown';
-import { useDispatch } from '../hooks/redux';
+import { useDispatch, useSelector } from '../hooks/redux';
 import { createClassicConfigAction, resetPlayersAction } from '../redux/global-actions';
+import { toggleIsAllianceAction } from '../redux/Settings';
+import { isAllianceSelector } from '../redux/Settings/selectors';
 
 type Props = {
   key?: string;
@@ -9,6 +12,7 @@ type Props = {
 
 const DropdownMenu: FunctionComponent<Props> = () => {
   const dispatch = useDispatch();
+  const isAlliance = useSelector(isAllianceSelector, shallowEqual);
 
   const handleNuke = useCallback(() => {
     resetPlayersAction(dispatch);
@@ -18,7 +22,18 @@ const DropdownMenu: FunctionComponent<Props> = () => {
     createClassicConfigAction(dispatch);
   }, [dispatch]);
 
-  return <Component onNukeAll={handleNuke} onFillClassicPlayers={handleClassicPlayers} />;
+  const handleToggleAlliance = useCallback(() => {
+    dispatch(toggleIsAllianceAction());
+  }, [dispatch]);
+
+  return (
+    <Component
+      isAlliance={isAlliance}
+      onToggleAlliance={handleToggleAlliance}
+      onNukeAll={handleNuke}
+      onFillClassicPlayers={handleClassicPlayers}
+    />
+  );
 };
 
 export default DropdownMenu;

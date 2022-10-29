@@ -6,7 +6,7 @@ export const MAX_PLAYERS_PER_GROUP = 5;
 
 export type Group = {
   id: number;
-  playerIds: Player['name'][];
+  playerIds: Player['id'][];
 };
 
 /** Groups state */

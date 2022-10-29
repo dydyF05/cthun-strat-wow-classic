@@ -11,6 +11,7 @@ export type State = {
   selectedPlayer?: string;
   /** Are we trying to place players. Disable to take a screenshot ;) */
   isConfiguring: boolean;
+  isAlliance: boolean;
 };
 
 const initialState: State = {
@@ -19,6 +20,7 @@ const initialState: State = {
   topStairsHeight: 0,
   bossZoneSizeRatio: 0.25,
   isConfiguring: true,
+  isAlliance: false,
 };
 
 export const settingsSlice = createSlice({
@@ -35,6 +37,9 @@ export const settingsSlice = createSlice({
     },
     setSelectedPlayer: (state, { payload }: PayloadAction<Player['id'] | undefined>) => {
       state.selectedPlayer = payload;
+    },
+    toggleIsAlliance: state => {
+      state.isAlliance = !state.isAlliance;
     },
     setIsConfiguring: (state, { payload }: PayloadAction<boolean>) => {
       state.isConfiguring = payload;
@@ -57,6 +62,7 @@ export const {
   setSelectedPlayer: setSelectedPlayerAction,
   setIsConfiguring: setIsConfiguringAction,
   setMinimalDistanceBetweenPlayers: setMinimalDistanceBetweenPlayersAction,
+  toggleIsAlliance: toggleIsAllianceAction,
   reset: resetAction,
 } = settingsSlice.actions;
 

@@ -3,7 +3,7 @@ import { FunctionComponent, memo } from 'react';
 import Dropdown from '../../containers/SideMenuDropdown';
 import AddPlayerButton from '../AddPlayerButton';
 import RaidGroups from '../RaidGroups';
-import RaidHelperPlayers from '../RaidHelperPlayers';
+import RaidHelperPlayers, { Props as RaidHelperPlayersProps } from '../RaidHelperPlayers';
 import classes from './index.module.css';
 
 export type Props = {
@@ -16,7 +16,7 @@ export type Props = {
   isEditing: boolean;
   onAddPlayer: () => void;
   onToggleConfiguring: () => void;
-};
+} & RaidHelperPlayersProps;
 
 const SideMenu: FunctionComponent<Props> = memo(
   ({
@@ -29,6 +29,7 @@ const SideMenu: FunctionComponent<Props> = memo(
     isEditing,
     onToggleConfiguring,
     onAddPlayer,
+    ...props
   }) => (
     <div className={classes.container}>
       <PageHeader
@@ -55,7 +56,7 @@ const SideMenu: FunctionComponent<Props> = memo(
       >
         <Tabs.TabPane tab="classes" key="rh" tabKey="rh" style={{ flex: 1 }}>
           <div className={classes.players}>
-            <RaidHelperPlayers />
+            <RaidHelperPlayers {...props} />
           </div>
         </Tabs.TabPane>
         <Tabs.TabPane tab="groups" key="groups" tabKey="groups" style={{ flex: 1 }}>

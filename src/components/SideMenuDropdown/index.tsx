@@ -3,11 +3,18 @@ import { Button, Dropdown, Menu } from 'antd';
 import { FunctionComponent, useMemo } from 'react';
 
 type Props = {
+  isAlliance: boolean;
   onFillClassicPlayers: () => void;
   onNukeAll: () => void;
+  onToggleAlliance: () => void;
 };
 
-const DropdownMenu: FunctionComponent<Props> = ({ onNukeAll, onFillClassicPlayers }) => {
+const DropdownMenu: FunctionComponent<Props> = ({
+  isAlliance,
+  onToggleAlliance,
+  onNukeAll,
+  onFillClassicPlayers,
+}) => {
   const menu = useMemo(
     () => (
       <Menu
@@ -20,10 +27,18 @@ const DropdownMenu: FunctionComponent<Props> = ({ onNukeAll, onFillClassicPlayer
             key: '2',
             label: <p onClick={onFillClassicPlayers}>Classic config</p>,
           },
+          {
+            key: '3',
+            label: (
+              <p onClick={onToggleAlliance}>
+                {isAlliance ? 'Switch to horde' : 'Switch to alliance'}
+              </p>
+            ),
+          },
         ]}
       />
     ),
-    [onFillClassicPlayers, onNukeAll]
+    [isAlliance, onFillClassicPlayers, onNukeAll, onToggleAlliance]
   );
 
   return (

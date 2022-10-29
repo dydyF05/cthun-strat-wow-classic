@@ -25,3 +25,6 @@ export const minimalPixelDistanceBetweenPlayersSelector = (
   state: RootState
 ): State['minimalPixelDistanceBetweenPlayers'] =>
   settingsSelector(state).minimalPixelDistanceBetweenPlayers;
+
+export const isAllianceSelector = (state: RootState): State['isAlliance'] =>
+  settingsSelector(state).isAlliance;
