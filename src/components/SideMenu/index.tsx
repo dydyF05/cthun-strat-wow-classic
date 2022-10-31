@@ -1,8 +1,8 @@
 import { Checkbox, PageHeader, Tabs, Typography } from 'antd';
 import { FunctionComponent, memo } from 'react';
+import RaidGroups from '../../containers/RaidGroups';
 import Dropdown from '../../containers/SideMenuDropdown';
 import AddPlayerButton from '../AddPlayerButton';
-import RaidGroups from '../RaidGroups';
 import RaidHelperPlayers, { Props as RaidHelperPlayersProps } from '../RaidHelperPlayers';
 import classes from './index.module.css';
 

@@ -1,18 +1,18 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
 import { FunctionComponent, memo } from 'react';
+import RaidGroupItem from '../../containers/RaidGroupItem';
 import classes from './index.module.css';
 
 export type Props = {
   groupIds?: number[];
 };
 
-const RaidGroups: FunctionComponent<Props> = memo(() => (
+const RaidGroups: FunctionComponent<Props> = memo(({ groupIds }) => (
   <div className={classes.container}>
-    <ExclamationCircleOutlined />
-    <Typography.Title style={{ color: 'var(--color-grey-light)', marginTop: 20 }} level={4}>
-      Position players on the schema first
-    </Typography.Title>
+    {groupIds?.map(id => (
+      <div key={`group-${id}`}>
+        <RaidGroupItem id={id} />
+      </div>
+    ))}
   </div>
 ));
 RaidGroups.displayName = 'RaidGroups';

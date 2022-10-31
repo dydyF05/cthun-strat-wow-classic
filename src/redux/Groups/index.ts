@@ -6,7 +6,7 @@ export const MAX_PLAYERS_PER_GROUP = 5;
 
 export type Group = {
   id: number;
-  playerIds: Player['id'][];
+  playerIds: (Player['id'] | undefined)[];
 };
 
 /** Groups state */
@@ -22,7 +22,7 @@ export type RemovePlayersInGroups = AddPlayerInGroup[];
 const getInitialState = (): State =>
   Array.from({ length: 8 }).map((_, index) => ({
     id: index + 1,
-    playerIds: [],
+    playerIds: Array.from({ length: MAX_PLAYERS_PER_GROUP }).map(() => undefined),
   }));
 
 export const groupsSlice = createSlice({
