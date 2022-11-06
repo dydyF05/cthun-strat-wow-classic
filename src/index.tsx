@@ -1,5 +1,7 @@
 import { Row, Spin } from 'antd';
 import React from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
@@ -28,7 +30,9 @@ root.render(
         }
         persistor={persistStore}
       >
-        <App />
+        <DndProvider backend={HTML5Backend}>
+          <App />
+        </DndProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

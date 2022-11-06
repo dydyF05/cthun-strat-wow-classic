@@ -1,16 +1,18 @@
 import { omit } from 'lodash/fp';
-import { FunctionComponent, useCallback, useLayoutEffect, useRef } from 'react';
+import { FunctionComponent, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useDrag } from 'react-dnd';
 import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/Position';
 import { useDispatch, useSelector } from '../hooks/redux';
+import { DraggablePlayerItem, DraggableType } from '../lib/draggable';
 import { playerSelector } from '../redux/Players/selectors';
 import { computePositionsNeihborsAction, setPlayerPositionAction } from '../redux/Positions';
 import { positionMarkerSelector, positionPlayerSelector } from '../redux/Positions/selectors';
-import { setSelectedPlayerAction } from '../redux/Settings';
-import { selectedPlayerSelector } from '../redux/Settings/selectors';
+import { setDraggedPlayerAction, setSelectedPlayerAction } from '../redux/Settings';
+import { draggedPlayerIdSelector, selectedPlayerSelector } from '../redux/Settings/selectors';
 import { RESIZE_DEBOUNCE_TRIGGER_GRAPH_MEASURES } from '../types/index.d';
 
-export type Props = Omit<ComponentProps, 'marker' | 'containerRef' | 'onPress'>;
+export type Props = Omit<ComponentProps, 'marker' | 'containerRef' | 'onPress' | 'dragPlayerRef'>;
 
 let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -22,9 +24,31 @@ const Position: FunctionComponent<Props> = props => {
 
   const dispatch = useDispatch();
   const selectedPlayerId = useSelector(selectedPlayerSelector, shallowEqual);
+  const draggedPlayerId = useSelector(draggedPlayerIdSelector, shallowEqual);
 
   const marker = useSelector(positionMarkerSelector({ index: id, line }), shallowEqual);
   const positionPlayerId = useSelector(positionPlayerSelector({ index: id, line }), shallowEqual);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [{ isDragging }, dragRef] = useDrag<DraggablePlayerItem, unknown, { isDragging: boolean }>(
+    () => ({
+      type: DraggableType.Player,
+      item: { id: positionPlayerId || '' },
+      end: () => {
+        dispatch(setDraggedPlayerAction());
+      },
+      collect: monitor => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }),
+    [positionPlayerId]
+  );
+
+  useEffect(() => {
+    if (!draggedPlayerId && isDragging && positionPlayerId) {
+      dispatch(setDraggedPlayerAction(positionPlayerId));
+    }
+  }, [dispatch, isDragging, draggedPlayerId, positionPlayerId]);
 
   const positionPlayer = useSelector(playerSelector({ id: positionPlayerId || '' }), shallowEqual);
 
@@ -78,6 +102,7 @@ const Position: FunctionComponent<Props> = props => {
       marker={marker}
       hasPlayer={hasPlayer}
       ref={ref}
+      dragPlayerRef={dragRef}
       onPress={selectedPlayerId ? handlePress : undefined}
     />
   );

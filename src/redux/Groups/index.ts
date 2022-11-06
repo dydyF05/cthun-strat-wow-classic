@@ -13,11 +13,12 @@ export type Group = {
 export type State = Group[];
 
 type AddPlayerInGroup = {
-  groupdId: Group['id'];
+  groupId: Group['id'];
+  index?: number;
   playerId: Group['playerIds'][0];
 };
 
-export type RemovePlayersInGroups = AddPlayerInGroup[];
+export type RemovePlayersInGroups = Omit<AddPlayerInGroup, 'index'>[];
 
 const getInitialState = (): State =>
   Array.from({ length: 8 }).map((_, index) => ({
@@ -30,12 +31,33 @@ export const groupsSlice = createSlice({
   initialState: getInitialState(),
   reducers: {
     addPlayerToGroup: (state, { payload }: PayloadAction<AddPlayerInGroup>) => {
-      const group = state.find(group => group.id === payload.groupdId);
-      if (!group || group.playerIds.includes(payload.playerId)) {
+      const group = state.find(group => group.id === payload.groupId);
+      if (!group) {
         return;
       }
 
-      group.playerIds.push(payload.playerId);
+      // Remove player id occurences first
+      for (const group of state) {
+        for (let index = 0; index < group.playerIds.length; index++) {
+          const element = group.playerIds[index];
+          if (element === payload.playerId) {
+            group.playerIds[index] = undefined;
+          }
+        }
+      }
+
+      if (typeof payload.index === typeof 123) {
+        group.playerIds[payload.index as number] = payload.playerId;
+        return;
+      }
+
+      const firstEmptyIndex = group.playerIds.findIndex(slot => !slot);
+      if (firstEmptyIndex !== -1) {
+        group.playerIds[firstEmptyIndex] = payload.playerId;
+        return;
+      }
+
+      group.playerIds[MAX_PLAYERS_PER_GROUP - 1] = payload.playerId;
     },
     removePlayersFromGroups: (state, { payload }: PayloadAction<RemovePlayersInGroups>) => {
       const playersByGroup = groupBy<RemovePlayersInGroups[0]>('groupId')(payload);
@@ -46,9 +68,19 @@ export const groupsSlice = createSlice({
           return;
         }
 
-        const playerIdsToRemove = playersToRemove.map(({ playerId }) => playerId);
+        const playerIdsToRemove = playersToRemove
+          .map(({ playerId }) => playerId)
+          .reduce((record, playerId) => {
+            playerId && (record[playerId] = true);
+            return record;
+          }, {} as Record<string, true>);
 
-        group.playerIds = group.playerIds.filter(id => !playerIdsToRemove.includes(id));
+        for (let index = 0; index < group.playerIds.length; index++) {
+          const slot = group.playerIds[index];
+          if (slot && playerIdsToRemove[slot]) {
+            group.playerIds[index] = undefined;
+          }
+        }
       });
     },
     reset: state => {
@@ -58,7 +90,10 @@ export const groupsSlice = createSlice({
   },
 });
 // Action creators are generated for each case reducer function
-export const { removePlayersFromGroups: removePlayersFromGroupsAction, reset: resetAction } =
-  groupsSlice.actions;
+export const {
+  removePlayersFromGroups: removePlayersFromGroupsAction,
+  reset: resetAction,
+  addPlayerToGroup: addPlayerToGroupAction,
+} = groupsSlice.actions;
 
 export default groupsSlice.reducer;

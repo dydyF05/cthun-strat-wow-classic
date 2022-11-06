@@ -66,11 +66,18 @@
 }
 .player > span {
   color: black;
+  background-color: rgba(255, 255, 255, 0.3);
   margin-left: 3px;
+  user-select: none;
+  cursor: grab;
 }
 
 .container[data-marker="true"] .positionIndex[data-hasplayer="true"] {
   background-color: #fff;
+}
+.positionIndex {
+  cursor: unset;
+  user-select: none;
 }
 .positionIndex[data-hasplayer="true"] {
   color: #fff;

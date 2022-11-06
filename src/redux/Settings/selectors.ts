@@ -12,8 +12,11 @@ export const graphHeightSelector = (state: RootState): State['graphHeight'] =>
 export const graphTopStairsHeight = (state: RootState): State['topStairsHeight'] =>
   settingsSelector(state).topStairsHeight;
 
-export const selectedPlayerSelector = (state: RootState): State['selectedPlayer'] =>
-  settingsSelector(state).selectedPlayer;
+export const selectedPlayerSelector = (state: RootState): State['selectedPlayerId'] =>
+  settingsSelector(state).selectedPlayerId;
+
+export const draggedPlayerIdSelector = (state: RootState): State['draggedPlayerId'] =>
+  settingsSelector(state).draggedPlayerId;
 
 export const isConfuringSelector = (state: RootState): State['isConfiguring'] =>
   settingsSelector(state).isConfiguring;

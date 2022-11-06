@@ -30,7 +30,7 @@ listener.startListening({
         }
 
         return {
-          groupdId: group.id,
+          groupId: group.id,
           playerId,
         };
       }),

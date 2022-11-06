@@ -4,16 +4,13 @@ import {
   EnvironmentOutlined,
   MinusCircleOutlined,
 } from '@ant-design/icons';
-import { Avatar, Card, CardProps, Typography } from 'antd';
+import { CardProps } from 'antd';
 import { FunctionComponent, memo, useCallback, useMemo } from 'react';
-import { BUILD_IMAGES } from '../../lib/player';
-import { MARKER_IMAGE } from '../../lib/position';
 import { Player } from '../../redux/Players';
 import { Position } from '../../redux/Positions';
-import { Marker } from '../../types/index.d';
-import classes from './index.module.css';
+import PlayerCard, { Props as PlayerCardProps } from '../PlayerCard';
 
-export type Props = Pick<Player, 'id' | 'name' | 'build'> & {
+export type Props = Pick<Player, 'id'> & {
   positionIndex?: Position['index'];
   positionMarker?: Position['marker'];
   isPreview?: boolean;
@@ -21,23 +18,19 @@ export type Props = Pick<Player, 'id' | 'name' | 'build'> & {
   onDeletePlayer: () => void;
   onPositionDelete: () => void;
   onEditPlayer: () => void;
-};
+} & Omit<PlayerCardProps, 'actions'>;
 
 const SideMenuPlayer: FunctionComponent<Props> = memo(
   ({
     positionIndex,
-    positionMarker,
     id,
-    name,
-    build,
     isPreview = false,
     onPosition,
     onDeletePlayer,
     onPositionDelete,
     onEditPlayer,
+    ...props
   }) => {
-    const hasPosition = !!positionIndex || !!positionMarker;
-
     const handleDeletePlayer = useCallback(
       (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
         event.preventDefault();
@@ -68,30 +61,12 @@ const SideMenuPlayer: FunctionComponent<Props> = memo(
     );
 
     return (
-      <Card
-        data-preview={isPreview}
-        data-positioned={hasPosition}
-        className={classes.container}
+      <PlayerCard
+        {...props}
+        positionIndex={positionIndex}
+        isPreview={isPreview}
         actions={actions}
-      >
-        <Card.Meta
-          avatar={
-            <div className={classes.avatar}>
-              <Avatar src={BUILD_IMAGES[build]} />
-              {positionIndex
-                ? (!positionMarker && (
-                    <Typography.Title level={5} className={classes.positionIndex}>
-                      {positionIndex}
-                    </Typography.Title>
-                  )) || (
-                    <img className={classes.marker} src={MARKER_IMAGE[positionMarker as Marker]} />
-                  )
-                : null}
-            </div>
-          }
-          title={name}
-        />
-      </Card>
+      />
     );
   }
 );

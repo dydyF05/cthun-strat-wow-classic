@@ -8,7 +8,8 @@ export type State = {
   /** The ratio (0 to 1) the central boss zone occupates within the graph */
   bossZoneSizeRatio: number;
   topStairsHeight: number;
-  selectedPlayer?: string;
+  selectedPlayerId?: string;
+  draggedPlayerId?: string;
   /** Are we trying to place players. Disable to take a screenshot ;) */
   isConfiguring: boolean;
   isAlliance: boolean;
@@ -36,7 +37,10 @@ export const settingsSlice = createSlice({
       state.topStairsHeight = payload.topStairsHeight;
     },
     setSelectedPlayer: (state, { payload }: PayloadAction<Player['id'] | undefined>) => {
-      state.selectedPlayer = payload;
+      state.selectedPlayerId = payload;
+    },
+    setDraggedPlayer: (state, { payload }: PayloadAction<Player['id'] | undefined>) => {
+      state.draggedPlayerId = payload;
     },
     toggleIsAlliance: state => {
       state.isAlliance = !state.isAlliance;
@@ -44,14 +48,15 @@ export const settingsSlice = createSlice({
     setIsConfiguring: (state, { payload }: PayloadAction<boolean>) => {
       state.isConfiguring = payload;
       if (!payload) {
-        state.selectedPlayer = undefined;
+        state.selectedPlayerId = undefined;
       }
     },
     setMinimalDistanceBetweenPlayers: (state, { payload }: PayloadAction<number>) => {
       state.minimalPixelDistanceBetweenPlayers = payload;
     },
     reset: state => {
-      state.selectedPlayer = undefined;
+      state.selectedPlayerId = undefined;
+      state.draggedPlayerId = undefined;
     },
   },
 });
@@ -60,6 +65,7 @@ export const settingsSlice = createSlice({
 export const {
   setGraphMeasures: setGraphMeasuresAction,
   setSelectedPlayer: setSelectedPlayerAction,
+  setDraggedPlayer: setDraggedPlayerAction,
   setIsConfiguring: setIsConfiguringAction,
   setMinimalDistanceBetweenPlayers: setMinimalDistanceBetweenPlayersAction,
   toggleIsAlliance: toggleIsAllianceAction,

@@ -17,7 +17,7 @@ type PlayerSelectorParams = Pick<Player, 'id'>;
 export const playerSelector =
   ({ id }: PlayerSelectorParams) =>
   (state: RootState): Player | undefined =>
-    playersSelector(state).find(player => player.id === id);
+    id ? playersSelector(state).find(player => player.id === id) : undefined;
 
 type PlayersSelectorFiltersStrict = {
   roles: Role[];

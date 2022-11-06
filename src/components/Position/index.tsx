@@ -1,5 +1,6 @@
 import { Typography } from 'antd';
 import { ClassAttributes, forwardRef, FunctionComponent, memo } from 'react';
+import { ConnectDragSource } from 'react-dnd';
 import { BUILD_IMAGES } from '../../lib/player';
 import { MARKER_IMAGE } from '../../lib/position';
 import { Player } from '../../redux/Players';
@@ -14,11 +15,12 @@ export type Props = {
   hasPlayer?: boolean;
   marker?: PositionStateType['marker'];
   containerRef: ClassAttributes<HTMLDivElement>['ref'];
+  dragPlayerRef: ConnectDragSource;
   onPress?: () => void;
 } & Partial<Pick<Player, 'name' | 'build'>>;
 
 const _Position: FunctionComponent<Props> = memo(
-  ({ id, bottom, left, marker, hasPlayer, build, name, onPress, containerRef }) => (
+  ({ id, bottom, left, marker, hasPlayer, build, name, onPress, containerRef, dragPlayerRef }) => (
     <div
       className={classes.container}
       data-marker={!!marker}
@@ -44,7 +46,7 @@ const _Position: FunctionComponent<Props> = memo(
         />
       )}
       {!!hasPlayer && !!build && !!name && (
-        <div className={classes.player}>
+        <div className={classes.player} ref={dragPlayerRef}>
           {/* {!!marker && <img className={classes.markerPlayerBuild} src={BUILD_IMAGES[build]} />} */}
           <Typography.Text style={{ margin: marker ? 'none' : '1vh' }} italic>
             {name.slice(0, 7)}
