@@ -86,3 +86,17 @@
 .markerPlayerBuild {
   border-radius: 100%;
 }
+
+
+@keyframes shine {
+  from {transform: scale(1.5,1.5);}
+  to {transform: scale(2,2);}
+}
+.groupColor {
+  position: absolute;
+  height: 4vh;
+  width: 4vh;
+  border-radius: 100%;
+  z-index: 1;
+  animation: shine .4s alternate 0s infinite;
+}

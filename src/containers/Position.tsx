@@ -4,6 +4,7 @@ import { useDrag } from 'react-dnd';
 import { shallowEqual } from 'react-redux';
 import Component, { Props as ComponentProps } from '../components/Position';
 import { useDispatch, useSelector } from '../hooks/redux';
+import { usePlayerGroupColor } from '../hooks/use-group-color';
 import { DraggablePlayerItem, DraggableType } from '../lib/draggable';
 import { playerSelector } from '../redux/Players/selectors';
 import { computePositionsNeihborsAction, setPlayerPositionAction } from '../redux/Positions';
@@ -28,6 +29,7 @@ const Position: FunctionComponent<Props> = props => {
 
   const marker = useSelector(positionMarkerSelector({ index: id, line }), shallowEqual);
   const positionPlayerId = useSelector(positionPlayerSelector({ index: id, line }), shallowEqual);
+  const playerGroupColor = usePlayerGroupColor(positionPlayerId);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ isDragging }, dragRef] = useDrag<DraggablePlayerItem, unknown, { isDragging: boolean }>(
@@ -99,6 +101,7 @@ const Position: FunctionComponent<Props> = props => {
     <Component
       {...props}
       {...omit(['id'], positionPlayer || {})}
+      groupColor={playerGroupColor}
       marker={marker}
       hasPlayer={hasPlayer}
       ref={ref}

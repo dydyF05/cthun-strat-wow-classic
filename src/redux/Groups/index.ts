@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { entries, groupBy } from 'lodash/fp';
+import { getColorForGroupIndex } from '../../theme';
 import { Player } from '../Players';
 
 export const MAX_PLAYERS_PER_GROUP = 5;
@@ -7,6 +8,7 @@ export const MAX_PLAYERS_PER_GROUP = 5;
 export type Group = {
   id: number;
   playerIds: (Player['id'] | undefined)[];
+  color: string;
 };
 
 /** Groups state */
@@ -17,6 +19,11 @@ type AddPlayerInGroup = {
   index?: number;
   playerId: Group['playerIds'][0];
 };
+type AddPlayersInGroups = {
+  groupId: Group['id'];
+  index: number;
+  playerId: Group['playerIds'][0];
+}[];
 
 export type RemovePlayersInGroups = Omit<AddPlayerInGroup, 'index'>[];
 
@@ -24,6 +31,7 @@ const getInitialState = (): State =>
   Array.from({ length: 8 }).map((_, index) => ({
     id: index + 1,
     playerIds: Array.from({ length: MAX_PLAYERS_PER_GROUP }).map(() => undefined),
+    color: getColorForGroupIndex(index),
   }));
 
 export const groupsSlice = createSlice({
@@ -58,6 +66,16 @@ export const groupsSlice = createSlice({
       }
 
       group.playerIds[MAX_PLAYERS_PER_GROUP - 1] = payload.playerId;
+    },
+    addPlayersToGroup: (state, { payload }: PayloadAction<AddPlayersInGroups>) => {
+      for (const player of payload) {
+        const group = state.find(group => group.id === player.groupId);
+        if (!group) {
+          continue;
+        }
+
+        group.playerIds[player.index] = player.playerId;
+      }
     },
     removePlayersFromGroups: (state, { payload }: PayloadAction<RemovePlayersInGroups>) => {
       const playersByGroup = groupBy<RemovePlayersInGroups[0]>('groupId')(payload);
@@ -94,6 +112,7 @@ export const {
   removePlayersFromGroups: removePlayersFromGroupsAction,
   reset: resetAction,
   addPlayerToGroup: addPlayerToGroupAction,
+  addPlayersToGroup: addPlayersToGroupAction,
 } = groupsSlice.actions;
 
 export default groupsSlice.reducer;

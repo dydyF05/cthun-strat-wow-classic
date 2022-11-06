@@ -1,6 +1,6 @@
 import { omit } from 'lodash/fp';
 import { useDispatch } from '../hooks/redux';
-import { resetAction as resetGroupsAction } from './Groups';
+import { addPlayersToGroupAction, resetAction as resetGroupsAction } from './Groups';
 import {
   addManyAction as addManyPlayersAction,
   resetAction as _resetPlayersAction,
@@ -37,6 +37,19 @@ export const createClassicConfigAction = (dispatch: ReturnType<typeof useDispatc
             player: player.id,
           })
         )
+    )
+  );
+
+  dispatch(
+    addPlayersToGroupAction(
+      roster
+        .filter(player => player.groupId !== undefined && player.groupIndex !== undefined)
+        .map(player => ({
+          playerId: player.id,
+          groupId: player.groupId as number,
+          index: player.groupIndex as number,
+          playerName: player.name,
+        }))
     )
   );
 };

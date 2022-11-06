@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { uniq } from 'lodash/fp';
+import { Group } from '../Groups';
 import { Player } from '../Players';
 
 export type State = {
@@ -13,6 +15,7 @@ export type State = {
   /** Are we trying to place players. Disable to take a screenshot ;) */
   isConfiguring: boolean;
   isAlliance: boolean;
+  shiningGroupIds: Group['id'][];
 };
 
 const initialState: State = {
@@ -22,6 +25,7 @@ const initialState: State = {
   bossZoneSizeRatio: 0.25,
   isConfiguring: true,
   isAlliance: false,
+  shiningGroupIds: [],
 };
 
 export const settingsSlice = createSlice({
@@ -49,10 +53,17 @@ export const settingsSlice = createSlice({
       state.isConfiguring = payload;
       if (!payload) {
         state.selectedPlayerId = undefined;
+        state.shiningGroupIds = [];
       }
     },
     setMinimalDistanceBetweenPlayers: (state, { payload }: PayloadAction<number>) => {
       state.minimalPixelDistanceBetweenPlayers = payload;
+    },
+    addShiningGroupIds: (state, { payload }: PayloadAction<Group['id'][]>) => {
+      state.shiningGroupIds = uniq([...state.shiningGroupIds, ...payload]);
+    },
+    removeShiningGroupIds: (state, { payload }: PayloadAction<Group['id'][]>) => {
+      state.shiningGroupIds = state.shiningGroupIds.filter(id => !payload.includes(id));
     },
     reset: state => {
       state.selectedPlayerId = undefined;
@@ -68,6 +79,8 @@ export const {
   setDraggedPlayer: setDraggedPlayerAction,
   setIsConfiguring: setIsConfiguringAction,
   setMinimalDistanceBetweenPlayers: setMinimalDistanceBetweenPlayersAction,
+  addShiningGroupIds: addShiningGroupIdsAction,
+  removeShiningGroupIds: removeShiningGroupIdsAction,
   toggleIsAlliance: toggleIsAllianceAction,
   reset: resetAction,
 } = settingsSlice.actions;

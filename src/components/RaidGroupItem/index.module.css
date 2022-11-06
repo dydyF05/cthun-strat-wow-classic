@@ -3,6 +3,7 @@
   flex-direction: column;
   padding: 0 16px;
   width: 200px;
+  flex: 1;
 }
 
 .item:not(:first-of-type) {

@@ -1,9 +1,14 @@
 import { Player } from '.';
 import { generatePlayerId } from '../../lib/player';
 import { ClassBuild, ClassName, Role } from '../../types/index.d';
+import { Group } from '../Groups';
 import { Position } from '../Positions';
 
-type PlayerWithPositionId = Player & { positionId?: Position['index'] };
+type PlayerWithPositionId = Player & {
+  positionId?: Position['index'];
+  groupId?: Group['id'];
+  groupIndex?: number;
+};
 
 export const playerFactory = (params?: Partial<Player>): Player => ({
   id: generatePlayerId(),
@@ -23,6 +28,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarProt,
     }),
     positionId: 10,
+    groupId: 8,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -31,6 +38,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarProt,
     }),
     positionId: 12,
+    groupId: 2,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -39,6 +48,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarProt,
     }),
     positionId: 14,
+    groupId: 4,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -48,6 +59,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.DroodFeral,
     }),
     positionId: 16,
+    groupId: 6,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -56,7 +69,9 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       role: Role.DpsMelee,
       build: ClassBuild.DroodFeral,
     }),
-    positionId: 11,
+    positionId: 21,
+    groupId: 1,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -66,6 +81,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.PriestHoly,
     }),
     positionId: 17,
+    groupId: 7,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -75,6 +92,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.PriestHoly,
     }),
     positionId: 34,
+    groupId: 7,
+    groupIndex: 4,
   },
   {
     ...playerFactory({
@@ -84,6 +103,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.PriestDiscipline,
     }),
     positionId: 39,
+    groupId: 7,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -109,6 +130,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.DroodRestau,
     }),
     positionId: 38,
+    groupId: 4,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -118,6 +141,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.ShamResto,
     }),
     positionId: 19,
+    groupId: 8,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -127,6 +152,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.ShamResto,
     }),
     positionId: 32,
+    groupId: 6,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -136,6 +163,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.ShamResto,
     }),
     positionId: 35,
+    groupId: 1,
+    groupIndex: 4,
   },
   {
     ...playerFactory({
@@ -145,6 +174,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.ShamAmelio,
     }),
     positionId: 27,
+    groupId: 4,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -154,6 +185,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.MageFire,
     }),
     positionId: 40,
+    groupId: 7,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -163,6 +196,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.MageFire,
     }),
     positionId: 25,
+    groupId: 3,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -172,6 +207,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.MageFire,
     }),
     positionId: 36,
+    groupId: 3,
+    groupIndex: 4,
   },
   {
     ...playerFactory({
@@ -181,6 +218,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.MageFire,
     }),
     positionId: 37,
+    groupId: 3,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -190,6 +229,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.MageFire,
     }),
     positionId: 26,
+    groupId: 3,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -199,6 +240,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.MageFire,
     }),
     positionId: 33,
+    groupId: 7,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -208,6 +251,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.DroodEqui,
     }),
     positionId: 24,
+    groupId: 3,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -217,6 +262,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarlockDestruction,
     }),
     positionId: 28,
+    groupId: 5,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -226,6 +273,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarlockDestruction,
     }),
     positionId: 29,
+    groupId: 5,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -235,6 +284,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarlockDestruction,
     }),
     positionId: 30,
+    groupId: 5,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -244,6 +295,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarlockDestruction,
     }),
     positionId: 31,
+    groupId: 5,
+    groupIndex: 4,
   },
   {
     ...playerFactory({
@@ -253,6 +306,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.PriestShadow,
     }),
     positionId: 15,
+    groupId: 5,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -262,6 +317,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.HuntPrecision,
     }),
     positionId: 20,
+    groupId: 8,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -270,6 +327,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 1,
+    groupId: 6,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -278,6 +337,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 2,
+    groupId: 8,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -286,6 +347,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 3,
+    groupId: 1,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -294,6 +357,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 4,
+    groupId: 2,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -302,6 +367,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 13,
+    groupId: 2,
+    groupIndex: 4,
   },
   {
     ...playerFactory({
@@ -310,6 +377,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 22,
+    groupId: 1,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -318,6 +387,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 23,
+    groupId: 2,
+    groupIndex: 2,
   },
   {
     ...playerFactory({
@@ -326,6 +397,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 18,
+    groupId: 8,
+    groupIndex: 4,
   },
   {
     ...playerFactory({
@@ -334,6 +407,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.WarFury,
     }),
     positionId: 5,
+    groupId: 2,
+    groupIndex: 3,
   },
   {
     ...playerFactory({
@@ -343,6 +418,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.RogueCombat,
     }),
     positionId: 6,
+    groupId: 4,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -352,6 +429,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.RogueCombat,
     }),
     positionId: 9,
+    groupId: 6,
+    groupIndex: 4,
   },
   {
     ...playerFactory({
@@ -361,6 +440,8 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.RogueCombat,
     }),
     positionId: 8,
+    groupId: 6,
+    groupIndex: 0,
   },
   {
     ...playerFactory({
@@ -369,7 +450,9 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       className: ClassName.Rogue,
       build: ClassBuild.RogueCombat,
     }),
-    positionId: 21,
+    positionId: 11,
+    groupId: 1,
+    groupIndex: 1,
   },
   {
     ...playerFactory({
@@ -379,5 +462,7 @@ export const typicalRosterFactory = (): PlayerWithPositionId[] => [
       build: ClassBuild.RogueCombat,
     }),
     positionId: 7,
+    groupId: 4,
+    groupIndex: 4,
   },
 ];

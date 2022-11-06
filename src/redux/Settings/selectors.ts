@@ -1,4 +1,5 @@
 import { State } from '.';
+import { Group } from '../Groups';
 import { RootState } from '../store';
 
 export const settingsSelector = (state: RootState): RootState['settings'] => state.settings;
@@ -31,3 +32,11 @@ export const minimalPixelDistanceBetweenPlayersSelector = (
 
 export const isAllianceSelector = (state: RootState): State['isAlliance'] =>
   settingsSelector(state).isAlliance;
+
+export const isGroupIdShiningSelector =
+  (groupId: Group['id']) =>
+  (state: RootState): boolean =>
+    settingsSelector(state).shiningGroupIds.includes(groupId);
+
+export const shiningGroupIdsLengthSelector = (state: RootState): number =>
+  settingsSelector(state).shiningGroupIds.length;
