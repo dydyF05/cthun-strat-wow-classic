@@ -5,7 +5,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## For noobs
 1. Install node -> https://nodejs.org/en/download/
 2. Open a terminal
-3. ```shell
+3. Run this in your terminal
+
+```shell
 git clone https://github.com/dydyF05/cthun-strat-wow-classic.git cthun
 cd cthun
 npm install
