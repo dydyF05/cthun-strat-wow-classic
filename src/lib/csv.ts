@@ -4,7 +4,7 @@ import { Player } from '../redux/Players';
 import { ClassBuild, ClassName, Role } from '../types/index.d';
 import log from './log';
 
-// const ROXOR_IDENTIFIER = '⚡';
+const ROXOR_IDENTIFIER = '⚡';
 
 const LAST_IGNORED_INDEX = 3;
 
@@ -113,9 +113,11 @@ const ROLE_PER_CSV_BUILD: Record<CSVBuild, Role> = {
 
 const mapDataToPlayers = (players: string[][]): Player[] => {
   if (players.length <= LAST_IGNORED_INDEX + 1) return [];
-  console.log('tits', players.slice(LAST_IGNORED_INDEX + 1));
+
+  const absentPlayers = [];
 
   const mappedPlayers = players
+    .slice(LAST_IGNORED_INDEX + 1)
     .filter(values => {
       const hasMinimalindexes = values.length >= 4;
       if (!hasMinimalindexes) return false;
@@ -143,7 +145,10 @@ const mapDataToPlayers = (players: string[][]): Player[] => {
       const name = values[2];
       const id = values[3];
 
-      if (csvSpec === ABS) return undefined;
+      if (csvSpec === ABS) {
+        absentPlayers.push(name || 'unknown');
+        return undefined;
+      }
 
       const build = BUILD_PER_CSV_BUILD[csvSpec];
       if (!build) {
@@ -174,24 +179,34 @@ const mapDataToPlayers = (players: string[][]): Player[] => {
 
       return {
         id,
-        name,
+        name: name.replace(ROXOR_IDENTIFIER, '').trim(),
         build,
         className,
         role,
       };
     });
 
-  return compact(mappedPlayers);
+  const compactPlayers = compact(mappedPlayers);
+
+  console.log(`${compactPlayers.length} players imported`);
+  console.log(`${absentPlayers.length} absents ignored`);
+  console.groupEnd();
+
+  return compactPlayers;
 };
 
 const parser = (file: File, onParsePlayers: (players: Player[]) => void) => {
   parse<unknown, File>(file, {
     delimiter: ',',
     complete: results => {
-      console.log('CSV file parse result', results);
+      console.group('Import');
+      console.groupCollapsed('raw result');
+      console.log('results', results);
+      console.groupEnd();
 
       if (Array.isArray(results?.data) && results?.data.length) {
         const players = mapDataToPlayers(results.data);
+        console.groupEnd();
 
         if (players?.length) {
           onParsePlayers(players);

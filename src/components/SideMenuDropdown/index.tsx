@@ -1,6 +1,6 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
-import { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useCallback, useMemo, useRef } from 'react';
 
 export type Props = {
   isAlliance: boolean;
@@ -17,34 +17,52 @@ const DropdownMenu: FunctionComponent<Props> = ({
   onFillClassicPlayers,
   onInputCsv,
 }) => {
+  const inputRef = useRef<HTMLInputElement>();
+
+  const handleImportClick = useCallback(() => {
+    inputRef?.current?.click();
+  }, []);
+
   const menu = useMemo(
     () => (
       <Menu
         items={[
           {
             key: '1',
-            label: <p onClick={onNukeAll}>Nuke all</p>,
+            label: <Button onClick={onNukeAll}>Nuke all</Button>,
           },
           {
             key: '2',
-            label: <p onClick={onFillClassicPlayers}>Classic config</p>,
+            label: <Button onClick={onFillClassicPlayers}>Classic config</Button>,
           },
           {
             key: '3',
             label: (
-              <p onClick={onToggleAlliance}>
+              <Button onClick={onToggleAlliance}>
                 {isAlliance ? 'Switch to horde' : 'Switch to alliance'}
-              </p>
+              </Button>
             ),
           },
           {
             key: '4',
-            label: <input type="file" accept=".csv" multiple={false} onChange={onInputCsv} />,
+            label: (
+              <>
+                <input
+                  ref={inputRef as any}
+                  style={{ display: 'none' }}
+                  type="file"
+                  accept=".csv"
+                  multiple={false}
+                  onChange={onInputCsv}
+                />
+                ,<Button onClick={handleImportClick}>Import roster</Button>
+              </>
+            ),
           },
         ]}
       />
     ),
-    [isAlliance, onFillClassicPlayers, onNukeAll, onToggleAlliance, onInputCsv]
+    [isAlliance, onFillClassicPlayers, onNukeAll, onToggleAlliance, onInputCsv, handleImportClick]
   );
 
   return (
