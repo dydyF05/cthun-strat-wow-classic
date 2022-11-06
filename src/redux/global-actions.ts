@@ -21,11 +21,18 @@ export const resetPlayersAction = (dispatch: ReturnType<typeof useDispatch>) => 
   dispatch(_resetPlayersAction());
 };
 
-export const createClassicConfigAction = (dispatch: ReturnType<typeof useDispatch>) => {
+export const createClassicConfigAction = (
+  dispatch: ReturnType<typeof useDispatch>,
+  players?: ReturnType<typeof typicalRosterFactory>
+) => {
   resetPlayersAction(dispatch);
 
-  const roster = typicalRosterFactory();
-  dispatch(addManyPlayersAction(roster.map(player => omit(['positionId'], player))));
+  const roster = players || typicalRosterFactory();
+  dispatch(
+    addManyPlayersAction(
+      roster.map(player => omit(['positionId', 'groupId', 'groupIndex'], player))
+    )
+  );
 
   dispatch(
     setPositionsPlayersAction(

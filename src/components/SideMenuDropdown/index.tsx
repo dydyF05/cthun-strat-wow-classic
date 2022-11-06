@@ -2,11 +2,12 @@ import { MoreOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
 import { FunctionComponent, useMemo } from 'react';
 
-type Props = {
+export type Props = {
   isAlliance: boolean;
   onFillClassicPlayers: () => void;
   onNukeAll: () => void;
   onToggleAlliance: () => void;
+  onInputCsv: React.InputHTMLAttributes<HTMLInputElement>['onChange'];
 };
 
 const DropdownMenu: FunctionComponent<Props> = ({
@@ -14,6 +15,7 @@ const DropdownMenu: FunctionComponent<Props> = ({
   onToggleAlliance,
   onNukeAll,
   onFillClassicPlayers,
+  onInputCsv,
 }) => {
   const menu = useMemo(
     () => (
@@ -35,10 +37,14 @@ const DropdownMenu: FunctionComponent<Props> = ({
               </p>
             ),
           },
+          {
+            key: '4',
+            label: <input type="file" accept=".csv" multiple={false} onChange={onInputCsv} />,
+          },
         ]}
       />
     ),
-    [isAlliance, onFillClassicPlayers, onNukeAll, onToggleAlliance]
+    [isAlliance, onFillClassicPlayers, onNukeAll, onToggleAlliance, onInputCsv]
   );
 
   return (
