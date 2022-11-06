@@ -2,6 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## For noobs
+1. Install node -> https://nodejs.org/en/download/
+2. Open a terminal
+3. ```shell
+git clone https://github.com/dydyF05/cthun-strat-wow-classic.git cthun
+cd cthun
+npm install
+npm start
+```
+
+
 ## Available Scripts
 
 In the project directory, you can run:
